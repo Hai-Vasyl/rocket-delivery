@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "URI": "mongodb+srv://Vasyl_Hai:4230@cluster0-jxr7w.mongodb.net/mern-db-practise?retryWrites=true&w=majority",
+  "jwt_secret": "It`s me secrete key!"
+}
