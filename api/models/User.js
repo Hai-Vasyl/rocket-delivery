@@ -1,12 +1,12 @@
 const { Schema, model, Types } = require("mongoose")
 
 const schema = new Schema({
-  username: { type: String, require: true, unique: true },
+  username: { type: String, required: true, unique: true },
   firstname: { type: String, default: "" },
   lastname: { type: String, default: "" },
-  email: { type: String, require: true },
-  password: { type: String, require: true },
-  typeUser: { type: String, require: true, default: "User" },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  typeUser: { type: String, required: true, default: "User" },
   postalCode: { type: String, default: "" },
   address: { type: String, default: "" },
   phone: { type: String, default: "" },
@@ -18,7 +18,7 @@ const schema = new Schema({
   orderList: [{ type: Types.ObjectId, ref: "Order" }],
   commentList: [{ type: Types.ObjectId, ref: "Comment" }],
   answerCommentList: [{ type: Types.ObjectId, ref: "Answer" }],
-  date: { type: Date, require: true },
+  date: { type: Date, required: true },
 })
 
 module.exports = model("User", schema)

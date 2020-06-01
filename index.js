@@ -18,8 +18,8 @@ const start = async () => {
       () => console.log("MongoDB started successfully")
     )
     app.use("/api/auth", require("./api/routes/users"))
-    // app.use("/api/foods", require(""))
-    // app.use("/api/comments", require(""))
+    app.use("/api/foods", require("./api/routes/foods"))
+    app.use("/api/comments", require("./api/routes/comments"))
     // app.use("/api/answers", require(""))
     // app.use("/api/orders", require(""))
 

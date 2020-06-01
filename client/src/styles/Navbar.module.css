@@ -1,0 +1,135 @@
+.wrapper {
+  background-color: #141e30;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  /* border-bottom: 1px solid lightgrey; */
+}
+.navbar {
+  width: 1300px;
+  max-width: 100%;
+  padding: 0 4vw;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+.centerBlock {
+  display: flex;
+}
+.link {
+  text-decoration: none;
+  color: lightgrey;
+  padding: 27px 15px;
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  border-top: 2px solid transparent;
+  outline: none;
+  transition: 0.2s ease;
+}
+.link:hover {
+  background-color: #1f2d47;
+}
+.link span {
+  margin-left: 5px;
+}
+.dropLink {
+  margin-left: 0;
+}
+.dropLinkActive {
+  transition: 0.3s ease;
+}
+.dropLinkActive {
+  background-color: #1f2d47;
+}
+.arrowDrop {
+  margin-left: 5px;
+  transform: rotate(0deg);
+  transition: 0.3s ease;
+  font-size: 1.2em;
+}
+.dropLinkActive .arrowDrop {
+  transform: rotate(90deg);
+}
+.logoLink {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: lightgrey;
+}
+.logoLink span {
+  margin-left: 10px;
+}
+.logoLink *:not(span) {
+  font-size: 2em;
+}
+.dropDownMenu {
+  position: relative;
+  margin-left: 5px;
+}
+.activeLink {
+  background-color: #1f2d47;
+  border-top-color: orangered;
+  transform: scale(1.01);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.39);
+}
+.dropMenu {
+  position: absolute;
+  width: 300px;
+  /* background-image: linear-gradient(to bottom, rgb(160, 157, 156), #141e30); */
+  background-color: #141e30de;
+  margin-top: 7px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.685),
+    0px 10px 30px rgba(0, 0, 0, 0.349);
+  /* border: 2px solid lightgrey; */
+  z-index: 0;
+  transform: scale(0.7);
+  padding: 10px 0;
+  border-top: 2px solid lightgrey;
+  opacity: -1;
+  visibility: hidden;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.dropMenu.activeDrop {
+  transform: scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+.triangeDrop {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 15px solid transparent;
+  border-bottom-color: lightgrey;
+  top: -30px;
+  left: 45px;
+}
+.dropMenu .link {
+  margin-left: 0px;
+  padding: 20px 0;
+  border: none;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+}
+.dropMenu .link:hover {
+  background-color: #1f2d47;
+}
+.dropMenu .link.activeLink {
+  transform: none;
+  border-left-color: orangered;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+}
+.authBlock {
+  display: flex;
+}

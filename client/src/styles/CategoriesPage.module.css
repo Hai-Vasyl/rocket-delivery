@@ -1,0 +1,39 @@
+.wrapperCategories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2vw;
+  padding: 20px;
+  border-right: 3px solid transparent;
+  border-left: 3px solid orangered;
+}
+.linkCategory {
+  transition: 0.3s ease;
+  box-shadow: 0px 13px 30px #141e3069;
+  height: 280px;
+  border: 10px solid white;
+  border-radius: 8px;
+  position: relative;
+}
+.linkCategory:hover {
+  transform: translateY(-4px);
+}
+.linkCategory img {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}
+.title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #333;
+  font-size: 2em;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 15px;
+  border-radius: 10px;
+  transition: 0.3s ease;
+  transform: translate(-50%, -50%) scale(0.7);
+}
+.linkCategory:hover .title {
+  transform: translate(-50%, -50%) scale(1);
+}

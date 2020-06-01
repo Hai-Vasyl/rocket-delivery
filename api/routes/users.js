@@ -66,7 +66,7 @@ router.post(
       const user = await newUser.save()
 
       const token = jwt.sign({ userId: user._id }, config.get("jwt_secret"), {
-        expiresIn: "1d",
+        expiresIn: "7d",
       })
 
       res.status(201).json({ token, userId: user._id, typeUser: user.typeUser })
@@ -113,7 +113,7 @@ router.post(
       }
 
       const token = jwt.sign({ userId: user._id }, config.get("jwt_secret"), {
-        expiresIn: "1d",
+        expiresIn: "7d",
       })
 
       res.json({ token, userId: user._id, typeUser: user.typeUser })

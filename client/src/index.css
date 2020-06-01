@@ -1,0 +1,19 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Abel&family=Advent+Pro&display=swap'); */
+@import url("https://fonts.googleapis.com/css2?family=Advent+Pro&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* font-family: 'Abel', sans-serif; */
+  font-family: "Advent Pro", sans-serif;
+  font-size: 1em;
+}

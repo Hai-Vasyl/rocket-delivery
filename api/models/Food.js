@@ -1,15 +1,16 @@
 const { Schema, model, Types } = require("mongoose")
 
 const schema = new Schema({
-  category: { type: String, require: true },
-  name: { type: String, require: true },
-  price: { type: Number, require: true },
-  institution: { type: String, require: true },
-  description: { type: String, require: true },
-  weight: { type: Number, require: true },
-  img: { type: String, require: true },
-  rate: { type: Number, require: true, default: 1 },
-  date: { type: Date, require: true },
+  category: { type: String, required: true },
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+  institution: { type: String, required: true },
+  description: { type: String, required: true },
+  weight: { type: Number, required: true },
+  img: { type: String, required: true },
+  rate: { type: Number, required: true, default: 1 },
+  date: { type: Date, required: true },
+  comments: [{ type: Types.ObjectId, ref: "Comment" }],
 })
 
 module.exports = model("Food", schema)
