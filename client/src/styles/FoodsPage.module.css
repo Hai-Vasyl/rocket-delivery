@@ -1,0 +1,16 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 3vw;
+}
+.mainTitle {
+  padding: 20px 0;
+  text-align: center;
+  background-color: #141e30;
+  border-left: 6px solid orangered;
+  margin-bottom: 20px;
+  /* color: #141e30; */
+  color: lightgrey;
+
+  text-transform: capitalize;
+}

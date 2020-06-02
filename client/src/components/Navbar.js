@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import style from "../styles/Navbar.module.css"
 import { Context } from "../context/Context"
 import { NavLink } from "react-router-dom"
@@ -77,7 +77,7 @@ function Navbar() {
 
           <NavLink
             exact
-            to='/categories/salad'
+            to='/categories/salads'
             className={link}
             activeClassName={activeLink}
             onClick={() => setDrop(false)}
@@ -113,7 +113,7 @@ function Navbar() {
           </NavLink>
           <NavLink
             exact
-            to='/categories/soup'
+            to='/categories/soups'
             className={link}
             activeClassName={activeLink}
             onClick={() => setDrop(false)}
@@ -122,7 +122,7 @@ function Navbar() {
           </NavLink>
           <NavLink
             exact
-            to='/categories/burger'
+            to='/categories/burgers'
             className={link}
             onClick={() => setDrop(false)}
             activeClassName={activeLink}

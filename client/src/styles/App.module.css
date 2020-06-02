@@ -1,8 +1,15 @@
 .wrapper {
-  background-image: url("../imgs/background.jpg");
+  /* background-image: url("../imgs/texture_surface_paint_117790_1920x1080.jpg"); */
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
+  background-image: linear-gradient(
+      to bottom right,
+      #141e30,
+      #141e30d3,
+      rgba(255, 68, 0, 0.616)
+    ),
+    url("../imgs/texture_surface_paint_117790_1920x1080.jpg");
 }
 .background {
   position: fixed;

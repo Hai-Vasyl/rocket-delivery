@@ -12,11 +12,11 @@ router.get("/:category", async (req, res) => {
       "name price institution img"
     )
 
-    if (food === null) {
-      return res
-        .status(404)
-        .json({ errorCode: true, message: "Category is not exist!" })
-    }
+    // if (food === null) {
+    //   return res
+    //     .status(404)
+    //     .json({ errorCode: true, message: "Category is not exist!" })
+    // }
 
     res.json(food)
   } catch (error) {

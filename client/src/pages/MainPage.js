@@ -4,7 +4,7 @@ import style from "../styles/MainPage.module.css"
 import axios from "axios"
 import ContainerPopularFoods from "../components/ContainerPopularFoods"
 import { IoIosRocket } from "react-icons/io"
-import imgMain from "../imgs/stake.jpg"
+import imgMain from "../imgs/mainImage.svg"
 import { Link } from "react-router-dom"
 import { FaAddressCard } from "react-icons/fa"
 import {
@@ -15,6 +15,9 @@ import {
   AiOutlineMail,
 } from "react-icons/ai"
 import { FiArrowRight } from "react-icons/fi"
+import imgCircle from "../imgs/circle1.svg"
+import imgCircle2 from "../imgs/background-circle3.svg"
+import imgCircle3 from "../imgs/background-circle2.svg"
 
 function MainPage() {
   const {
@@ -41,7 +44,11 @@ function MainPage() {
     img,
     quickLinkBlock,
     quickLink,
+    imgBackgroundCircle,
     contactsBlock,
+    circle1,
+    circle2,
+    circle3,
   } = style
   const [data, setData] = useState({
     pizza: [],
@@ -67,6 +74,21 @@ function MainPage() {
     <div className={wrapperMain}>
       <div className={header}>
         <div className={wrapperHeader}>
+          <img
+            className={`${imgBackgroundCircle} ${circle1}`}
+            src={imgCircle}
+            alt='imgCircle'
+          />
+          <img
+            className={`${imgBackgroundCircle} ${circle3}`}
+            src={imgCircle3}
+            alt='imgCircle'
+          />
+          <img
+            className={`${imgBackgroundCircle} ${circle2}`}
+            src={imgCircle2}
+            alt='imgCircle'
+          />
           <div className={textSideBar}>
             <h1 className={title}>
               <IoIosRocket /> <span>Rocket-Delivery</span>
