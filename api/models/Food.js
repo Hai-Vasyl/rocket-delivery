@@ -11,6 +11,7 @@ const schema = new Schema({
   rate: { type: Number, required: true, default: 1 },
   date: { type: Date, required: true },
   comments: [{ type: Types.ObjectId, ref: "Comment" }],
+  rateList: [{ type: Types.ObjectId, ref: "RateFood" }],
 })
 
 module.exports = model("Food", schema)

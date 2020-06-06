@@ -1,0 +1,215 @@
+.containerForm {
+  width: 43%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  background-color: #141e30;
+  padding: 2vh 3vw;
+  min-height: 77vh;
+}
+.containerPreview {
+  width: 57%;
+  padding: 5vw;
+  display: flex;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(255, 68, 0),
+    rgb(56, 10, 56)
+  );
+}
+.invertColorContainerPreview {
+  background-image: linear-gradient(to bottom right, #141e30, darkred);
+}
+.container {
+  display: flex;
+}
+.invertContainer {
+  flex-direction: row-reverse;
+}
+.input {
+  font-size: inherit;
+  font-size: 1.1em;
+  padding: 10px;
+  width: 100%;
+  font-family: inherit;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1.2px solid orangered;
+  transition: 0.4s ease;
+  color: lightgrey;
+  outline: none;
+}
+.input:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.input::placeholder {
+  color: lightgrey;
+}
+.selectContainer {
+  border: 1px solid rgba(128, 128, 128, 0.363);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img {
+  position: relative;
+  margin: auto;
+}
+.img img {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+  /* border-radius: 10px; */
+  box-shadow: 0px 0px 93px #141e30b4, 0px 20px 43px #141e30b2;
+}
+.title {
+  font-size: 2em;
+  color: lightgrey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title span {
+  margin-left: 15px;
+}
+.labelText {
+  color: lightgrey;
+  width: 50%;
+  text-align: center;
+  font-size: inherit;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.labelText span {
+  margin-left: 15px;
+}
+.select {
+  background-color: orangered;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 15px;
+  cursor: pointer;
+  width: 50%;
+  outline: none;
+  text-align: center;
+  margin-left: 20px;
+  transition: 0.2s ease;
+  border: none;
+  text-shadow: 0px 0px 5px black;
+  color: white;
+}
+.select:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 5px 29px rgba(0, 0, 0, 0.295);
+}
+.select:active {
+  transform: scale(0.9);
+}
+.select > * {
+  padding: 20px;
+  cursor: pointer;
+}
+.option {
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  padding: 10px;
+  color: #333;
+  background-color: lightgrey;
+  border: 2px solid orangered;
+}
+.btnContainer {
+  display: flex;
+}
+.btnCreate {
+  font-size: inherit;
+  font-family: inherit;
+  background-color: green;
+  padding: 20px 40px;
+  transition: 0.2s ease;
+  cursor: pointer;
+  color: white;
+  text-shadow: 0px 0px 5px black;
+  outline: none;
+  border-radius: 4px;
+  /* font-weight: bold; */
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btnRemove {
+  background-color: rgba(128, 128, 128, 0.164);
+  border: 1px solid transparent;
+  margin-left: 15px;
+  box-shadow: none !important;
+}
+.btnRemove:hover {
+  transform: scale(1) !important;
+  border-color: rgba(128, 128, 128, 0.445);
+  background-color: transparent;
+}
+.btnEdit {
+  background-color: orangered;
+}
+.btnCreate *:not(span) {
+  filter: drop-shadow(0px 0px 1px black);
+  font-size: 1.2em;
+}
+.btnCreate span {
+  margin-left: 5px;
+}
+.btnCreate:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 5px 29px rgba(0, 0, 0, 0.295);
+}
+.btnCreate:active {
+  transform: scale(0.9);
+}
+.messagePopup {
+  position: absolute;
+  padding: 20px;
+  bottom: -100px;
+  left: 50%;
+  border-radius: 10px;
+  opacity: 0;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: white;
+  min-width: 200px;
+  transform: translateX(-50%) scale(0);
+  visibility: hidden;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 15px 29px rgba(0, 0, 0, 0.295);
+  background-color: lightgrey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.messagePopup span {
+  margin-left: 15px;
+}
+.messagePopup *:not(span) {
+  font-size: 1.1em;
+}
+.popupActiveStatusFalse {
+  background-color: red;
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  visibility: visible;
+}
+.popupActiveStatusTrue {
+  visibility: visible;
+  background-color: green;
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  visibility: visible;
+}
+.messagePopup.popupActiveStatusTrue span {
+  margin-left: 0px;
+}

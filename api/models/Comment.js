@@ -7,6 +7,7 @@ const schema = new Schema({
   date: { type: Date, required: true },
   rate: { type: Number, required: true, default: 1 },
   content: { type: String, required: true },
+  rateList: [{ type: Types.ObjectId, ref: "RateComment" }],
 })
 
 module.exports = model("Comment", schema)

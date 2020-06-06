@@ -1,9 +1,28 @@
 const { Router } = require("express")
 const Food = require("../models/Food")
 const auth = require("../middlewares/auth.middleware")
+const RateFood = require("../models/RateFood")
+const Order = require("../models/Order")
+const Comment = require("../models/Comment")
+const RateComment = require("../models/RateComment")
+const Answer = require("../models/Answer")
+const RateAnswer = require("../models/RateAnswer")
+// const RateFood = require("../models/RateFood")
 
 const router = Router()
 
+router.get("/partner/:institution", async (req, res) => {
+  try {
+    const { institution } = req.params
+    const food = await Food.find({ institution }).select(
+      "name img category price"
+    )
+
+    res.json(food)
+  } catch (error) {
+    res.status(500).json(`Error getting foods of partner: ${error.message}`)
+  }
+})
 router.get("/:category", async (req, res) => {
   try {
     const { category } = req.params
@@ -57,18 +76,39 @@ router.get("/briefcategory/all", async (req, res) => {
     res.status(500).json(`Error getting all popular foods: ${error.message}`)
   }
 })
+router.get("/food/auth/:id", auth, async (req, res) => {
+  try {
+    const { id } = req.params
+
+    // const food = await Food.findById(id).populate({
+    //   path: "comments",
+    //   populate: { path: "owner" },
+    // })
+    // const ratefood = await RateFood.find({owner: req.userId}).find({food: id})
+
+    const food = await Food.findById(id).populate({
+      path: "rateList",
+      match: { owner: req.userId },
+      select: "status",
+    })
+
+    // .find({ rateList: { $elemMatch: { owner: req.userId } } })
+    // const foodnew = await food.rateList.find({ owner: req.userId })
+    // if (food === null) {
+    //   res.status(404).json({ errorCode: true, message: "Food is not exist!" })
+    // }
+
+    res.json(food)
+  } catch (error) {
+    res.status(500).json(`Error getting food by id: ${error.message}`)
+  }
+})
+
 router.get("/food/:id", async (req, res) => {
   try {
     const { id } = req.params
 
-    const food = await Food.findById(id).populate({
-      path: "comments",
-      populate: { path: "owner" },
-    })
-
-    if (food === null) {
-      res.status(404).json({ errorCode: true, message: "Food is not exist!" })
-    }
+    const food = await Food.findById(id)
 
     res.json(food)
   } catch (error) {
@@ -154,7 +194,7 @@ router.patch("/update/:id", auth, async (req, res) => {
     //   weight,
     // } = req.body
 
-    const updatedFood = await Food.update({ _id: req.params.id }, req.body)
+    const updatedFood = await Food.updateOne({ _id: req.params.id }, req.body)
 
     // await updatedFood.save()
 
@@ -166,7 +206,33 @@ router.patch("/update/:id", auth, async (req, res) => {
 
 router.delete("/delete/:id", auth, async (req, res) => {
   try {
-    await Food.findByIdAndDelete(req.params.id)
+    const { id } = req.params
+
+    await Order.deleteMany({ foodProps: id })
+
+    const comments = await Comment.find({ food: id })
+
+    comments.map((item) => {
+      const deleteRecords = async () => {
+        try {
+          await RateComment.deleteMany({ comment: item._id })
+
+          const answers = await Answer.find({ comment: item._id })
+
+          answers.map((elem) => {
+            ;async () => await RateAnswer.deleteMany({ answer: elem._id })
+          })
+
+          await Answer.deleteMany({ comment: item._id })
+        } catch (error) {}
+      }
+      deleteRecords()
+    })
+
+    await Comment.deleteMany({ food: id })
+    await RateFood.deleteMany({ food: id })
+
+    await Food.findByIdAndDelete(id)
 
     res.json({ message: "Food successfully deleted!" })
   } catch (error) {

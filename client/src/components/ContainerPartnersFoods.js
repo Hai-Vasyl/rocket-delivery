@@ -15,12 +15,12 @@ function ContainerPartnersFoods({ items }) {
     return (
       <div className={boxFood} key={item._id}>
         <div className={img}>
-          <Link to={`/${item._id}`}>
+          <Link to={`/details/${item._id}`}>
             <img src={item.img} alt='imageFood' />
           </Link>
         </div>
         <div className={title}>
-          <Link className={foodInstitution} to={`/${item._id}`}>
+          <Link className={foodInstitution} to={`/details/${item._id}`}>
             <span className={foodName}>{item.name}</span>
           </Link>
           <Link className={foodInstitution} to={`/categories/${item.category}`}>

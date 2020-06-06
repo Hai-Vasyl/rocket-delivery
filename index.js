@@ -14,14 +14,18 @@ const start = async () => {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
       },
       () => console.log("MongoDB started successfully")
     )
     app.use("/api/auth", require("./api/routes/users"))
     app.use("/api/foods", require("./api/routes/foods"))
     app.use("/api/comments", require("./api/routes/comments"))
-    // app.use("/api/answers", require(""))
-    // app.use("/api/orders", require(""))
+    app.use("/api/answers", require("./api/routes/answers"))
+    app.use("/api/orders", require("./api/routes/orders"))
+    app.use("/api/ratefoods", require("./api/routes/rateFood"))
+    app.use("/api/ratecomments", require("./api/routes/rateComment"))
+    app.use("/api/rateanswers", require("./api/routes/rateAnswer"))
 
     app.listen(PORT, () => console.log(`Server started on port: ${PORT}`))
   } catch (error) {

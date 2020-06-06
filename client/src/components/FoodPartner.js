@@ -15,8 +15,8 @@ function Food({ food }) {
         </div>
         <div className={foodName}>{food.name}</div>
       </Link>
-      <Link to={`/partners/${food.institution}`} className={category}>
-        <span>partner:</span> {food.institution}
+      <Link to={`/categories/${food.category}`} className={category}>
+        <span>category:</span> {food.category}
       </Link>
     </div>
   )

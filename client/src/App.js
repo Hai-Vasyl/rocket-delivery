@@ -57,7 +57,7 @@ function App() {
 
               <Route path='/partners/:partnerid' component={PartnerPage} />
               <Route path='/categories/:foodcategory' component={FoodsPage} />
-              <Route path='/:foodid' component={FoodPage} />
+              <Route path='/details/:foodid' component={FoodPage} />
 
               <Redirect to='/' />
             </Switch>
@@ -73,9 +73,9 @@ function App() {
               <Route path='/partners/:partnerid' component={PartnerPage} />
               <Route path='/categories/:foodcategory' component={FoodsPage} />
               <Route path='/edit/:foodid' component={EditFoodPage} />
-              <Route path='/:foodid' component={FoodPage} />
+              <Route path='/details/:foodid' component={FoodPage} />
 
-              <Redirect to='/' />
+              <Redirect exact to='/' />
             </Switch>
           )
         ) : (
@@ -83,14 +83,15 @@ function App() {
             <Route exact path='/' component={MainPage} />
             <Route exact path='/categories' component={CategoriesPage} />
             <Route exact path='/partners' component={PartnersPage} />
-            <Route path='/auth/register' component={RegisterPage} />
-            <Route path='/auth/login' component={LoginPage} />
 
             <Route path='/categories/:foodcategory' component={FoodsPage} />
             <Route path='/partners/:partnerid' component={PartnerPage} />
-            <Route path='/:foodid' component={FoodPage} />
+            <Route path='/details/:foodid' component={FoodPage} />
 
-            <Redirect to='/' />
+            <Route path='/auth/register' component={RegisterPage} />
+            <Route path='/auth/login' component={LoginPage} />
+
+            <Redirect exact to='/' />
           </Switch>
         )}
       </div>

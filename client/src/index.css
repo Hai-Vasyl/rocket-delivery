@@ -1,5 +1,7 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Abel&family=Advent+Pro&display=swap'); */
-@import url("https://fonts.googleapis.com/css2?family=Advent+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abel&family=Advent+Pro&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +15,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* font-family: 'Abel', sans-serif; */
-  font-family: "Advent Pro", sans-serif;
+  /* font-family: "Abel", sans-serif; */
+  /* font-family: "Maven Pro", sans-serif; */
+  font-family: "Quicksand", sans-serif;
+  /* font-family: "Dosis", sans-serif; */
+  /* font-family: "Advent Pro", sans-serif; */
+
   font-size: 1em;
 }

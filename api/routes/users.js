@@ -69,7 +69,13 @@ router.post(
         expiresIn: "7d",
       })
 
-      res.status(201).json({ token, userId: user._id, typeUser: user.typeUser })
+      res.status(201).json({
+        token,
+        userId: user._id,
+        typeUser: user.typeUser,
+        ava: user.ava,
+        username: user.username,
+      })
     } catch (error) {
       res
         .status(500)
@@ -116,7 +122,13 @@ router.post(
         expiresIn: "7d",
       })
 
-      res.json({ token, userId: user._id, typeUser: user.typeUser })
+      res.json({
+        token,
+        userId: user._id,
+        typeUser: user.typeUser,
+        ava: user.ava,
+        username: user.username,
+      })
     } catch (error) {
       res
         .status(500)

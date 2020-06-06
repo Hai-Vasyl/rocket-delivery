@@ -6,6 +6,7 @@ const schema = new Schema({
   generalPrice: { type: Number, required: true },
   owner: { type: Types.ObjectId, ref: "User", required: true },
   date: { type: Date, required: true },
+  status: { type: Boolean, required: true, default: true },
 })
 
 module.exports = model("Order", schema)

@@ -66,9 +66,11 @@
   align-items: center;
   justify-content: center;
   color: lightgrey;
+  font-weight: bold;
 }
 .logoLink span {
   margin-left: 10px;
+  font-size: 1.2em;
 }
 .logoLink *:not(span) {
   font-size: 2em;

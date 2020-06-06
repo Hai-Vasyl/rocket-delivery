@@ -129,7 +129,7 @@
   transition: 0.2s ease;
   cursor: pointer;
   color: white;
-  text-shadow: 0px 0px 3px black, 0px 0px 4px black, 0px 0px 2px black;
+  text-shadow: 0px 0px 5px black;
   outline: none;
   border-radius: 4px;
   font-weight: bold;
@@ -220,7 +220,7 @@
   border-bottom-color: transparent;
   border-top-color: transparent;
   /* box-shadow: 0px 0px 90px black; */
-  filter: drop-shadow(0px 0px 6px black);
+  /* filter: drop-shadow(0px 0px 6px black); */
   /* border-bottom: none; */
   animation: load 1s linear infinite;
   top: 50%;

@@ -253,16 +253,7 @@
   border-radius: 5px;
   text-decoration: none;
 } */
-.titleMainPopular {
-  text-align: center;
-  padding: 20px 0;
-  font-size: 3em;
-  background-color: #141e30;
-  /* border-radius: 100px; */
-  color: lightgrey;
-  border-left: 10px solid orangered;
-  border-right: 10px solid transparent;
-}
+
 .wrapperContainer {
   border-left: 3px solid transparent;
   border-right: 3px solid transparent;
