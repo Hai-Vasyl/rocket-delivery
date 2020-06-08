@@ -4,7 +4,7 @@ import style from "../styles/FoodPage.module.css"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { RiShoppingCartLine } from "react-icons/ri"
-import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai"
+import { AiOutlineLike, AiOutlineDislike, AiOutlineCheck } from "react-icons/ai"
 import Comment from "../components/Comment"
 import { Context } from "../context/Context"
 import { BsArrowRightShort } from "react-icons/bs"
@@ -14,8 +14,9 @@ function FoodPage(props) {
   const { wrapper } = mainStyle
   const [data, setData] = useState({})
   const [comments, setComments] = useState([])
+  const [added, setAdded] = useState(false)
   const [formComment, setFormComment] = useState("")
-  const { token } = useContext(Context)
+  const { token, orders, setOrders } = useContext(Context)
   const {
     containerCard,
     imgContainer,
@@ -59,6 +60,7 @@ function FoodPage(props) {
     imgBox,
     btnActive,
     linkEdit,
+    activeCart,
     backgroundFood,
   } = style
   const { foodid } = props.match.params
@@ -130,22 +132,15 @@ function FoodPage(props) {
                   ? "none"
                   : elem.rateList[0].status
 
-              // elem.answerList > 0 &&
               elem.answerList.map((answer) => {
-                // if(answer.rateList > 0){
                 answer.rateStatus =
                   answer.rateList[0] === undefined
                     ? "none"
                     : answer.rateList[0].status
-                // }
+
                 return answer
               })
 
-              // elem.answerList.rateStatus =
-              //   elem.answerList.length > 0 &&
-              //   elem.answerList.rateList === undefined
-              //     ? "none"
-              //     : elem.answerList.rateList[0].status
               return elem
             })
           )
@@ -158,6 +153,29 @@ function FoodPage(props) {
 
     fetch()
   }, [foodid, token])
+
+  useEffect(() => {
+    // orders.map((order) => {
+    //   if (order.foodProps._id === data._id) {
+    //     seEdded(true)
+    //   }
+    //   return order
+    // })
+
+    const fetch = async () => {
+      try {
+        const res = await axios.get(`/api/orders/check/${foodid}`, {
+          headers: {
+            Authorization: `Basic ${token.token}`,
+          },
+        })
+
+        setAdded(res.data)
+      } catch (error) {}
+    }
+
+    fetch()
+  }, [orders, data._id, foodid, token.token])
 
   const handleLikeComment = async (comment) => {
     try {
@@ -330,9 +348,124 @@ function FoodPage(props) {
     } catch (error) {}
   }
 
-  // const answerJSX = comment.answerList.map((answer) => {
-  //   return <Answer key={answer._id} answer={answer} />
-  // })
+  const handleAddFoodToCart = () => {
+    if (!!token.token) {
+      const fetch = async () => {
+        try {
+          const res = await axios.post(
+            `/api/orders/create/${foodid}`,
+            { price: data.price },
+            {
+              headers: {
+                Authorization: `Basic ${token.token}`,
+              },
+            }
+          )
+
+          setOrders((prevOrders) => [...prevOrders, res.data])
+        } catch (error) {}
+      }
+
+      fetch()
+    } else {
+    }
+  }
+
+  const handleRemoveFoodFromCart = async () => {
+    if (!!token.token) {
+      const fetch = async () => {
+        try {
+          await axios.delete(`/api/orders/delete/${foodid}`, {
+            headers: {
+              Authorization: `Basic ${token.token}`,
+            },
+          })
+
+          setOrders((prevOrders) =>
+            prevOrders.filter((order) => order.foodProps._id !== foodid)
+          )
+        } catch (error) {}
+      }
+
+      fetch()
+    } else {
+    }
+  }
+
+  const handleRemove = () => {
+    if (!!token.token) {
+      const fetch = async () => {
+        try {
+          const res = await axios.patch(
+            `/api/orders/amount/remove/${foodid}`,
+            null,
+            {
+              headers: {
+                Authorization: `Basic ${token.token}`,
+              },
+            }
+          )
+          if (res.data.statusError) {
+            return
+          }
+          const { generalPrice, amount } = res.data
+
+          setOrders((prevOrders) =>
+            prevOrders.map((order) => {
+              if (order.foodProps._id === foodid) {
+                order.amount = amount
+                order.generalPrice = generalPrice
+              }
+              return order
+            })
+          )
+        } catch (error) {}
+      }
+
+      fetch()
+    } else {
+    }
+  }
+
+  const handleAdd = () => {
+    if (!!token.token) {
+      const fetch = async () => {
+        try {
+          const res = await axios.patch(
+            `/api/orders/amount/add/${foodid}`,
+            null,
+            {
+              headers: {
+                Authorization: `Basic ${token.token}`,
+              },
+            }
+          )
+          const { generalPrice, amount } = res.data
+
+          setOrders((prevOrders) =>
+            prevOrders.map((order) => {
+              if (order.foodProps._id === foodid) {
+                order.amount = amount
+                order.generalPrice = generalPrice
+              }
+              return order
+            })
+          )
+        } catch (error) {}
+      }
+
+      fetch()
+    } else {
+    }
+  }
+
+  let orderAmount
+
+  orders.forEach((order) => {
+    if (order.foodProps._id === foodid) {
+      orderAmount = order.amount
+    }
+  })
 
   return (
     <div className={wrapper}>
@@ -391,12 +524,18 @@ function FoodPage(props) {
 
           <div className={linkBlock}>
             <span className={`${text} ${categoryText}`}>category: </span>
-            <Link to='' className={`${link}  ${category}`}>
+            <Link
+              to={`/categories/${data.category}`}
+              className={`${link}  ${category}`}
+            >
               {data.category}
             </Link>
             <br />
             <span className={`${text} ${institutionText}`}>institution: </span>
-            <Link to='' className={`${link} ${institution}`}>
+            <Link
+              to={`/partners/${data.institution}`}
+              className={`${link} ${institution}`}
+            >
               {data.institution}
             </Link>
           </div>
@@ -409,16 +548,29 @@ function FoodPage(props) {
           <div className={buttonsBlock}>
             <div className={btnAddAmount}>
               <div className={amount}>
-                <span>1</span>
+                <span>{orderAmount}</span>
               </div>
               <div>
-                <button className={btnAmount}>+</button>
-                <button className={btnAmount}>-</button>
+                <button className={btnAmount} onClick={handleAdd}>
+                  +
+                </button>
+                <button className={btnAmount} onClick={handleRemove}>
+                  -
+                </button>
               </div>
             </div>
-            <button className={cart}>
-              <RiShoppingCartLine /> <span>Add</span>
-            </button>
+            {added ? (
+              <button
+                className={`${cart} ${activeCart}`}
+                onClick={handleRemoveFoodFromCart}
+              >
+                <AiOutlineCheck /> <span>Added</span>
+              </button>
+            ) : (
+              <button className={cart} onClick={handleAddFoodToCart}>
+                <RiShoppingCartLine /> <span>Add</span>
+              </button>
+            )}
           </div>
         </div>
       </div>

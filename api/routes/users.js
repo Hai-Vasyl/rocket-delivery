@@ -4,6 +4,11 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("../models/User")
 const config = require("config")
+const auth = require("../middlewares/auth.middleware")
+const RateFood = require("../models/RateFood")
+const RateComment = require("../models/RateComment")
+const RateAnswer = require("../models/RateAnswer")
+const Order = require("../models/Order")
 
 const router = Router()
 
@@ -136,5 +141,32 @@ router.post(
     }
   }
 )
+
+router.get("/users", auth, async (req, res) => {
+  try {
+    const users = await User.find().select("ava username email date typeUser")
+
+    res.json(users)
+  } catch (error) {
+    res.status(500).json(`Error getting users: ${error.message}`)
+  }
+})
+
+router.delete("/delete/:userid", auth, async (req, res) => {
+  try {
+    const { userid } = req.params
+
+    await RateFood.deleteMany({ owner: userid })
+    await RateAnswer.deleteMany({ owner: userid })
+    await RateComment.deleteMany({ owner: userid })
+    await Order.deleteMany({ owner: userid })
+
+    await User.findByIdAndDelete(userid)
+
+    res.json("User deleted successfully!")
+  } catch (error) {
+    res.status(500).json(`Error deleting user: ${error.message}`)
+  }
+})
 
 module.exports = router

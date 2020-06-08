@@ -51,6 +51,9 @@
 .dropLinkActive {
   background-color: #1f2d47;
 }
+.linkActive {
+  background-color: #1f2d47 !important;
+}
 .arrowDrop {
   margin-left: 5px;
   transform: rotate(0deg);

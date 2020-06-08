@@ -1,0 +1,199 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  padding: 13px 20px;
+  background-color: #141e30;
+  margin-top: 1.5vh;
+  color: lightgrey;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.521),
+    0px 0px 8px rgba(0, 0, 0, 0.315);
+  border-radius: 7px;
+  /* border-bottom: 1px solid orangered; */
+}
+.wrapper:first-child {
+  margin-top: 0px;
+}
+.orderIndex {
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 35px;
+  margin-right: 10px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 50%;
+}
+.orderName {
+  border: 1px solid rgba(128, 128, 128, 0.425);
+  text-decoration: none;
+  color: lightgrey;
+  display: block;
+  width: 100%;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 4px;
+  transition: 0.2s ease;
+}
+.orderName:hover {
+  color: orangered;
+}
+.img {
+  width: 100px;
+  height: 90px;
+  overflow: hidden;
+  border-radius: 7px;
+}
+.img img {
+  width: 100%;
+  height: 100%;
+  transition: 0.2s ease;
+  object-fit: cover;
+}
+.img:hover img {
+  transform: scale(1.1);
+}
+.btnsAmount {
+  display: flex;
+  flex-direction: column;
+}
+.purchaseBtn {
+  padding: 12px 20px;
+  border-radius: 5px;
+  background-color: orangered;
+  color: white;
+  text-decoration: none;
+  transition: 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.purchaseBtn span {
+  margin-right: 5px;
+}
+.purchaseBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 5px 20px rgba(0, 0, 0, 0.295);
+}
+.purchaseBtn:active {
+  transform: scale(0.9);
+}
+.deleteBtn {
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s ease;
+  outline: none;
+  font-family: inherit;
+  background-color: transparent;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  color: lightgrey;
+  border-radius: 5px;
+  font-size: 1.2em;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.deleteBtn * {
+  margin: auto;
+}
+.deleteBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: transparent;
+}
+.deleteBtn:active {
+  transform: scale(0.9);
+}
+.amount {
+  width: 27px;
+  height: 27px;
+  text-align: center;
+  line-height: 27px;
+  margin: 1.5px 0;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.btnAmount {
+  font-size: inherit;
+  font-family: inherit;
+  width: 27px;
+  border: none;
+  background-color: orangered;
+  outline: none;
+  color: white;
+  height: 27px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  line-height: 27px;
+  text-align: center;
+}
+.btnAmount:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 5px 20px rgba(0, 0, 0, 0.295);
+}
+.btnAmount:active {
+  transform: scale(0.9);
+}
+.block {
+  margin-top: 10px;
+}
+.link {
+  text-decoration: none;
+  color: lightgrey;
+  border: 1px solid rgba(128, 128, 128, 0.425);
+  padding: 1px 5px;
+  transition: 0.2s ease;
+  border-radius: 4px;
+}
+.link:hover {
+  color: orangered;
+}
+.containerInfo {
+  min-width: 240px;
+  width: 25%;
+  margin-left: 10px;
+}
+.priceBlock {
+  margin-left: 10px;
+  width: 10%;
+  text-align: center;
+}
+.priceBlock *:not(span) {
+  font-size: 2.2em;
+}
+.btnBlock {
+  flex: 1;
+  display: flex;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.buyBtn {
+  font-size: inherit;
+  font-family: inherit;
+
+  border: none;
+  background-color: green;
+  outline: none;
+  color: white;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+  padding: 12px 22px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* text-align: center; */
+}
+.buyBtn *:not(span) {
+  font-size: 0.9em;
+  margin-left: 10px;
+}
+.buyBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 5px 20px rgba(0, 0, 0, 0.295);
+}
+.buyBtn:active {
+  transform: scale(0.9);
+}

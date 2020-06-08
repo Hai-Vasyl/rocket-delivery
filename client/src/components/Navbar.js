@@ -28,20 +28,37 @@ function Navbar() {
     dropDownMenu,
     centerBlock,
     dropLink,
+    linkActive,
     triangeDrop,
     arrowDrop,
     dropLinkActive,
   } = style
-  const { token, setToken, drop, setDrop } = useContext(Context)
+  const {
+    token,
+    setToken,
+    drop,
+    setDrop,
+    popupCart,
+    setPopupCart,
+  } = useContext(Context)
 
   const handlerSignOut = () => {
     localStorage.removeItem("Auth")
     setToken(false)
     setDrop(false)
+    setPopupCart(false)
   }
-
+  const handleDropDownActive = () => {
+    setDrop(!drop)
+    setPopupCart(false)
+  }
   const handleOpenCart = () => {
     setDrop(false)
+    setPopupCart(!popupCart)
+  }
+  const removeAllActivePopups = () => {
+    setDrop(false)
+    setPopupCart(false)
   }
 
   const styleDropDownMenu = () => {
@@ -49,7 +66,7 @@ function Navbar() {
       <div className={dropDownMenu}>
         <button
           className={`${link} ${dropLink} ${drop && dropLinkActive}`}
-          onClick={() => setDrop((prevDrop) => !prevDrop)}
+          onClick={handleDropDownActive}
         >
           <AiOutlineMenu /> <span>All Dishes</span>{" "}
           <MdKeyboardArrowRight className={arrowDrop} />
@@ -143,7 +160,7 @@ function Navbar() {
               exact
               to='/'
               className={logoLink}
-              onClick={() => setDrop(false)}
+              onClick={removeAllActivePopups}
             >
               <IoIosRocket /> <span>Rocket-Delivery</span>
             </NavLink>
@@ -154,12 +171,15 @@ function Navbar() {
                 to='/'
                 activeClassName={activeLink}
                 className={link}
-                onClick={() => setDrop(false)}
+                onClick={removeAllActivePopups}
               >
                 <AiOutlineHome /> <span>Home</span>
               </NavLink>
 
-              <button className={link} onClick={handleOpenCart}>
+              <button
+                className={`${link} ${popupCart && linkActive}`}
+                onClick={handleOpenCart}
+              >
                 <RiShoppingCartLine /> <span>My Cart</span>
               </button>
 
@@ -168,7 +188,7 @@ function Navbar() {
               <NavLink
                 exact
                 to='/personalcab'
-                onClick={() => setDrop(false)}
+                onClick={removeAllActivePopups}
                 className={link}
                 activeClassName={activeLink}
               >
@@ -186,7 +206,7 @@ function Navbar() {
               exact
               to='/'
               className={logoLink}
-              onClick={() => setDrop(false)}
+              onClick={removeAllActivePopups}
             >
               <IoIosRocket /> <span>Rocket-Delivery</span>
             </NavLink>
@@ -197,11 +217,14 @@ function Navbar() {
                 to='/'
                 activeClassName={activeLink}
                 className={link}
-                onClick={() => setDrop(false)}
+                onClick={removeAllActivePopups}
               >
                 <AiOutlineHome /> <span>Home</span>
               </NavLink>
-              <button className={link} onClick={handleOpenCart}>
+              <button
+                className={`${link} ${popupCart && linkActive}`}
+                onClick={handleOpenCart}
+              >
                 <RiShoppingCartLine /> <span>My Cart</span>
               </button>
               {styleDropDownMenu()}
@@ -209,7 +232,7 @@ function Navbar() {
                 exact
                 to='/create'
                 className={link}
-                onClick={() => setDrop(false)}
+                onClick={removeAllActivePopups}
                 activeClassName={activeLink}
               >
                 <FiPlus /> <span>Create</span>
@@ -217,7 +240,7 @@ function Navbar() {
               <NavLink
                 exact
                 to='/users'
-                onClick={() => setDrop(false)}
+                onClick={removeAllActivePopups}
                 className={link}
                 activeClassName={activeLink}
               >
@@ -226,7 +249,7 @@ function Navbar() {
               <NavLink
                 exact
                 to='/personalcab'
-                onClick={() => setDrop(false)}
+                onClick={removeAllActivePopups}
                 className={link}
                 activeClassName={activeLink}
               >
@@ -245,7 +268,7 @@ function Navbar() {
             exact
             to='/'
             className={logoLink}
-            onClick={() => setDrop(false)}
+            onClick={removeAllActivePopups}
           >
             <IoIosRocket /> <span>Rocket-Delivery</span>
           </NavLink>
@@ -256,12 +279,15 @@ function Navbar() {
               to='/'
               activeClassName={activeLink}
               className={link}
-              onClick={() => setDrop(false)}
+              onClick={removeAllActivePopups}
             >
               <AiOutlineHome /> <span>Home</span>
             </NavLink>
 
-            <button className={link} onClick={handleOpenCart}>
+            <button
+              className={`${link} ${popupCart && linkActive}`}
+              onClick={handleOpenCart}
+            >
               <RiShoppingCartLine /> <span>My Cart</span>
             </button>
 
@@ -273,7 +299,7 @@ function Navbar() {
               exact
               to='/auth/login'
               className={link}
-              onClick={() => setDrop(false)}
+              onClick={removeAllActivePopups}
               activeClassName={activeLink}
             >
               <FaSignInAlt /> <span>Sign In</span>
@@ -282,7 +308,7 @@ function Navbar() {
               exact
               to='/auth/register'
               className={link}
-              onClick={() => setDrop(false)}
+              onClick={removeAllActivePopups}
               activeClassName={activeLink}
             >
               <FaCheckCircle /> <span>Sign Up</span>

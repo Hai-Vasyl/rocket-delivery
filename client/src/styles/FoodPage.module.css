@@ -310,8 +310,11 @@
   margin-top: 5px;
   border-radius: 3px;
   transition: 0.2s ease;
+  height: 30px;
   text-shadow: 0px 0px 5px black;
   outline: none;
+  text-align: center;
+  line-height: 20px;
 }
 .btnAmount:first-child {
   margin-top: 0;
@@ -359,6 +362,9 @@
 }
 .cart *:not(span) {
   filter: drop-shadow(0px 0px 3px black);
+}
+.activeCart {
+  background-color: grey;
 }
 .dateBlock {
   padding: 1vh;
