@@ -10,7 +10,7 @@ const PORT = process.env.PORT || config.get("port") || 5000
 const start = async () => {
   try {
     await mongoose.connect(
-      process.env.MONGODB_URI || config.get("URI"),
+      config.get("URI"),
       {
         useCreateIndex: true,
         useNewUrlParser: true,
@@ -32,7 +32,7 @@ const start = async () => {
       app.use(express.static("client/build"))
 
       app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
       })
     }
 
