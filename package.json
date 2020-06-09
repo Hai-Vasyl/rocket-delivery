@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "buid": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuid": "npm run install-client && npm run build",
+    "start": "node index.js",
     "client": "npm start --prefix client",
-    "server": "nodemon index.js",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "server-dev": "nodemon index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",

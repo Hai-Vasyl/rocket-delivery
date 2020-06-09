@@ -4,12 +4,12 @@ const config = require("config")
 
 const app = express()
 app.use(express.json({ extended: true }))
-const PORT = config.get("port") || 5000
+const PORT = process.env.PORT || config.get("port") || 5000
 
 const start = async () => {
   try {
     await mongoose.connect(
-      config.get("URI"),
+      process.env.MONGODB_URI || config.get("URI"),
       {
         useCreateIndex: true,
         useNewUrlParser: true,
@@ -26,6 +26,10 @@ const start = async () => {
     app.use("/api/ratefoods", require("./api/routes/rateFood"))
     app.use("/api/ratecomments", require("./api/routes/rateComment"))
     app.use("/api/rateanswers", require("./api/routes/rateAnswer"))
+
+    if (process.env.NODE_ENV === "production") {
+      app.use(express.static("client/build"))
+    }
 
     app.listen(PORT, () => console.log(`Server started on port: ${PORT}`))
   } catch (error) {
