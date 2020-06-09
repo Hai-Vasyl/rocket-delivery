@@ -10,7 +10,7 @@ const PORT = process.env.PORT || config.get("port") || 5000
 const start = async () => {
   try {
     await mongoose.connect(
-      config.get("URI"),
+      process.env.MONGODB_URI || config.get("URI"),
       {
         useCreateIndex: true,
         useNewUrlParser: true,
