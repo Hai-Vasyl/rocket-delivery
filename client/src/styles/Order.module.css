@@ -197,3 +197,14 @@
 .buyBtn:active {
   transform: scale(0.9);
 }
+.bought {
+  background-color: grey;
+  cursor: default;
+}
+.bought:hover {
+  box-shadow: none;
+  transform: none;
+}
+.bought:active {
+  transform: none;
+}

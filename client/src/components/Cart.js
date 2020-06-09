@@ -95,6 +95,40 @@ function Cart({ isCabinet }) {
     }
   }
 
+  const handleBuy = (orderid) => {
+    if (!!token.token) {
+      const fetch = async () => {
+        try {
+          const res = await axios.patch(
+            `/api/orders/cart/buy/${orderid}`,
+            null,
+            {
+              headers: {
+                Authorization: `Basic ${token.token}`,
+              },
+            }
+          )
+
+          if (res.statusError) {
+            return
+          }
+
+          setOrders((prevOrders) =>
+            prevOrders.map((order) => {
+              if (order._id === orderid) {
+                order.status = false
+              }
+              return order
+            })
+          )
+        } catch (error) {}
+      }
+
+      fetch()
+    } else {
+    }
+  }
+
   const ordersJSX = orders.map((order, index) => {
     return (
       <Order
@@ -107,6 +141,7 @@ function Cart({ isCabinet }) {
         handleAdd={handleAdd}
         handleRemove={handleRemove}
         handleDelete={handleDelete}
+        handleBuy={handleBuy}
       />
     )
   })

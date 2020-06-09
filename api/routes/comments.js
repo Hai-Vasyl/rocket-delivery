@@ -33,8 +33,6 @@ router.post("/create/:id", auth, async (req, res) => {
   }
 })
 
-//
-// .select("answerList rate owner date content")
 router.get("/list/auth/:foodid", auth, async (req, res) => {
   try {
     const { foodid } = req.params

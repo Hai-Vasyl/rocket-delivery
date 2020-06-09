@@ -14,6 +14,7 @@ function FoodPage(props) {
   const { wrapper } = mainStyle
   const [data, setData] = useState({})
   const [comments, setComments] = useState([])
+  const [message, setMessage] = useState("")
   const [added, setAdded] = useState(false)
   const [formComment, setFormComment] = useState("")
   const { token, orders, setOrders } = useContext(Context)
@@ -62,6 +63,7 @@ function FoodPage(props) {
     linkEdit,
     activeCart,
     backgroundFood,
+    alertMessage,
   } = style
   const { foodid } = props.match.params
 
@@ -89,10 +91,12 @@ function FoodPage(props) {
             img,
             rate,
             date,
+            _id,
             rateList,
           } = res.data
 
           setData({
+            _id,
             category,
             name,
             price,
@@ -155,13 +159,6 @@ function FoodPage(props) {
   }, [foodid, token])
 
   useEffect(() => {
-    // orders.map((order) => {
-    //   if (order.foodProps._id === data._id) {
-    //     seEdded(true)
-    //   }
-    //   return order
-    // })
-
     const fetch = async () => {
       try {
         const res = await axios.get(`/api/orders/check/${foodid}`, {
@@ -303,11 +300,6 @@ function FoodPage(props) {
       />
     )
   })
-
-  const handleSubmitComment = (e) => {
-    e.preventDefault()
-    console.log("comment posted!")
-  }
 
   const handleUnLike = async () => {
     try {
@@ -459,6 +451,44 @@ function FoodPage(props) {
     }
   }
 
+  const handleSubmitComment = (e) => {
+    e.preventDefault()
+
+    if (!!token.token) {
+      const fetch = async () => {
+        try {
+          if (!formComment) {
+            return setMessage("Fill Field To Post!")
+          }
+
+          const res = await axios.post(
+            `/api/comments/create/${data._id}`,
+            { content: formComment },
+            {
+              headers: {
+                Authorization: `Basic ${token.token}`,
+              },
+            }
+          )
+
+          const owner = {
+            username: token.username,
+            typeUser: token.typeUser,
+            ava: token.ava,
+          }
+          setComments((prevComments) => [
+            ...prevComments,
+            { ...res.data, owner },
+          ])
+          setFormComment("")
+        } catch (error) {}
+      }
+
+      fetch()
+    } else {
+    }
+  }
+
   let orderAmount
 
   orders.forEach((order) => {
@@ -583,13 +613,14 @@ function FoodPage(props) {
             </div>
           </div>
           <form className={form} onSubmit={handleSubmitComment}>
+            <div className={alertMessage}>{message}</div>
             <h3 className={username}>{token.username}</h3>
             <textarea
               onChange={handleChangeComment}
               value={formComment}
               placeholder='Comment'
             ></textarea>
-            <button className={postBtn}>
+            <button className={postBtn} onClick={handleSubmitComment}>
               <span>Post</span> <BsArrowRightShort />
             </button>
           </form>

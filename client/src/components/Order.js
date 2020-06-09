@@ -2,6 +2,7 @@ import React from "react"
 import style from "../styles/Order.module.css"
 import { Link } from "react-router-dom"
 import { BsArrowRight } from "react-icons/bs"
+import { FiPlus } from "react-icons/fi"
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai"
 
 function Order({
@@ -13,6 +14,7 @@ function Order({
   handleAdd,
   handleRemove,
   handleDelete,
+  handleBuy,
 }) {
   const {
     wrapper,
@@ -30,6 +32,7 @@ function Order({
     priceBlock,
     btnBlock,
     buyBtn,
+    bought,
   } = style
 
   return (
@@ -80,15 +83,20 @@ function Order({
       </div>
 
       <div className={btnBlock}>
-        <div className={btnsAmount}>
-          <button className={btnAmount} onClick={() => handleAdd(order._id)}>
-            +
-          </button>
-          <span className={amount}>{order.amount}</span>
-          <button className={btnAmount} onClick={() => handleRemove(order._id)}>
-            -
-          </button>
-        </div>
+        {order.status && (
+          <div className={btnsAmount}>
+            <button className={btnAmount} onClick={() => handleAdd(order._id)}>
+              +
+            </button>
+            <span className={amount}>{order.amount}</span>
+            <button
+              className={btnAmount}
+              onClick={() => handleRemove(order._id)}
+            >
+              -
+            </button>
+          </div>
+        )}
         {!!token.token && !isCabinet && (
           <Link
             className={purchaseBtn}
@@ -99,8 +107,19 @@ function Order({
           </Link>
         )}
         {(!token.token || isCabinet) && (
-          <button className={buyBtn}>
-            <span>Buy</span> <AiOutlineCheck />
+          <button
+            className={`${buyBtn} ${!order.status && bought}`}
+            onClick={() => handleBuy(order._id)}
+          >
+            {order.status ? (
+              <>
+                <span>Buy</span> <FiPlus />
+              </>
+            ) : (
+              <>
+                <span>Bought</span> <AiOutlineCheck />
+              </>
+            )}
           </button>
         )}
         <button className={deleteBtn} onClick={() => handleDelete(order._id)}>

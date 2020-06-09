@@ -89,6 +89,22 @@ router.patch("/amount/remove/:foodid", auth, async (req, res) => {
   }
 })
 
+router.patch("/cart/buy/:orderid", auth, async (req, res) => {
+  try {
+    const { orderid } = req.params
+    const order = await Order.findById(orderid).select("status")
+    if (!order.status) {
+      return res.json({ statusError: true })
+    }
+
+    await Order.updateOne({ _id: orderid }, { status: false })
+
+    res.json("Order bought successfully!")
+  } catch (error) {
+    res.status(500).json(`Error removing amount order: ${error.message}`)
+  }
+})
+
 router.patch("/cart/amount/add/:orderid", auth, async (req, res) => {
   try {
     const { orderid } = req.params

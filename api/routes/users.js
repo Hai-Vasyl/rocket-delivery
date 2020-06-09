@@ -152,6 +152,16 @@ router.get("/users", auth, async (req, res) => {
   }
 })
 
+router.get("/user/personalcab", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId)
+
+    res.json(user)
+  } catch (error) {
+    res.status(500).json(`Error getting user: ${error.message}`)
+  }
+})
+
 router.delete("/delete/:userid", auth, async (req, res) => {
   try {
     const { userid } = req.params
@@ -166,6 +176,16 @@ router.delete("/delete/:userid", auth, async (req, res) => {
     res.json("User deleted successfully!")
   } catch (error) {
     res.status(500).json(`Error deleting user: ${error.message}`)
+  }
+})
+
+router.patch("/user/change_userinfo", auth, async (req, res) => {
+  try {
+    await User.updateOne({ _id: req.userId }, req.body)
+
+    res.json("User updated successfully!")
+  } catch (error) {
+    res.status(500).json(`Error updating user image: ${error.message}`)
   }
 })
 

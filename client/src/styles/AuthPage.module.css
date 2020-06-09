@@ -219,9 +219,6 @@
   border-radius: 50%;
   border-bottom-color: transparent;
   border-top-color: transparent;
-  /* box-shadow: 0px 0px 90px black; */
-  /* filter: drop-shadow(0px 0px 6px black); */
-  /* border-bottom: none; */
   animation: load 1s linear infinite;
   top: 50%;
   left: 50%;

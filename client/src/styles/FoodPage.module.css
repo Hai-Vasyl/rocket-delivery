@@ -431,6 +431,7 @@
 .form {
   /* border: 1px solid black; */
   /* width: 500px; */
+  position: relative;
   width: 50%;
   margin-left: 20px;
 }
@@ -483,4 +484,13 @@ textarea:focus {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.alertMessage {
+  position: absolute;
+  color: white;
+  padding: 20px;
+  background-color: red;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
