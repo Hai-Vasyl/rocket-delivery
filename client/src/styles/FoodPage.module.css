@@ -381,9 +381,6 @@
   display: inline-block;
   margin-top: 0px;
 }
-.date {
-}
-
 .containerComments {
   width: 100%;
   margin-top: 5vh;
@@ -396,9 +393,7 @@
   padding: 20px;
   height: 230px;
 }
-.avaBlock {
-  /* border: 1px solid black; */
-}
+
 .postBtn {
   font-size: inherit;
   font-family: inherit;
