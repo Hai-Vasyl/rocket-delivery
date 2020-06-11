@@ -26,6 +26,7 @@ import EditFoodPage from "./pages/EditFoodPage"
 import PartnersPage from "./pages/PartnersPage"
 import PartnerPage from "./pages/PartnerPage"
 import Cart from "./components/Cart"
+import Loader from "./components/Loader"
 
 function App() {
   const {
@@ -69,18 +70,22 @@ function App() {
       }
 
       fetch()
-      setReady(true)
+      setTimeout(() => setReady(true), 1000)
     } else {
       const orders = localStorage.getItem("UserOrders")
       if (!!orders) {
         setOrders(JSON.parse(orders))
       }
-      setReady(true)
+      setTimeout(() => setReady(true), 1000)
     }
   }, [setToken, setOrders])
 
   if (!ready) {
-    return <div>LOADING...</div>
+    return (
+      <div className={wrapper}>
+        <Loader />
+      </div>
+    )
   }
 
   return (
@@ -112,13 +117,15 @@ function App() {
               >
                 <AiOutlineLeft /> <span>Continue Shoping</span>
               </button>
-              <Link
-                className={linkPersonalCab}
-                to='/personalcab'
-                onClick={() => setPopupCart(false)}
-              >
-                <span>Personal Cabinet</span> <AiOutlineRight />
-              </Link>
+              {!!token.token && (
+                <Link
+                  className={linkPersonalCab}
+                  to='/personalcab'
+                  onClick={() => setPopupCart(false)}
+                >
+                  <span>Personal Cabinet</span> <AiOutlineRight />
+                </Link>
+              )}
             </div>
           </div>
         </div>

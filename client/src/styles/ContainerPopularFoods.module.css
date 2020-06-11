@@ -35,6 +35,7 @@
 }
 .title {
   padding: 0px 20px;
+
   padding-bottom: 8px;
 }
 .foodName {
@@ -49,6 +50,8 @@
   background-color: #e3e3e3;
   /* transform: translateY(-20px); */
   /* border: 1px solid rgb(145, 142, 142); */
+  height: 40px;
+  overflow: hidden;
   border-bottom-color: transparent;
 }
 .foodName:hover {

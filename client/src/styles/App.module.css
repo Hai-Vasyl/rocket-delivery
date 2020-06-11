@@ -30,7 +30,7 @@
 }
 .popup {
   position: fixed;
-  top: 50%;
+  top: calc(50% + 39px);
   left: 50%;
   z-index: 9;
   width: 900px;

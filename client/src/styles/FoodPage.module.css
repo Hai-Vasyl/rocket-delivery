@@ -124,7 +124,8 @@
   transition: 0.2s ease;
 }
 .btnActive {
-  border: 2px solid green;
+  /* border: 2px solid green; */
+  background-color: green;
 }
 .btnRate * {
   margin: auto;
@@ -386,6 +387,7 @@
 .containerComments {
   width: 100%;
   margin-top: 5vh;
+  padding-bottom: 50px;
 }
 .commentBlock {
   display: flex;
@@ -458,14 +460,12 @@ textarea {
   background-color: transparent;
   outline: none;
   transition: 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.05);
   color: lightgrey;
+  height: 7vh;
 }
 textarea::placeholder {
-  color: lightgrey;
-}
-textarea:focus {
-  background-color: rgba(255, 255, 255, 0.1);
-  height: 7vh;
+  color: grey;
 }
 .username {
   color: lightgrey;
@@ -485,12 +485,33 @@ textarea:focus {
   height: 100%;
   object-fit: cover;
 }
-.alertMessage {
-  position: absolute;
-  color: white;
-  padding: 20px;
+.alertBox {
   background-color: red;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  padding: 15px;
+  position: absolute;
+  border-radius: 10px;
+  opacity: 0;
+  color: white;
+  right: 0px;
+  /* z-index: 999; */
+  cursor: pointer;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: scale(0.4);
+}
+.alertBox span {
+  margin-left: 10px;
+}
+.alertPopup {
+  opacity: 1;
+  transform: scale(1);
+}
+.commentWarning {
+  background-color: #141e304f;
+  padding: 20px;
+  color: lightgrey;
+  font-size: 1.5em;
 }

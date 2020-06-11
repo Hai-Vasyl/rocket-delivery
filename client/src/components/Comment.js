@@ -1,9 +1,11 @@
-import React from "react"
+import React, { useContext, useState } from "react"
 import style from "../styles/Comment.module.css"
-// import { FaCommentSlash } from "react-icons/fa"
-import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai"
+import { AiOutlineLike, AiOutlineDislike, AiOutlineClose } from "react-icons/ai"
 import { RiQuestionAnswerLine } from "react-icons/ri"
 import Answer from "../components/Answer"
+import { Context } from "../context/Context"
+import axios from "axios"
+import { IoIosAlert } from "react-icons/io"
 
 function Comment({
   comment,
@@ -11,7 +13,9 @@ function Comment({
   handleDisLikeComment,
   handleLikeAnswer,
   handleDisLikeAnswer,
+  handleSetStateComments,
 }) {
+  const [reply, setReply] = useState(false)
   const {
     wrapper,
     avaContainer,
@@ -26,11 +30,20 @@ function Comment({
     btnRate,
     rate,
     answerBtn,
-
+    formAnswer,
+    inputAnswer,
+    submitAnswerBtn,
     wrapperAnswers,
     mainWrapper,
     btnActive,
+    hideForm,
+    cancel,
+    alertBox,
+    alertPopup,
   } = style
+  const { token } = useContext(Context)
+  const [answer, setAnswer] = useState("")
+  const [message, setMessage] = useState("")
 
   const answerJSX = comment.answerList.map((answer) => {
     return (
@@ -42,6 +55,50 @@ function Comment({
       />
     )
   })
+
+  const handleChangeAnswer = (e) => {
+    setAnswer(e.target.value)
+    setMessage("")
+  }
+
+  const handleReply = () => {
+    if (reply) {
+      setAnswer("")
+    }
+    setReply(!reply)
+  }
+
+  const handleSubmitAnswer = (e) => {
+    e.preventDefault()
+
+    if (!!token.token) {
+      if (!answer) {
+        setMessage("Type Something!")
+        return
+      }
+
+      const fetch = async () => {
+        try {
+          const res = await axios.post(
+            `/api/answers/create/${comment._id}`,
+            { content: answer },
+            {
+              headers: {
+                Authorization: `Basic ${token.token}`,
+              },
+            }
+          )
+
+          handleSetStateComments(res.data, comment._id)
+          setAnswer("")
+          setReply(false)
+        } catch (error) {}
+      }
+
+      fetch()
+    } else {
+    }
+  }
 
   return (
     <div className={mainWrapper}>
@@ -81,11 +138,43 @@ function Comment({
             >
               <AiOutlineDislike />
             </button>
-            <button className={answerBtn}>
-              <RiQuestionAnswerLine /> <span>Reply</span>
+            <button
+              className={`${answerBtn} ${reply && cancel}`}
+              onClick={handleReply}
+            >
+              {reply ? (
+                <>
+                  <AiOutlineClose /> <span>Cancel</span>
+                </>
+              ) : (
+                <>
+                  <RiQuestionAnswerLine /> <span>Reply</span>
+                </>
+              )}
             </button>
           </div>
+          <span
+            className={`${alertBox} ${!!message && alertPopup}`}
+            onClick={() => setMessage("")}
+          >
+            <IoIosAlert /> <span>{message}</span>
+          </span>
         </div>
+
+        <form
+          className={`${formAnswer} ${reply && hideForm}`}
+          onSubmit={handleSubmitAnswer}
+        >
+          <input
+            type='text'
+            className={inputAnswer}
+            value={answer}
+            onChange={handleChangeAnswer}
+            autoComplete='off'
+            placeholder='Type Answer here'
+          />
+          <button className={submitAnswerBtn}>Submit</button>
+        </form>
       </div>
 
       <div className={wrapperAnswers}>{answerJSX}</div>

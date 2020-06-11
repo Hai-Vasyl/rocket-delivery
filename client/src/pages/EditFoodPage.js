@@ -12,11 +12,13 @@ import { RiUserSettingsLine } from "react-icons/ri"
 import { Context } from "../context/Context"
 import { IoIosAlert } from "react-icons/io"
 import { FaRegEdit } from "react-icons/fa"
+import LoaderData from "../components/LoaderData"
 
 function CreateFoodPage(props) {
   const { wrapper } = mainStyle
   const { token } = useContext(Context)
   const { foodid } = props.match.params
+  const [load, setLoad] = useState(false)
   const {
     containerForm,
     containerPreview,
@@ -59,6 +61,7 @@ function CreateFoodPage(props) {
     }
 
     fetch()
+    setTimeout(() => setLoad(true), 1000)
   }, [foodid])
 
   const handleChangeForm = (e) => {
@@ -101,6 +104,13 @@ function CreateFoodPage(props) {
     } catch (error) {}
   }
 
+  if (!load) {
+    return (
+      <div className={wrapper}>
+        <LoaderData />
+      </div>
+    )
+  }
   return (
     <div className={wrapper}>
       <div className={`${container} ${invertContainer}`}>

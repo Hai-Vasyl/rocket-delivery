@@ -9,6 +9,8 @@ import Comment from "../components/Comment"
 import { Context } from "../context/Context"
 import { BsArrowRightShort } from "react-icons/bs"
 import { FiArrowRight } from "react-icons/fi"
+import { IoIosAlert } from "react-icons/io"
+import LoaderData from "../components/LoaderData"
 
 function FoodPage(props) {
   const { wrapper } = mainStyle
@@ -18,6 +20,7 @@ function FoodPage(props) {
   const [added, setAdded] = useState(false)
   const [formComment, setFormComment] = useState("")
   const { token, orders, setOrders } = useContext(Context)
+  const [load, setLoad] = useState(false)
   const {
     containerCard,
     imgContainer,
@@ -63,12 +66,15 @@ function FoodPage(props) {
     linkEdit,
     activeCart,
     backgroundFood,
-    alertMessage,
+    alertBox,
+    alertPopup,
+    commentWarning,
   } = style
   const { foodid } = props.match.params
 
   const handleChangeComment = (e) => {
     setFormComment(e.target.value)
+    setMessage("")
   }
 
   useEffect(() => {
@@ -116,6 +122,7 @@ function FoodPage(props) {
     }
 
     fetch()
+    setTimeout(() => setLoad(true), 1000)
   }, [foodid, token])
 
   useEffect(() => {
@@ -288,6 +295,23 @@ function FoodPage(props) {
     } catch (error) {}
   }
 
+  const handleSetStateComments = (newAnswer, commentId) => {
+    setComments((prevComments) =>
+      prevComments.map((comment) => {
+        if (comment._id === commentId) {
+          const owner = {
+            username: token.username,
+            ava: token.ava,
+            typeUser: token.typeUser,
+          }
+
+          comment.answerList = [...comment.answerList, { ...newAnswer, owner }]
+        }
+        return comment
+      })
+    )
+  }
+
   const commentsJSX = comments.map((comment) => {
     return (
       <Comment
@@ -297,6 +321,7 @@ function FoodPage(props) {
         handleDisLikeComment={handleDisLikeComment}
         handleLikeAnswer={handleLikeAnswer}
         handleDisLikeAnswer={handleDisLikeAnswer}
+        handleSetStateComments={handleSetStateComments}
       />
     )
   })
@@ -497,6 +522,41 @@ function FoodPage(props) {
     }
   })
 
+  const displayCommentPost = () => {
+    return (
+      <div className={commentBlock}>
+        <div className={avaBlock}>
+          <div className={imgBox}>
+            <img src={token.ava} alt='avaImage' />
+          </div>
+        </div>
+        <form className={form} onSubmit={handleSubmitComment}>
+          <h3 className={username}>{token.username}</h3>
+          <textarea
+            onChange={handleChangeComment}
+            value={formComment}
+            placeholder='Comment'
+          ></textarea>
+          <button className={postBtn} onClick={handleSubmitComment}>
+            <span>Post</span> <BsArrowRightShort />
+          </button>
+          <span
+            className={`${alertBox} ${!!message && alertPopup}`}
+            onClick={() => setMessage("")}
+          >
+            <IoIosAlert /> <span>{message}</span>
+          </span>
+        </form>
+      </div>
+    )
+  }
+  if (!load) {
+    return (
+      <div className={wrapper}>
+        <LoaderData />
+      </div>
+    )
+  }
   return (
     <div className={wrapper}>
       <div className={containerCard}>
@@ -606,25 +666,13 @@ function FoodPage(props) {
       </div>
 
       <div className={containerComments}>
-        <div className={commentBlock}>
-          <div className={avaBlock}>
-            <div className={imgBox}>
-              <img src={token.ava} alt='avaImage' />
-            </div>
+        {!!token.token ? (
+          displayCommentPost()
+        ) : (
+          <div className={commentWarning}>
+            =( Want to leave a comment - first register!
           </div>
-          <form className={form} onSubmit={handleSubmitComment}>
-            <div className={alertMessage}>{message}</div>
-            <h3 className={username}>{token.username}</h3>
-            <textarea
-              onChange={handleChangeComment}
-              value={formComment}
-              placeholder='Comment'
-            ></textarea>
-            <button className={postBtn} onClick={handleSubmitComment}>
-              <span>Post</span> <BsArrowRightShort />
-            </button>
-          </form>
-        </div>
+        )}
 
         {commentsJSX}
       </div>

@@ -38,6 +38,7 @@ function Navbar() {
     setToken,
     drop,
     setDrop,
+    setOrders,
     popupCart,
     setPopupCart,
   } = useContext(Context)
@@ -47,6 +48,7 @@ function Navbar() {
     setToken(false)
     setDrop(false)
     setPopupCart(false)
+    setOrders([])
   }
   const handleDropDownActive = () => {
     setDrop(!drop)

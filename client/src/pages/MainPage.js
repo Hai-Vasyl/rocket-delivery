@@ -21,7 +21,6 @@ import imgCircle3 from "../imgs/background-circle2.svg"
 
 function MainPage() {
   const {
-    wrapper,
     titlePopular,
     titleCategory,
     linkCategory,
@@ -30,6 +29,7 @@ function MainPage() {
     titleMainPopular,
     wrapper_main,
   } = mainStyle
+  // const [load, setLoad] = useState(false)
   const {
     imgHeader,
     title,
@@ -68,7 +68,12 @@ function MainPage() {
     }
 
     fetch()
+    // setTimeout(() => setLoad(true), 1000)
   }, [])
+
+  // if (!load) {
+  //   return <div className={wrapperMain}>LOADER....</div>
+  // }
 
   return (
     <div className={wrapperMain}>

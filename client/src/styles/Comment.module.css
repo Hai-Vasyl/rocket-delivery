@@ -7,6 +7,7 @@
   background-color: #e3e3e3;
   box-shadow: 0px 20px 23px #141e3050, 0px 0px 20px #141e3031;
   margin-top: 1.8vh;
+  position: relative;
   /* border-bottom: 2px solid #141e30; */
 }
 .img {
@@ -50,6 +51,7 @@
 .rateBlock {
   display: flex;
   align-items: center;
+  position: relative;
 }
 .rateBlock > * {
   margin-right: 4px;
@@ -114,6 +116,10 @@
 .answerBtn:active {
   transform: scale(0.9);
 }
+.cancel {
+  background-color: grey;
+  box-shadow: none !important;
+}
 .wrapperAnswers {
   margin-left: 10%;
 }
@@ -136,5 +142,88 @@
   background-color: rgba(255, 255, 255, 0.05);
 }
 .btnActive {
-  border: 2px solid green;
+  background-color: green;
+  color: white;
+}
+.formAnswer {
+  position: absolute;
+  bottom: -63px;
+  left: 0;
+  z-index: 4;
+  right: 0;
+  display: flex;
+  /* height: 0; */
+  transition: 0.2s ease;
+  /* align-items: center; */
+  opacity: 0;
+  transform: scale(0.5);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  /* border: 1px solid grey; */
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1), 0px 5px 10px rgba(0, 0, 0, 0.1),
+    0px 5px 10px rgba(0, 0, 0, 0.4);
+}
+.hideForm {
+  /* height: auto; */
+  opacity: 1;
+  transform: scale(1);
+}
+.inputAnswer {
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  padding: 4px;
+  width: 80%;
+  transition: 0.3s ease;
+  border: none;
+  color: black !important;
+  background-color: transparent;
+  border-bottom: 1.2px solid #141e30;
+}
+.inputAnswer:focus {
+  background-color: rgba(51, 51, 51, 0.123);
+}
+.submitAnswerBtn {
+  font-size: inherit;
+  outline: none;
+  font-family: inherit;
+  border: none;
+  color: lightgrey;
+  padding: 10px;
+  transition: 0.2s ease;
+  background-color: #141e30;
+  width: 20%;
+  /* border-bottom: 1.2px solid #141e30; */
+  cursor: pointer;
+}
+.submitAnswerBtn:hover {
+  transform: scale(1.05);
+}
+.submitAnswerBtn:active {
+  transform: scale(0.9);
+}
+.alertBox {
+  background-color: red;
+  padding: 15px;
+  position: absolute;
+  border-radius: 10px;
+  opacity: 0;
+  color: white;
+  right: 10px;
+  cursor: pointer;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform: scale(0.4);
+}
+.alertBox span {
+  margin-left: 10px;
+}
+.alertPopup {
+  opacity: 1;
+  transform: scale(1);
 }

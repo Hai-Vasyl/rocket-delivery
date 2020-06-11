@@ -1,10 +1,13 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const config = require("config")
+const cors = require("cors")
 const path = require("path")
 
 const app = express()
+
 app.use(express.json({ extended: true }))
+app.use(cors())
 const PORT = process.env.PORT || config.get("port") || 5000
 
 const start = async () => {

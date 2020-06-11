@@ -26,6 +26,7 @@
   object-fit: contain;
   width: 100%;
   height: 100%;
+  animation: fade 2s ease;
 }
 .textSideBar {
   width: 40%;
@@ -136,6 +137,7 @@
   position: absolute;
   z-index: -1;
   opacity: 1;
+  animation: fade 5s ease;
 }
 .circle1 {
   right: 0;
@@ -157,6 +159,14 @@
   width: 59vw;
   filter: drop-shadow(0px 0px 38px #141e30);
   opacity: 0.9;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .imgTitle h2 {
   display: flex;
@@ -181,10 +191,10 @@
   background-color: rgba(211, 211, 211, 0.274);
   border-radius: 5px;
   transition: 0.3s ease;
+  text-decoration: none;
 }
 
 .quickLink:hover {
-  text-decoration: none;
   border-color: rgba(211, 211, 211, 0.589);
 }
 .contactsBlock {

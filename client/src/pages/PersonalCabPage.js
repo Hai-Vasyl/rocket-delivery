@@ -7,6 +7,7 @@ import { Context } from "../context/Context"
 import { IoIosAlert } from "react-icons/io"
 import { FaRegEdit } from "react-icons/fa"
 import { RiShoppingCartLine } from "react-icons/ri"
+import LoaderData from "../components/LoaderData"
 
 function PersonalCab() {
   const { wrapper } = mainStyle
@@ -64,6 +65,7 @@ function PersonalCab() {
     cartBox,
   } = style
   const { token } = useContext(Context)
+  const [load, setLoad] = useState(false)
   const [statusUpdate, setStatusUpdate] = useState(false)
 
   useEffect(() => {
@@ -79,6 +81,7 @@ function PersonalCab() {
     }
 
     fetch()
+    setTimeout(() => setLoad(true), 1000)
   }, [token.token])
 
   const handleChange = (e) => {
@@ -96,7 +99,7 @@ function PersonalCab() {
           return
         }
 
-        const res = await axios.patch("/api/auth/user/change_userinfo", data, {
+        await axios.patch("/api/auth/user/change_userinfo", data, {
           headers: {
             Authorization: `Basic ${token.token}`,
           },
@@ -140,7 +143,13 @@ function PersonalCab() {
     setImgUserUpdate(!imgUserUpdate)
     setImgUser("")
   }
-
+  if (!load) {
+    return (
+      <div className={wrapper}>
+        <LoaderData />
+      </div>
+    )
+  }
   return (
     <div className={wrapper}>
       <div className={container}>

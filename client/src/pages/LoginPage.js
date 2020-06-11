@@ -29,7 +29,7 @@ function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" })
   const [error, setError] = useState("")
   const [loader, setLoader] = useState(false)
-  const { token, setToken } = useContext(Context)
+  const { setToken } = useContext(Context)
 
   const handlerChangeForm = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })

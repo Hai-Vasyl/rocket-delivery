@@ -4,6 +4,7 @@ import axios from "axios"
 import ContainerPartnersFoods from "../components/ContainerPartnersFoods.js"
 import { Link } from "react-router-dom"
 import { FiArrowRight } from "react-icons/fi"
+import LoaderData from "../components/LoaderData"
 
 function Partners() {
   const {
@@ -24,6 +25,7 @@ function Partners() {
     Dari_Mora: [],
     Brown: [],
   })
+  const [load, setLoad] = useState(false)
 
   useEffect(() => {
     const fetch = async () => {
@@ -34,8 +36,16 @@ function Partners() {
     }
 
     fetch()
+    setTimeout(() => setLoad(true), 1000)
   }, [])
 
+  if (!load) {
+    return (
+      <div className={wrapper}>
+        <LoaderData />
+      </div>
+    )
+  }
   return (
     <div className={wrapper}>
       <h2 className={`${mainTitle} ${invertColorTitle}`}>Our Partners</h2>

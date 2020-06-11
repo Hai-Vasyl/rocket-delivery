@@ -12,6 +12,7 @@ import { IoIosAlert } from "react-icons/io"
 function CreateFoodPage() {
   const { wrapper } = mainStyle
   const { token } = useContext(Context)
+
   const {
     containerForm,
     containerPreview,
