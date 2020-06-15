@@ -2,6 +2,8 @@
   display: flex;
   justify-content: space-between;
   /* flex-wrap: wrap; */
+  padding: 0px 2.5vw;
+  /* border: 1px solid black; */
 }
 .boxFood {
   /* border: 2px solid orangered; */
@@ -35,8 +37,12 @@
 }
 .title {
   padding: 0px 20px;
-
   padding-bottom: 8px;
+}
+.name {
+  font-size: 0.9em;
+  /* text-align: center;
+  border: 1px solid black; */
 }
 .foodName {
   display: block;
@@ -62,7 +68,15 @@
 .foodInstitution {
   text-decoration: none;
   color: #141e30;
+  display: flex;
+  align-items: center;
 }
 .foodInstitution:hover {
   color: orangered;
+}
+.partner {
+  border: 1px solid rgba(128, 128, 128, 0.6);
+  padding: 2px 5px;
+  border-radius: 4px;
+  margin-right: 10px;
 }

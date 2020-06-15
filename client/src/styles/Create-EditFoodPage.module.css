@@ -6,7 +6,6 @@
   flex-direction: column;
   background-color: #141e30;
   padding: 2vh 3vw;
-  min-height: 77vh;
 }
 .containerPreview {
   width: 57%;
@@ -14,19 +13,20 @@
   display: flex;
   background-image: linear-gradient(
     to bottom right,
-    rgb(255, 68, 0),
-    rgb(56, 10, 56)
+    rgba(163, 90, 185, 0.603),
+    rgba(38, 111, 121, 0.663)
   );
 }
-.invertColorContainerPreview {
+/* .invertColorContainerPreview {
   background-image: linear-gradient(to bottom right, #141e30, darkred);
-}
+} */
 .container {
   display: flex;
+  min-height: 750px;
 }
-.invertContainer {
+/* .invertContainer {
   flex-direction: row-reverse;
-}
+} */
 .input {
   font-size: inherit;
   font-size: 1.1em;

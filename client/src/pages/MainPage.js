@@ -18,6 +18,7 @@ import { FiArrowRight } from "react-icons/fi"
 import imgCircle from "../imgs/circle1.svg"
 import imgCircle2 from "../imgs/background-circle3.svg"
 import imgCircle3 from "../imgs/background-circle2.svg"
+import LoaderData from "../components/LoaderData"
 
 function MainPage() {
   const {
@@ -50,6 +51,7 @@ function MainPage() {
     circle2,
     circle3,
   } = style
+  const [load, setLoad] = useState(false)
   const [data, setData] = useState({
     pizza: [],
     soups: [],
@@ -68,12 +70,16 @@ function MainPage() {
     }
 
     fetch()
-    // setTimeout(() => setLoad(true), 1000)
+    setTimeout(() => setLoad(true), 500)
   }, [])
 
-  // if (!load) {
-  //   return <div className={wrapperMain}>LOADER....</div>
-  // }
+  if (!load) {
+    return (
+      <div className={wrapperMain}>
+        <LoaderData />
+      </div>
+    )
+  }
 
   return (
     <div className={wrapperMain}>
@@ -119,7 +125,7 @@ function MainPage() {
           <div className={imgHeader}>
             <div className={imgTitle}>
               <h2>
-                <AiOutlineLink /> <span>Quick Links</span>
+                <AiOutlineLink /> <span>Fast Links</span>
               </h2>
             </div>
             <div className={quickLinkBlock}>

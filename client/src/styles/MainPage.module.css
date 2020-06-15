@@ -27,6 +27,7 @@
   width: 100%;
   height: 100%;
   animation: fade 2s ease;
+  filter: drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.5));
 }
 .textSideBar {
   width: 40%;
@@ -62,11 +63,8 @@
   display: flex;
 }
 .link {
-  /* background-color: rgba(211, 211, 211, 0.596); */
-  /* border-radius: 10px; */
   background: transparent;
   padding: 20px 30px;
-  /* color: #333; */
   color: lightgrey;
   text-decoration: none;
   display: flex;
@@ -113,9 +111,6 @@
   padding: 100px 4vw 20px 4vw;
   margin: 0 auto;
   display: flex;
-  /* position: relative; */
-  /* color: black; */
-
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0px 0px 90px rgba(51, 51, 51, 0.697);
 }
@@ -270,8 +265,6 @@
   padding: 0px 25px;
   /* border: 1px solid rgb(185, 185, 185); */
   padding-bottom: 20px;
-  /* padding */
-  /* border-top: 1px solid orangered; */
 }
 
 .wrapperContainer:nth-child(odd) {
@@ -280,6 +273,7 @@
   /* to right, */
   /* rgba(255, 68, 0, 0.253), */
   /* transparent */
+
   /* ); */
 }
 .wrapperContainer:nth-child(even) {

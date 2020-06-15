@@ -40,6 +40,7 @@ function Comment({
     cancel,
     alertBox,
     alertPopup,
+    unActive,
   } = style
   const { token } = useContext(Context)
   const [answer, setAnswer] = useState("")
@@ -139,7 +140,9 @@ function Comment({
               <AiOutlineDislike />
             </button>
             <button
-              className={`${answerBtn} ${reply && cancel}`}
+              className={`${answerBtn} ${
+                !token.token ? unActive : reply && cancel
+              }`}
               onClick={handleReply}
             >
               {reply ? (

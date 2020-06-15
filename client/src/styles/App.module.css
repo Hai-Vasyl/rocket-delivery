@@ -6,8 +6,8 @@
   background-image: linear-gradient(
       to bottom right,
       #141e30,
-      #141e30d3,
-      rgba(255, 68, 0, 0.616)
+      #1f1430d3,
+      rgba(255, 68, 0, 0.548)
     ),
     url("../imgs/texture_surface_paint_117790_1920x1080.jpg");
 }
@@ -19,7 +19,8 @@
   right: 0;
   z-index: 3;
   background-color: rgba(51, 51, 51, 0.651);
-  background-image: linear-gradient(rgba(255, 68, 0, 0.555), #1f2d4763);
+  background-image: linear-gradient(rgba(255, 68, 0, 0.445), #2332bd1f),
+    linear-gradient(to bottom left, rgba(32, 91, 201, 0.137), #1215bd2a);
   visibility: hidden;
   opacity: 0;
   transition: 0.4s ease;

@@ -9,7 +9,9 @@ function ContainerPartnersFoods({ items }) {
     img,
     title,
     foodName,
+    name,
     foodInstitution,
+    partner,
   } = style
   const itemsJSX = items.map((item) => {
     return (
@@ -21,13 +23,14 @@ function ContainerPartnersFoods({ items }) {
         </div>
         <div className={title}>
           <Link
-            className={foodInstitution}
+            className={foodName}
             to={`/details/${item._id}`}
             title={item.name}
           >
-            <span className={foodName}>{item.name}</span>
+            <span className={name}>{item.name}</span>
           </Link>
           <Link className={foodInstitution} to={`/categories/${item.category}`}>
+            <span className={partner}>partner: </span>{" "}
             <span>{item.category}</span>
           </Link>
         </div>

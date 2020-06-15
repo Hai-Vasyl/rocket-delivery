@@ -11,6 +11,7 @@ import { BsArrowRightShort } from "react-icons/bs"
 import { FiArrowRight } from "react-icons/fi"
 import { IoIosAlert } from "react-icons/io"
 import LoaderData from "../components/LoaderData"
+import { v4 as uuidv4 } from "uuid"
 
 function FoodPage(props) {
   const { wrapper } = mainStyle
@@ -19,7 +20,9 @@ function FoodPage(props) {
   const [message, setMessage] = useState("")
   const [added, setAdded] = useState(false)
   const [formComment, setFormComment] = useState("")
-  const { token, orders, setOrders } = useContext(Context)
+  const { token, orders, setOrders, addedOrder, setAddedOrder } = useContext(
+    Context
+  )
   const [load, setLoad] = useState(false)
   const {
     containerCard,
@@ -69,6 +72,8 @@ function FoodPage(props) {
     alertBox,
     alertPopup,
     commentWarning,
+    invertColorBtnAmount,
+    unActiveBtn,
   } = style
   const { foodid } = props.match.params
 
@@ -118,6 +123,7 @@ function FoodPage(props) {
           const res = await axios.get(`/api/foods/food/${foodid}`)
           setData(res.data)
         }
+        setAdded(false)
       } catch (error) {}
     }
 
@@ -166,19 +172,28 @@ function FoodPage(props) {
   }, [foodid, token])
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get(`/api/orders/check/${foodid}`, {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        })
+    if (!!token.token) {
+      const fetch = async () => {
+        try {
+          const res = await axios.get(`/api/orders/check/${foodid}`, {
+            headers: {
+              Authorization: `Basic ${token.token}`,
+            },
+          })
 
-        setAdded(res.data)
-      } catch (error) {}
+          setAdded(res.data)
+        } catch (error) {}
+      }
+
+      fetch()
+    } else {
+      orders.map((order) => {
+        if (order.foodProps._id === foodid) {
+          setAdded(true)
+        }
+        return order
+      })
     }
-
-    fetch()
   }, [orders, data._id, foodid, token.token])
 
   const handleLikeComment = async (comment) => {
@@ -385,28 +400,44 @@ function FoodPage(props) {
 
       fetch()
     } else {
+      setOrders((prevOrders) => [
+        ...prevOrders,
+        {
+          foodProps: data,
+          generalPrice: data.price,
+          amount: 1,
+          status: true,
+          _id: uuidv4(),
+        },
+      ])
     }
+    setAddedOrder("")
   }
 
   const handleRemoveFoodFromCart = async () => {
     if (!!token.token) {
       const fetch = async () => {
         try {
+          setOrders((prevOrders) =>
+            prevOrders.filter((order) => order.foodProps._id !== foodid)
+          )
+
           await axios.delete(`/api/orders/delete/${foodid}`, {
             headers: {
               Authorization: `Basic ${token.token}`,
             },
           })
-
-          setOrders((prevOrders) =>
-            prevOrders.filter((order) => order.foodProps._id !== foodid)
-          )
         } catch (error) {}
       }
 
       fetch()
     } else {
+      setOrders((prevOrders) =>
+        prevOrders.filter((order) => order.foodProps._id !== foodid)
+      )
     }
+    setAdded(false)
+    setAddedOrder("")
   }
 
   const handleRemove = () => {
@@ -441,6 +472,17 @@ function FoodPage(props) {
 
       fetch()
     } else {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) => {
+          if (order.foodProps._id === foodid && order.amount !== 1) {
+            const amountOrder = order.amount - 1
+            order.generalPrice =
+              (order.generalPrice / order.amount) * amountOrder
+            order.amount = amountOrder
+          }
+          return order
+        })
+      )
     }
   }
 
@@ -457,6 +499,7 @@ function FoodPage(props) {
               },
             }
           )
+
           const { generalPrice, amount } = res.data
 
           setOrders((prevOrders) =>
@@ -473,6 +516,17 @@ function FoodPage(props) {
 
       fetch()
     } else {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) => {
+          if (order.foodProps._id === foodid) {
+            const amountOrder = order.amount + 1
+            order.generalPrice =
+              (order.generalPrice / order.amount) * amountOrder
+            order.amount = amountOrder
+          }
+          return order
+        })
+      )
     }
   }
 
@@ -576,7 +630,9 @@ function FoodPage(props) {
             <div className={rateBlock}>
               <button
                 className={`${btnRate} ${
-                  data.rateStatus === true && btnActive
+                  !!token.token
+                    ? data.rateStatus === true && btnActive
+                    : unActiveBtn
                 }`}
                 onClick={handleLike}
               >
@@ -585,7 +641,9 @@ function FoodPage(props) {
               <span className={rate}>{data.rate}</span>
               <button
                 className={`${btnRate} ${
-                  data.rateStatus === false && btnActive
+                  !!token.token
+                    ? data.rateStatus === false && btnActive
+                    : unActiveBtn
                 }`}
                 onClick={handleUnLike}
               >
@@ -641,15 +699,27 @@ function FoodPage(props) {
                 <span>{orderAmount}</span>
               </div>
               <div>
-                <button className={btnAmount} onClick={handleAdd}>
+                <button
+                  className={`${btnAmount} ${
+                    (typeof addedOrder === "string" ? !added : !addedOrder) &&
+                    invertColorBtnAmount
+                  }`}
+                  onClick={handleAdd}
+                >
                   +
                 </button>
-                <button className={btnAmount} onClick={handleRemove}>
+                <button
+                  className={`${btnAmount} ${
+                    (typeof addedOrder === "string" ? !added : !addedOrder) &&
+                    invertColorBtnAmount
+                  }`}
+                  onClick={handleRemove}
+                >
                   -
                 </button>
               </div>
             </div>
-            {added ? (
+            {(typeof addedOrder === "string" ? added : addedOrder) ? (
               <button
                 className={`${cart} ${activeCart}`}
                 onClick={handleRemoveFoodFromCart}

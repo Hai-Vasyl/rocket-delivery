@@ -105,11 +105,17 @@ router.get("/list/:foodid", async (req, res) => {
     const { foodid } = req.params
     const comment = await Comment.find({ food: foodid })
       .populate({
-        path: "owner answerList",
-        select: "typeUser ava username rate owner content date",
+        path: "owner",
+        select: "typeUser ava username",
+      })
+      .populate({
+        path: "answerList",
+        select: "rate owner content date",
+        options: { sort: { rate: -1 } },
         populate: { path: "owner", select: "typeUser ava username" },
       })
       .select("answerList rate owner date content")
+      .sort({ rate: -1 })
 
     res.json(comment)
   } catch (error) {

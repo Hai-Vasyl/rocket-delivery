@@ -10,6 +10,8 @@ function ContainerPopularFoods({ items }) {
     title,
     foodName,
     foodInstitution,
+    partner,
+    name,
   } = style
   const itemsJSX = items.map((item) => {
     return (
@@ -21,16 +23,17 @@ function ContainerPopularFoods({ items }) {
         </div>
         <div className={title}>
           <Link
-            className={foodInstitution}
+            className={foodName}
             to={`/details/${item._id}`}
             title={item.name}
           >
-            <span className={foodName}>{item.name}</span>
+            <span className={name}>{item.name}</span>
           </Link>
           <Link
             className={foodInstitution}
             to={`/partners/${item.institution}`}
           >
+            <span className={partner}>partner: </span>{" "}
             <span>{item.institution}</span>
           </Link>
         </div>

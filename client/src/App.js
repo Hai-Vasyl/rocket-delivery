@@ -41,6 +41,7 @@ function App() {
     linkContainer,
     popupActive,
   } = style
+
   const [ready, setReady] = useState(false)
   const {
     token,
@@ -56,29 +57,25 @@ function App() {
     const auth = localStorage.getItem("Auth")
     if (!!auth) {
       setToken(JSON.parse(auth))
-
-      const fetch = async () => {
-        try {
-          const res = await axios.get("/api/orders/all", {
-            headers: {
-              Authorization: `Basic ${JSON.parse(auth).token}`,
-            },
-          })
-
-          setOrders(res.data)
-        } catch (error) {}
-      }
-
-      fetch()
-      setTimeout(() => setReady(true), 1000)
-    } else {
-      const orders = localStorage.getItem("UserOrders")
-      if (!!orders) {
-        setOrders(JSON.parse(orders))
-      }
-      setTimeout(() => setReady(true), 1000)
     }
+    setTimeout(() => setReady(true), 1000)
   }, [setToken, setOrders])
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await axios.get("/api/orders/all", {
+          headers: {
+            Authorization: `Basic ${token.token}`,
+          },
+        })
+
+        setOrders(res.data)
+      } catch (error) {}
+    }
+
+    fetch()
+  }, [token.token, setOrders])
 
   if (!ready) {
     return (

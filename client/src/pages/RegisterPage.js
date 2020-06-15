@@ -41,7 +41,7 @@ function LoginPage() {
 
   const handlerSubmit = async (e) => {
     try {
-      e.preventDefault()
+      // e.preventDefault()
       if (!form.email || !form.password || !form.username) {
         setError("Fill all fields!")
         return

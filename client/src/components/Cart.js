@@ -4,7 +4,9 @@ import Order from "../components/Order"
 import axios from "axios"
 
 function Cart({ isCabinet }) {
-  const { orders, setOrders, token, setPopupCart } = useContext(Context)
+  const { orders, setOrders, token, setPopupCart, setAddedOrder } = useContext(
+    Context
+  )
 
   const handleRemove = (orderid) => {
     if (!!token.token) {
@@ -39,6 +41,17 @@ function Cart({ isCabinet }) {
 
       fetch()
     } else {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) => {
+          if (order._id === orderid && order.amount !== 1) {
+            const orderAmount = order.amount - 1
+            order.generalPrice =
+              (order.generalPrice / order.amount) * orderAmount
+            order.amount = orderAmount
+          }
+          return order
+        })
+      )
     }
   }
 
@@ -71,6 +84,17 @@ function Cart({ isCabinet }) {
 
       fetch()
     } else {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) => {
+          if (order._id === orderid) {
+            const orderAmount = order.amount + 1
+            order.generalPrice =
+              (order.generalPrice / order.amount) * orderAmount
+            order.amount = orderAmount
+          }
+          return order
+        })
+      )
     }
   }
 
@@ -83,16 +107,15 @@ function Cart({ isCabinet }) {
               Authorization: `Basic ${token.token}`,
             },
           })
-
-          setOrders((prevOrders) =>
-            prevOrders.filter((order) => order._id !== orderid)
-          )
         } catch (error) {}
       }
 
       fetch()
-    } else {
     }
+    setOrders((prevOrders) =>
+      prevOrders.filter((order) => order._id !== orderid)
+    )
+    setAddedOrder(false)
   }
 
   const handleBuy = (orderid) => {
@@ -126,6 +149,14 @@ function Cart({ isCabinet }) {
 
       fetch()
     } else {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) => {
+          if (order._id === orderid) {
+            order.status = false
+          }
+          return order
+        })
+      )
     }
   }
 
