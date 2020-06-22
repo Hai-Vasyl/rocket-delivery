@@ -171,12 +171,10 @@
 .buyBtn {
   font-size: inherit;
   font-family: inherit;
-
   border: none;
   background-color: green;
   outline: none;
   color: white;
-
   cursor: pointer;
   transition: 0.2s ease;
   padding: 12px 22px;
@@ -184,7 +182,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* text-align: center; */
 }
 .buyBtn *:not(span) {
   font-size: 0.9em;
@@ -207,4 +204,83 @@
 }
 .bought:active {
   transform: none;
+}
+@media (max-width: 880px) {
+  .orderIndex {
+    display: none;
+  }
+  .img {
+    width: 80px;
+    height: 65px;
+  }
+  .containerInfo {
+    margin-left: 10px;
+  }
+  .deleteBtn {
+    width: 27px;
+    height: 27px;
+    margin-left: 10px;
+    font-size: 1em;
+  }
+  .btnBlock {
+    margin-left: 10px;
+  }
+  .purchaseBtn {
+    margin-left: 10px;
+    padding: 12px;
+    font-size: 0.9em;
+  }
+  .buyBtn {
+    padding: 12px;
+    margin-left: 5px;
+  }
+}
+@media (max-width: 760px) {
+  .wrapper {
+    padding: 10px;
+  }
+  .containerInfo {
+    min-width: 200px;
+    padding: 0;
+    font-size: 0.9em;
+  }
+}
+@media (max-width: 680px) {
+  .containerInfo {
+    min-width: 150px;
+  }
+}
+@media (max-width: 600px) {
+  .containerInfo {
+    display: none;
+  }
+  .priceBlock {
+    margin-left: 10px;
+    width: 15%;
+    text-align: center;
+  }
+}
+@media (max-width: 420px) {
+  .img {
+    width: 50px;
+    height: 50px;
+  }
+  .priceBlock {
+    margin-left: 10px;
+    width: 10%;
+    font-size: 0.8em;
+    text-align: center;
+  }
+  .btnAmount,
+  .amount {
+    width: 25px;
+    height: 25px;
+  }
+  .priceBlock *:not(span) {
+    font-size: 1.5em;
+  }
+  .purchaseBtn {
+    padding: 10px;
+    font-size: 0.8em;
+  }
 }

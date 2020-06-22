@@ -1,48 +1,39 @@
 .containerCard {
   display: flex;
-  /* border: 1px solid black; */
-  min-height: 65vh;
-  /* width: 100%; */
-  /* width: 750px; */
-  /* max-width: 100%; */
-  min-height: 700px;
   font-size: 1.1em;
+  /* height: 75vh; */
 }
+
 .imgContainer {
   width: 58%;
-
   background-image: linear-gradient(
     to bottom right,
     rgba(20, 82, 153, 0.514),
     #c91f1fa8
   );
-  /* border: 1px solid black; */
-  padding: 6vw;
+  /* padding: 0px !important; */
   display: flex;
 }
 .imgFlowSide {
-  /* border: 1px solid black; */
   box-shadow: 0px 10px 42px #141e30, 0px 20px 92px #080c148f;
   background-color: #141e30;
-  /* border: 4px solid lightgrey; */
-  /* border-radius: 5px; */
   overflow: hidden;
   margin: auto;
+  /* margin: 0; */
 }
 .propContainer {
   width: 42%;
   padding: 3vh;
   display: flex;
-  /* justify-content: space-evenly; */
   flex-direction: column;
   color: lightgrey;
   background-color: #141e30;
 }
 .img {
-  /* width: 500px; */
-  height: 380px;
   position: relative;
   transition: 0.3s ease;
+  width: 420px;
+  height: 370px;
 }
 .backgroundFood {
   visibility: hidden;
@@ -74,15 +65,10 @@
   color: lightgrey;
   justify-content: center;
   background: orangered;
-  /* margin-left: 20px; */
   padding: 20px 30px;
   text-decoration: none;
-  /* text-shadow: 0px 0px 5px black; */
-
   border-radius: 4px;
-  /* font-weight: bold; */
 }
-
 .linkEdit *:not(span) {
   font-size: 0.9em;
   margin-left: 5px;
@@ -101,27 +87,21 @@
   height: 100%;
 }
 .rateBlock {
-  /* border: 1px solid black; */
   padding: 10px 0;
   display: flex;
   justify-content: center;
   border-left: 2px solid transparent;
   border-right: 2px solid orangered;
 }
-
 .btnRate {
-  /* padding: 10px 20px; */
   font-size: inherit;
   font-family: inherit;
-  /* padding: 10px; */
   cursor: pointer;
   width: 50px;
   height: 50px;
   border: none;
   color: white;
   background-color: #141e30;
-  /* border: 1px solid rgba(128, 128, 128, 0.507); */
-  /* background-color: rgba(255, 255, 255, 0.1); */
   border-radius: 4px;
   font-size: 1.5em;
   text-shadow: 0px 0px 5px black;
@@ -132,7 +112,6 @@
   transition: 0.2s ease;
 }
 .btnActive {
-  /* border: 2px solid green; */
   background-color: green;
 }
 .btnRate * {
@@ -157,7 +136,6 @@
   text-align: center;
   background-color: rgba(255, 255, 255, 0.05);
   margin: 0px 10px;
-
   border-radius: 4px;
 }
 .price {
@@ -180,23 +158,18 @@
   display: block;
   padding: 15px 10px;
   margin: 5px 0;
-  /* background: rgba(255, 255, 255, 0.05); */
   font-size: 1.2em;
-  min-height: 12vh;
-  /* border-right: 2px solid orangered; */
+  min-height: 8vh;
 }
 .weight {
   font-size: 1.2em;
 }
 .institution {
-  /* text-decoration: none; */
   font-size: 1.2em;
   color: lightgrey;
 }
 .category {
-  /* text-decoration: none; */
   color: lightgrey;
-
   font-size: 1.2em;
 }
 .title {
@@ -205,61 +178,31 @@
   width: 70%;
   font-size: 1.2em;
   padding: 20px 0;
-  /* text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.555); */
-  /* box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.705),
-    inset 0px 0px 20px rgba(0, 0, 0, 0.452); */
-  /* background-image: linear-gradient(to right, orangered, #141e30); */
 }
 .mainBlock {
   display: flex;
   margin-bottom: 2vh;
-  /* background-color: orangered; */
-  /* background-image: linear-gradient(to right, orangered, #141e30); */
   border: 2px solid orangered;
   margin-bottom: 5vh;
   margin: 5vh 0;
 }
-
 .descriptionBlock {
-  /* border: 1px solid black; */
   padding: 1vh;
-  /* display: block; */
-  /* border: 1px solid black; */
   border-left: 2px solid transparent;
-  min-height: 12vh;
   margin-bottom: 2vh;
   border-right: 2px solid orangered;
-  /* background: rgba(255, 255, 255, 0.1); */
-  /* border-bottom: 1px solid grey; */
   text-align: center;
 }
 .weightBlock {
-  /* border: 1px solid black; */
   padding: 0px 1vh;
-  /* text-align: center; */
   padding-left: 4vw;
-  /* border-left: 2px solid orangered; */
-  /* border-right: 2px solid transparent; */
-  /* background: rgba(255, 255, 255, 0.1); */
 }
 .weightText {
   display: inline-block !important;
-  /* border: 1px solid black; */
 }
 .linkBlock {
-  /* border: 1px solid black; */
   padding: 0px 1vh;
-  /* padding-bottom: 1vh; */
-  /* border-left: 2px solid transparent; */
-  /* border-right: 2px solid orangered; */
-
-  /* background-image: linear-gradient(to right, #141e30, rgba(255, 68, 0, 0.212)); */
-  /* background: rgba(255, 255, 255, 0.1); */
-  /* text-align: center; */
-  /* border-bottom: 1px solid grey; */
-  /* background: rgba(0, 0, 0, 0.1); */
   padding-left: 4vw;
-  /* border: 1px solid black; */
 }
 .link {
   transition: 0.3s ease;
@@ -269,18 +212,14 @@
 }
 .categoryText {
   display: inline-block !important;
-  /* border: 1px solid black; */
 }
 .institutionText {
   display: inline-block !important;
 }
 .text {
   display: block;
-  /* color: orangered; */
   padding: 4px 0;
-
   margin-right: 10px;
-  /* letter-spacing: 3px; */
   border: 1px solid rgba(128, 128, 128, 0.388);
   border-radius: 5px;
   padding: 4px;
@@ -288,16 +227,12 @@
 }
 .descriptionText {
   margin-top: 0px;
-  /* width: 100%; */
-  /* border: 1px solid black; */
   display: inline-block;
 }
 .buttonsBlock {
-  /* border: 1px solid black; */
   display: flex;
   margin: 0 auto;
   margin-top: 5vh;
-
   width: 300px;
   max-width: 100%;
 }
@@ -305,7 +240,6 @@
   display: flex;
   width: 40%;
 }
-
 .invertColorBtnAmount {
   background-color: grey !important;
   box-shadow: none !important;
@@ -323,15 +257,12 @@
   margin: auto;
 }
 .btnAmount {
-  /* display: block; */
   width: 100%;
   font-size: inherit;
   font-family: inherit;
   cursor: pointer;
   border: none;
   background: rgba(255, 255, 255, 0.1);
-  /* border: 1px solid rgba(211, 211, 211, 0.473); */
-  /* background: transparent; */
   color: white;
   padding: 4px 0;
   background: orangered;
@@ -360,23 +291,18 @@
   font-family: inherit;
   cursor: pointer;
   display: flex;
-  /* border: 1px solid lightgrey; */
-
   align-items: center;
   color: white;
   justify-content: center;
   background: orangered;
   margin-left: 20px;
-  /* padding: 20px 30px; */
   transition: 0.2s ease;
   text-shadow: 0px 0px 5px black;
   outline: none;
   border-radius: 4px;
   font-weight: bold;
-  /* box-shadow: inset 0px 0px 12px black; */
   border: none;
 }
-
 .cart:hover {
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 5px 29px rgba(0, 0, 0, 0.295);
@@ -384,7 +310,6 @@
 .cart:active {
   transform: scale(0.9);
 }
-
 .cart span {
   margin-left: 10px;
 }
@@ -398,16 +323,14 @@
   padding: 1vh;
   text-align: center;
   margin-top: 2vh;
-  /* background-color: rgba(255, 255, 255, 0.05); */
-  /* border: 1px solid black; */
   border-left: 2px solid orangered;
   border-right: 2px solid transparent;
 }
 .dateText {
-  /* display: block; */
   display: inline-block;
   margin-top: 0px;
 }
+
 .containerComments {
   width: 100%;
   margin-top: 5vh;
@@ -415,12 +338,9 @@
 }
 .commentBlock {
   display: flex;
-  /* width: 58%; */
   background-color: #141e30;
   padding: 20px;
-  height: 230px;
 }
-
 .postBtn {
   font-size: inherit;
   font-family: inherit;
@@ -430,7 +350,6 @@
   color: white;
   justify-content: center;
   background: orangered;
-  /* margin-left: 20px; */
   transition: 0.2s ease;
   padding: 15px 20px;
   text-shadow: 0px 0px 5px black;
@@ -453,8 +372,6 @@
   transform: scale(0.9);
 }
 .form {
-  /* border: 1px solid black; */
-  /* width: 500px; */
   position: relative;
   width: 50%;
   margin-left: 20px;
@@ -477,7 +394,6 @@ textarea {
   overflow-y: auto;
   resize: none;
   border: none;
-  /* border: 1px solid orangered; */
   border-bottom: 1.2px solid orangered;
   background-color: transparent;
   outline: none;
@@ -494,13 +410,9 @@ textarea::placeholder {
   font-weight: normal;
   padding: 10px;
   display: inline-block;
-  /* background-color: orangered; */
-
   border: 1px solid rgba(128, 128, 128, 0.527);
-  /* margin: auto; */
   margin-bottom: 10px;
   border-radius: 5px;
-  /* padding-top: 0; */
 }
 .imgBox img {
   width: 100%;
@@ -515,9 +427,8 @@ textarea::placeholder {
   opacity: 0;
   color: white;
   right: 0px;
-  /* z-index: 999; */
   cursor: pointer;
-  top: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -536,4 +447,192 @@ textarea::placeholder {
   padding: 20px;
   color: lightgrey;
   font-size: 1.5em;
+}
+@media (max-width: 1150px) {
+  .propContainer {
+    padding: 2.5vh;
+  }
+}
+@media (max-width: 950px) {
+  .description {
+    font-size: 1em;
+    min-height: 6vh;
+  }
+  .dateBlock {
+    margin-top: 0px;
+    border-left: none;
+    border-right: none;
+    margin: 5px 0;
+    text-align: left;
+    padding: 0px 10px;
+  }
+  .weightBlock {
+    margin: 0;
+    padding: 0px 10px;
+  }
+  .linkBlock {
+    text-align: left;
+    padding: 0px 10px;
+    margin: 0;
+  }
+  .title {
+    font-size: 1em;
+  }
+  .linkEdit {
+    padding: 15px;
+  }
+  .img {
+    width: 380px;
+    height: 330px;
+  }
+}
+@media (max-width: 880px) {
+  .containerCard {
+    flex-direction: column;
+  }
+  .propContainer {
+    width: 100%;
+    padding: 0px 5vw;
+    padding-bottom: 5vw;
+  }
+  .imgContainer {
+    width: 100%;
+    min-height: 70vh;
+  }
+  .img {
+    width: 420px;
+    height: 370px;
+  }
+  .description {
+    font-size: 1.2em;
+    min-height: 8vh;
+  }
+  .dateBlock {
+    padding: 1vh;
+    text-align: center;
+    margin-top: 2vh;
+    border-left: 2px solid orangered;
+    border-right: 2px solid transparent;
+  }
+  .weightBlock {
+    padding: 0px 1vh;
+    padding-left: 10vw;
+  }
+  .linkBlock {
+    padding: 0px 1vh;
+    padding-left: 10vw;
+  }
+  .title {
+    font-size: 1.2em;
+  }
+  .linkEdit {
+    padding: 20px 30px;
+  }
+  .form {
+    width: 100%;
+    margin-left: 15px;
+  }
+  .commentBlock {
+    padding: 15px;
+  }
+  .imgBox {
+    width: 80px;
+    height: 80px;
+  }
+}
+@media (max-width: 600px) {
+  .img {
+    width: 320px;
+    height: 270px;
+  }
+  .description {
+    font-size: 1em;
+    min-height: 6vh;
+  }
+  .dateBlock {
+    margin-top: 0px;
+    border-left: none;
+    border-right: none;
+    margin: 5px 0;
+    text-align: left;
+    padding: 0px 10px;
+  }
+  .weightBlock {
+    margin: 0;
+    padding: 0px 10px;
+  }
+  .linkBlock {
+    text-align: left;
+    padding: 0px 10px;
+    margin: 0;
+  }
+  .title {
+    font-size: 1em;
+  }
+  .linkEdit {
+    padding: 15px;
+  }
+  .btnRate {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3em;
+  }
+  .rate {
+    width: 40px;
+    line-height: 40px;
+    margin: 0px 7px;
+  }
+  .btnAmount {
+    padding: 4px 0;
+    height: 25px;
+    line-height: 15px;
+  }
+  .cart {
+    font-size: 0.9em;
+  }
+  .alertBox {
+    padding: 15px 10px;
+    font-size: 0.8em;
+  }
+  .postBtn {
+    font-size: 0.9em;
+  }
+  .form textarea {
+    min-height: 10vh;
+  }
+}
+@media (max-width: 520px) {
+  .form {
+    margin-left: 10px;
+    margin-top: 0;
+  }
+  .imgBox {
+    width: 65px;
+    height: 65px;
+  }
+  .username {
+    padding: 5px;
+    font-size: 1em;
+  }
+  .postBtn {
+    margin-top: 5px;
+    padding: 13px 15px;
+  }
+  .form textarea {
+    font-size: 0.9em;
+  }
+}
+@media (max-width: 450px) {
+  .img {
+    width: 260px;
+    height: 210px;
+  }
+}
+@media (max-width: 400px) {
+  .alertBox {
+    padding: 5px;
+    width: 80px;
+    border-radius: 4px;
+    font-size: 0.8em;
+  }
 }

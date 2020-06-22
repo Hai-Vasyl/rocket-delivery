@@ -74,8 +74,10 @@ function App() {
       } catch (error) {}
     }
 
-    fetch()
-  }, [token.token, setOrders])
+    if (ready) {
+      fetch()
+    }
+  }, [token.token, setOrders, ready])
 
   if (!ready) {
     return (

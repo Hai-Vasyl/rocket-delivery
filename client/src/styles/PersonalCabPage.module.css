@@ -1,6 +1,7 @@
 .container {
   display: flex;
   width: 1100px;
+  max-width: 100%;
   margin: 0 auto;
   padding-bottom: 15px;
   border-bottom: 1px solid grey;
@@ -97,6 +98,7 @@
   align-items: center;
   justify-content: center;
   transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 3;
 }
 .alertBox.activeBox {
   transform: translate(-50%, -50%) scale(1);
@@ -139,7 +141,7 @@
 .update {
   font-size: inherit;
   font-family: inherit;
-  border: 1px solid rgba(128, 128, 128, 0.6);
+  border: none;
   padding: 18px 30px;
   display: flex;
   align-items: center;
@@ -190,7 +192,7 @@
   font-family: inherit;
   background-color: transparent;
   border: none;
-  width: 300px;
+  width: 270px;
   max-width: 100%;
   border-bottom: 1.2px solid orangered;
   transition: 0.4s ease;
@@ -207,7 +209,7 @@
 }
 .block textarea {
   margin-left: 20px;
-  width: 400px;
+  width: 270px;
   color: lightgrey !important;
   max-width: 100%;
 }
@@ -276,4 +278,85 @@
 .title {
   padding: 10px 0;
   text-align: center;
+}
+
+@media (max-width: 850px) {
+  .container {
+    flex-direction: column;
+  }
+  .block input {
+    margin-left: 10px;
+    width: 100% !important;
+  }
+  .block textarea {
+    margin-left: 10px;
+    width: 100%;
+  }
+  .imageContainer {
+    border-radius: 5px;
+    color: white;
+    border-bottom: 1px solid rgba(211, 211, 211, 0.555);
+    background-image: linear-gradient(
+        to bottom right,
+        rgba(88, 72, 235, 0.445),
+        #2fa16280
+      ),
+      linear-gradient(to bottom left, rgba(59, 172, 187, 0.692), #993b5f5d);
+    width: 100%;
+    margin-bottom: 3vh;
+    padding: 22px 0px;
+  }
+  .img {
+    width: 270px;
+    margin: 0 auto;
+    border-color: lightgrey;
+    background-color: rgba(255, 255, 255, 0.188);
+  }
+  .img img {
+    width: 100%;
+    height: 298px;
+  }
+  .typeUser {
+    width: 270px;
+    margin: 0 auto;
+    margin-top: 10px;
+    border-color: lightgrey;
+  }
+  .infoContainer {
+    width: 100%;
+    margin-left: 0;
+    border-radius: 5px;
+  }
+  .formImageChange {
+    padding: 0px 20px;
+  }
+  .cartBox {
+    height: 400px;
+  }
+  .containerCart {
+    padding: 0px 10px;
+    border-radius: 7px;
+    padding-bottom: 10px;
+  }
+  .cartBox::-webkit-scrollbar {
+    width: 0.1em;
+  }
+}
+@media (max-width: 550px) {
+  .block input {
+    margin-left: 5px;
+    width: 100% !important;
+  }
+  .block textarea {
+    margin-left: 5px;
+  }
+  .block label {
+    font-size: 0.9em;
+  }
+  .infoContainer {
+    padding: 22px 3vw;
+  }
+  .formImageChange {
+    padding: 0px 10px;
+  }
 }

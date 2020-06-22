@@ -6,7 +6,7 @@ function Food({ food }) {
   const { wrapper, foodPrice, wrapperImg, foodName, category, linkFood } = style
   return (
     <div className={wrapper}>
-      <Link to={`/details/${food._id}`} className={linkFood}>
+      <Link to={`/details/${food._id}`} className={linkFood} title={food.name}>
         <div className={wrapperImg}>
           <img src={food.img} alt='imgFood' />
           <span className={foodPrice}>

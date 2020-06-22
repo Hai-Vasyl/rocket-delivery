@@ -3,6 +3,7 @@
   position: fixed;
   top: 0;
   left: 0;
+
   right: 0;
   z-index: 5;
 }
@@ -12,10 +13,13 @@
   padding: 0 4vw;
   margin: 0 auto;
   display: flex;
+  min-height: 78px;
   justify-content: space-between;
+  position: relative;
 }
 .centerBlock {
   display: flex;
+  align-items: center;
 }
 .link {
   text-decoration: none;
@@ -43,6 +47,7 @@
 }
 .dropLink {
   margin-left: 0;
+  margin-left: 5px;
 }
 .dropLinkActive {
   transition: 0.3s ease;
@@ -69,17 +74,20 @@
   justify-content: center;
   color: lightgrey;
   font-weight: bold;
+  font-size: 1em;
 }
-.logoLink span {
+.logoLink *:not(.titleLogo) {
+  font-size: 1.9em;
+}
+.titleLogo {
   margin-left: 10px;
   font-size: 1.2em;
 }
-.logoLink *:not(span) {
-  font-size: 2em;
+.resizeBriefLogo {
+  font-size: 1em !important;
 }
 .dropDownMenu {
   position: relative;
-  margin-left: 5px;
 }
 .activeLink {
   background-color: #1f2d47;
@@ -90,14 +98,12 @@
 .dropMenu {
   position: absolute;
   width: 300px;
-  /* background-image: linear-gradient(to bottom, rgb(160, 157, 156), #141e30); */
   background-color: #141e30;
   margin-top: 7px;
   border-radius: 10px;
   box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.685),
     0px 10px 30px rgba(0, 0, 0, 0.349);
-  /* border: 2px solid lightgrey; */
-  z-index: 0;
+  z-index: 1;
   transform: scale(0.7);
   padding: 10px 0;
   border-top: 2px solid lightgrey;
@@ -123,8 +129,6 @@
   margin-left: 0px;
   padding: 20px 0;
   border: none;
-  border-left: 2px solid transparent;
-  border-right: 2px solid transparent;
 }
 .dropMenu .link:hover {
   background-color: #1f2d47;
@@ -136,4 +140,128 @@
 }
 .authBlock {
   display: flex;
+}
+.linkAdaptive {
+  display: none;
+}
+.btnDropAdaptive {
+  font-size: inherit;
+  font-family: inherit;
+  display: none;
+  transition: 0.5s ease;
+  padding: 0;
+  /* position: absolute; */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  height: 78px;
+  margin: 0;
+}
+.btnDropAdaptive.activeAdaptive span {
+  transition: 0.3s ease;
+}
+.btnDropAdaptive.activeAdaptive span:nth-child(1) {
+  transform: translateY(7px) rotateZ(45deg);
+}
+.btnDropAdaptive.activeAdaptive span:nth-child(2) {
+  width: 150px;
+  opacity: 0;
+}
+.btnDropAdaptive.activeAdaptive span:nth-child(3) {
+  transform: translateY(-7px) rotateZ(-45deg);
+}
+
+.btnDropAdaptive span:first-child {
+  margin-top: 0px;
+}
+
+@media (max-width: 1250px) {
+  .linkAdaptive {
+    display: block;
+    text-align: center;
+  }
+  .btnDropAdaptive {
+    display: flex;
+    width: 100px !important;
+    max-width: 100% !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .btnDropAdaptive span {
+    width: 30px;
+    display: block;
+    margin-top: 6px;
+    height: 1px;
+    background-color: lightgrey;
+    transition: 0.3s ease;
+    margin-left: 0;
+  }
+  .centerBlock {
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    background-color: #141e30c7;
+    background-image: linear-gradient(#141e30b2, rgba(199, 191, 191, 0.2));
+    left: 50%;
+    top: 78px;
+    bottom: 0 !important;
+    height: 100%;
+    transition: 0.3s ease;
+    transform: translateX(-50%);
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    height: calc(100vh - 78px);
+  }
+  .centerBlockAdaptive {
+    opacity: 1;
+    visibility: visible;
+  }
+  .centerBlock .link {
+    width: 100%;
+    margin: 0;
+    transform: scale(1);
+    box-shadow: none;
+    border: none;
+    padding: 3vh;
+  }
+  .centerBlock .link:hover {
+    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+  .centerBlock .link.activeLink {
+    background-color: transparent;
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 68, 0, 0.4),
+      transparent
+    );
+  }
+  .centerBlock .link.activeLink:hover {
+    background-color: transparent !important;
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 68, 0, 0.4),
+      transparent
+    ) !important;
+  }
+  .dropDownMenu,
+  .authAdaptiveLinks {
+    display: none;
+  }
+  .linkActive {
+    background-color: transparent !important;
+  }
+}
+@media (max-width: 950px) {
+  .resizeBriefLogo {
+    display: none;
+  }
+}
+@media (max-width: 420px) {
+  .btnDropAdaptive {
+    width: 65px !important;
+  }
 }

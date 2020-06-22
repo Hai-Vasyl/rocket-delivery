@@ -65,6 +65,7 @@ function Comment({
   const handleReply = () => {
     if (reply) {
       setAnswer("")
+      setMessage("")
     }
     setReply(!reply)
   }

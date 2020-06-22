@@ -690,7 +690,7 @@ function FoodPage(props) {
 
           <div className={dateBlock}>
             <span className={`${text} ${dateText}`}>date creating: </span>
-            <span className={date}>{data.date}</span>
+            <span className={date}>{data.date && data.date.slice(0, 10)}</span>
           </div>
 
           <div className={buttonsBlock}>

@@ -9,7 +9,7 @@ import LoaderData from "../components/LoaderData"
 function Partners() {
   const {
     wrapper,
-    mainTitle,
+    titleMainPopular,
     titlePopular,
     titleCategory,
     linkCategory,
@@ -48,11 +48,16 @@ function Partners() {
   }
   return (
     <div className={wrapper}>
-      <h2 className={`${mainTitle} ${invertColorTitle}`}>Our Partners</h2>
+      <h2 className={`${titleMainPopular} ${invertColorTitle}`}>
+        Our Partners
+      </h2>
 
       <div className={`${wrapperContainer} ${invertWrapperContainer}`}>
         <div className={titlePopular}>
-          <span className={`${titleCategory} ${invertColorTitleCategory}`}>
+          <span
+            className={`${titleCategory} ${invertColorTitleCategory}`}
+            title='Regina'
+          >
             Regina
           </span>
           <Link className={linkCategory} to='/partners/Regina'>
@@ -63,7 +68,10 @@ function Partners() {
       </div>
       <div className={`${wrapperContainer} ${invertWrapperContainer}`}>
         <div className={titlePopular}>
-          <span className={`${titleCategory} ${invertColorTitleCategory}`}>
+          <span
+            className={`${titleCategory} ${invertColorTitleCategory}`}
+            title='Dari Mora'
+          >
             Dari Mora
           </span>
           <Link className={linkCategory} to='/partners/Dari_Mora'>
@@ -74,8 +82,11 @@ function Partners() {
       </div>
       <div className={`${wrapperContainer} ${invertWrapperContainer}`}>
         <div className={titlePopular}>
-          <span className={`${titleCategory} ${invertColorTitleCategory}`}>
-            Embroidered Shirt
+          <span
+            className={`${titleCategory} ${invertColorTitleCategory}`}
+            title='Embroidered Shirt'
+          >
+            Emb Shirt
           </span>
           <Link className={linkCategory} to='/categories/Embroidered_Shirt'>
             <span>More</span> <FiArrowRight />
@@ -85,7 +96,10 @@ function Partners() {
       </div>
       <div className={`${wrapperContainer} ${invertWrapperContainer}`}>
         <div className={titlePopular}>
-          <span className={`${titleCategory} ${invertColorTitleCategory}`}>
+          <span
+            className={`${titleCategory} ${invertColorTitleCategory}`}
+            title='Pulse'
+          >
             Pulse
           </span>
           <Link className={linkCategory} to='/partners/Pulse'>
@@ -96,7 +110,10 @@ function Partners() {
       </div>
       <div className={`${wrapperContainer} ${invertWrapperContainer}`}>
         <div className={titlePopular}>
-          <span className={`${titleCategory} ${invertColorTitleCategory}`}>
+          <span
+            className={`${titleCategory} ${invertColorTitleCategory}`}
+            title='Brown'
+          >
             Brown
           </span>
           <Link className={linkCategory} to='/partners/Brown'>

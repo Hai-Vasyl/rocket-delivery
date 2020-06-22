@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import style from "../styles/Navbar.module.css"
 import { Context } from "../context/Context"
 import { NavLink } from "react-router-dom"
@@ -32,6 +32,13 @@ function Navbar() {
     triangeDrop,
     arrowDrop,
     dropLinkActive,
+    btnDropAdaptive,
+    activeAdaptive,
+    titleLogo,
+    linkAdaptive,
+    centerBlockAdaptive,
+    resizeBriefLogo,
+    authAdaptiveLinks,
   } = style
   const {
     token,
@@ -43,12 +50,20 @@ function Navbar() {
     setPopupCart,
   } = useContext(Context)
 
+  const [dropAdaptive, setDropAdaptive] = useState(false)
+
   const handlerSignOut = () => {
     localStorage.removeItem("Auth")
     setToken(false)
     setDrop(false)
     setPopupCart(false)
     setOrders([])
+  }
+  const hadleDropDownAdaptive = () => {
+    setDropAdaptive(!dropAdaptive)
+    if (!dropAdaptive) {
+      setPopupCart(false)
+    }
   }
   const handleDropDownActive = () => {
     setDrop(!drop)
@@ -63,6 +78,30 @@ function Navbar() {
     setPopupCart(false)
   }
 
+  const styleAdaptiveLink = () => {
+    return (
+      <>
+        <NavLink
+          exact
+          to='/categories'
+          className={`${link} ${linkAdaptive}`}
+          activeClassName={activeLink}
+          onClick={() => setDrop(false)}
+        >
+          <AiOutlineAppstore /> <span>All Categories</span>
+        </NavLink>
+        <NavLink
+          exact
+          to='/partners'
+          className={`${link} ${linkAdaptive}`}
+          activeClassName={activeLink}
+          onClick={() => setDrop(false)}
+        >
+          <AiOutlineUsergroupAdd /> <span>Our Partners</span>
+        </NavLink>
+      </>
+    )
+  }
   const styleDropDownMenu = () => {
     return (
       <div className={dropDownMenu}>
@@ -164,10 +203,19 @@ function Navbar() {
               className={logoLink}
               onClick={removeAllActivePopups}
             >
-              <IoIosRocket /> <span>Rocket-Delivery</span>
+              <IoIosRocket />{" "}
+              <span className={titleLogo}>
+                R<span className={resizeBriefLogo}>ocket</span>-D
+                <span className={resizeBriefLogo}>elivery</span>
+              </span>
             </NavLink>
 
-            <div className={centerBlock}>
+            <div
+              className={`${centerBlock} ${
+                dropAdaptive && centerBlockAdaptive
+              }`}
+              onClick={hadleDropDownAdaptive}
+            >
               <NavLink
                 exact
                 to='/'
@@ -184,6 +232,7 @@ function Navbar() {
               >
                 <RiShoppingCartLine /> <span>My Cart</span>
               </button>
+              {styleAdaptiveLink()}
 
               {styleDropDownMenu()}
 
@@ -201,6 +250,16 @@ function Navbar() {
             <button onClick={handlerSignOut} className={link}>
               <FaSignOutAlt /> <span>Sign Out</span>
             </button>
+            <button
+              className={`${link} ${btnDropAdaptive} ${
+                dropAdaptive && activeAdaptive
+              }`}
+              onClick={hadleDropDownAdaptive}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
           </div>
         ) : (
           <div className={navbar}>
@@ -210,10 +269,19 @@ function Navbar() {
               className={logoLink}
               onClick={removeAllActivePopups}
             >
-              <IoIosRocket /> <span>Rocket-Delivery</span>
+              <IoIosRocket />{" "}
+              <span className={titleLogo}>
+                R<span className={resizeBriefLogo}>ocket</span>-D
+                <span className={resizeBriefLogo}>elivery</span>
+              </span>
             </NavLink>
 
-            <div className={centerBlock}>
+            <div
+              className={`${centerBlock} ${
+                dropAdaptive && centerBlockAdaptive
+              }`}
+              onClick={hadleDropDownAdaptive}
+            >
               <NavLink
                 exact
                 to='/'
@@ -229,6 +297,7 @@ function Navbar() {
               >
                 <RiShoppingCartLine /> <span>My Cart</span>
               </button>
+              {styleAdaptiveLink()}
               {styleDropDownMenu()}
               <NavLink
                 exact
@@ -262,6 +331,16 @@ function Navbar() {
             <button onClick={handlerSignOut} className={link}>
               <FaSignOutAlt /> <span>Sign Out</span>
             </button>
+            <button
+              className={`${link} ${btnDropAdaptive} ${
+                dropAdaptive && activeAdaptive
+              }`}
+              onClick={hadleDropDownAdaptive}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
           </div>
         )
       ) : (
@@ -272,10 +351,28 @@ function Navbar() {
             className={logoLink}
             onClick={removeAllActivePopups}
           >
-            <IoIosRocket /> <span>Rocket-Delivery</span>
+            <IoIosRocket />{" "}
+            <span className={titleLogo}>
+              R<span className={resizeBriefLogo}>ocket</span>-D
+              <span className={resizeBriefLogo}>elivery</span>
+            </span>
           </NavLink>
 
-          <div className={centerBlock}>
+          <button
+            className={`${link} ${btnDropAdaptive} ${
+              dropAdaptive && activeAdaptive
+            }`}
+            onClick={hadleDropDownAdaptive}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <div
+            className={`${centerBlock} ${dropAdaptive && centerBlockAdaptive}`}
+            onClick={hadleDropDownAdaptive}
+          >
             <NavLink
               exact
               to='/'
@@ -292,11 +389,29 @@ function Navbar() {
             >
               <RiShoppingCartLine /> <span>My Cart</span>
             </button>
-
+            {styleAdaptiveLink()}
             {styleDropDownMenu()}
+            <NavLink
+              exact
+              to='/auth/login'
+              className={`${link} ${linkAdaptive}`}
+              onClick={removeAllActivePopups}
+              activeClassName={activeLink}
+            >
+              <FaSignInAlt /> <span>Sign In</span>
+            </NavLink>
+            <NavLink
+              exact
+              to='/auth/register'
+              className={`${link} ${linkAdaptive}`}
+              onClick={removeAllActivePopups}
+              activeClassName={activeLink}
+            >
+              <FaCheckCircle /> <span>Sign Up</span>
+            </NavLink>
           </div>
 
-          <div className={authBlock}>
+          <div className={`${authBlock} ${authAdaptiveLinks}`}>
             <NavLink
               exact
               to='/auth/login'

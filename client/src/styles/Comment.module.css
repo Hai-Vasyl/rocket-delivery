@@ -1,5 +1,4 @@
 .wrapper {
-  /* border: 1px solid black; */
   border-radius: 5px;
   display: flex;
   padding: 15px 20px;
@@ -8,7 +7,6 @@
   box-shadow: 0px 20px 23px #141e3050, 0px 0px 20px #141e3031;
   margin-top: 1.8vh;
   position: relative;
-  /* border-bottom: 2px solid #141e30; */
 }
 .img {
   width: 80px;
@@ -16,7 +14,6 @@
   overflow: hidden;
   height: 80px;
   border: 2px solid lightgrey;
-  /* box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.726); */
 }
 .img img {
   width: 100%;
@@ -24,10 +21,8 @@
   height: 100%;
 }
 .infoContainer {
-  /* border: 1px solid black; */
   margin-left: 20px;
 }
-
 .typeUser {
   text-align: center;
   border: 1px solid rgba(51, 51, 51, 0.4);
@@ -162,14 +157,11 @@
   z-index: 2;
   right: 0;
   display: flex;
-  /* height: 0; */
   transition: 0.2s ease;
-  /* align-items: center; */
   opacity: 0;
   transform: scale(0.5);
   background-color: rgba(255, 255, 255, 0.8);
   padding: 10px 20px;
-  /* border: 1px solid grey; */
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1), 0px 5px 10px rgba(0, 0, 0, 0.1),
@@ -236,4 +228,98 @@
 .alertPopup {
   opacity: 1;
   transform: scale(1);
+}
+@media (max-width: 950px) {
+  .wrapper {
+    padding: 15px;
+    width: 100%;
+  }
+  .wrapperAnswers {
+    margin-left: 5vw;
+  }
+}
+@media (max-width: 880px) {
+  .infoContainer {
+    margin-left: 15px;
+  }
+  .contentBlock {
+    font-size: 0.9em;
+  }
+  .alertBox {
+    padding: 10px;
+    top: 5px;
+    bottom: auto;
+    font-size: 0.9em;
+    right: 5px;
+  }
+}
+@media (max-width: 620px) {
+  .wrapperAnswers {
+    margin-left: 0px;
+  }
+}
+@media (max-width: 520px) {
+  .wrapper {
+    padding: 10px;
+  }
+  .infoContainer {
+    margin-left: 10px;
+  }
+  .img {
+    width: 65px;
+    height: 65px;
+    border: none;
+  }
+  .typeUser {
+    font-size: 0.9em;
+  }
+  .name {
+    font-size: 1em;
+    padding: 5px;
+  }
+  .btnRate {
+    font-size: 1.3em;
+    width: 30px;
+    line-height: 15px;
+    height: 30px;
+  }
+  .date {
+    font-size: 0.85em;
+  }
+  .rate {
+    font-size: 0.8em;
+    width: 30px;
+    line-height: 30px;
+    height: 30px;
+  }
+  .answerBtn {
+    padding: 13px 15px;
+    margin-left: 10px;
+    font-size: 0.9em;
+  }
+  .inputAnswer {
+    padding: 3px;
+    width: 80%;
+  }
+  .inputAnswer:focus {
+    background-color: rgba(51, 51, 51, 0.123);
+  }
+  .submitAnswerBtn {
+    flex: 1;
+  }
+  .formAnswer {
+    padding: 10px;
+  }
+  .alertBox {
+    border-radius: 4px;
+  }
+}
+@media (max-width: 420px) {
+  .img {
+    width: 55px;
+    height: 55px;
+  }
+  .inputAnswer {
+    width: 70%;
+  }
 }

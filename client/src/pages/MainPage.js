@@ -191,7 +191,7 @@ function MainPage() {
         </div>
         <div className={wrapperContainer}>
           <div className={titlePopular}>
-            <span className={titleCategory}>Main Dishes</span>
+            <span className={titleCategory}>Main</span>
             <Link className={linkCategory} to='/categories/main_dishes'>
               <span>More</span> <FiArrowRight />
             </Link>
