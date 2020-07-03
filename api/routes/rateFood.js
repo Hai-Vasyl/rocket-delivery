@@ -5,18 +5,6 @@ const Food = require("../models/Food")
 
 const router = Router()
 
-// router.get("/getone/:foodid", auth, async (req, res) => {
-//   try {
-//     const { userId } = req
-//     const { foodid } = req.params
-//     const item = await RateFood.findOne({ owner: userId, food: foodid })
-
-//     res.json(item)
-//   } catch (error) {
-//     res.status(500).json(`Error getting ratefood: ${error.message}`)
-//   }
-// })
-
 router.post("/create/:foodid", auth, async (req, res) => {
   try {
     const { userId } = req
@@ -33,8 +21,6 @@ router.post("/create/:foodid", auth, async (req, res) => {
         await RateFood.findByIdAndDelete(item._id)
 
         await Food.findByIdAndUpdate(foodid, { $pull: { rateList: item._id } })
-
-        // await food.save()
 
         if (status) {
           rate -= 1

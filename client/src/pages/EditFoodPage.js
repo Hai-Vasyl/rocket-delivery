@@ -1,24 +1,26 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import mainStyle from "../styles/MainStyles.module.css"
 import style from "../styles/Create-EditFoodPage.module.css"
 import iconNoImage from "../imgs/icon-no-image.svg"
+import { IoIosAlert } from "react-icons/io"
+import { RiUserSettingsLine } from "react-icons/ri"
 import {
   AiOutlineAppstore,
   AiOutlineEdit,
   AiOutlineDelete,
 } from "react-icons/ai"
-import axios from "axios"
-import { RiUserSettingsLine } from "react-icons/ri"
-import { Context } from "../context/Context"
-import { IoIosAlert } from "react-icons/io"
 import { FaRegEdit } from "react-icons/fa"
 import LoaderData from "../components/LoaderData"
+import { useHTTP } from "../hooks/useHTTP"
+import { useModifyFood } from "../hooks/useModifyFood"
+import { Link } from "react-router-dom"
 
 function CreateFoodPage(props) {
   const { wrapper } = mainStyle
-  const { token } = useContext(Context)
   const { foodid } = props.match.params
-  const [load, setLoad] = useState(false)
+  const { load, fetchData } = useHTTP()
+  const { handleModify } = useModifyFood()
+
   const {
     containerForm,
     containerPreview,
@@ -39,7 +41,10 @@ function CreateFoodPage(props) {
     invertColorContainerPreview,
     btnRemove,
     btnEdit,
+    blockInput,
+    goBtn,
   } = style
+
   const [form, setForm] = useState({
     category: "",
     name: "",
@@ -52,54 +57,17 @@ function CreateFoodPage(props) {
   const [message, setMessage] = useState("")
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get(`/api/foods/food/${foodid}`)
-
-        setForm(res.data)
-      } catch (error) {}
-    }
-
-    fetch()
-    setTimeout(() => setLoad(true), 1000)
-  }, [foodid])
+    fetchData("get", `/api/foods/food/${foodid}`, null, setForm)
+  }, [foodid, fetchData])
 
   const handleChangeForm = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
     setMessage("")
   }
 
-  const handleEditFood = async () => {
-    try {
-      if (
-        !form.category ||
-        !form.name ||
-        !form.price ||
-        !form.img ||
-        !form.description ||
-        !form.institution ||
-        !form.weight
-      ) {
-        setMessage({ status: false, message: "Fill all fields!" })
-        return
-      }
-      await axios.patch(`/api/foods/update/${foodid}`, form, {
-        headers: {
-          Authorization: `Basic ${token.token}`,
-        },
-      })
-
-      setMessage({ status: true, message: "Food updated!" })
-    } catch (error) {}
-  }
-
   const handleDeleteFood = async () => {
     try {
-      await axios.delete(`/api/foods/delete/${foodid}`, {
-        headers: {
-          Authorization: `Basic ${token.token}`,
-        },
-      })
+      await fetchData("delete", `/api/foods/delete/${foodid}`)
       props.history.push(!!form.category ? `/categories/${form.category}` : "/")
     } catch (error) {}
   }
@@ -118,33 +86,40 @@ function CreateFoodPage(props) {
           <div className={title}>
             <FaRegEdit /> <span>Edit Food</span>
           </div>
-          <input
-            className={input}
-            type='text'
-            name='name'
-            value={form.name}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Name'
-          />
-          <input
-            className={input}
-            type='text'
-            name='price'
-            value={form.price}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Price'
-          />
-          <input
-            className={input}
-            type='text'
-            name='description'
-            value={form.description}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Description'
-          />
+
+          <div className={blockInput}>
+            <label>Name: </label>
+            <input
+              className={input}
+              type='text'
+              name='name'
+              value={form.name}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
+          <div className={blockInput}>
+            <label>Price: </label>
+            <input
+              className={input}
+              type='text'
+              name='price'
+              value={form.price}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
+          <div className={blockInput}>
+            <label>Description: </label>
+            <input
+              className={input}
+              type='text'
+              name='description'
+              value={form.description}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
 
           <div className={selectContainer}>
             <label className={labelText}>
@@ -177,24 +152,28 @@ function CreateFoodPage(props) {
             </select>
           </div>
 
-          <input
-            className={input}
-            type='text'
-            name='img'
-            value={form.img}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Image'
-          />
-          <input
-            className={input}
-            type='text'
-            name='weight'
-            value={form.weight}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Weight'
-          />
+          <div className={blockInput}>
+            <label>Image: </label>
+            <input
+              className={input}
+              type='text'
+              name='img'
+              value={form.img}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
+          <div className={blockInput}>
+            <label>Weight: </label>
+            <input
+              className={input}
+              type='text'
+              name='weight'
+              value={form.weight}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
 
           <div className={selectContainer}>
             <label className={labelText}>
@@ -227,7 +206,7 @@ function CreateFoodPage(props) {
           <div className={btnContainer}>
             <button
               className={`${btnCreate} ${btnEdit}`}
-              onClick={handleEditFood}
+              onClick={() => handleModify(form, setMessage, false, foodid)}
             >
               <AiOutlineEdit /> <span>Edit</span>{" "}
             </button>
@@ -242,7 +221,10 @@ function CreateFoodPage(props) {
 
         <div className={`${containerPreview} ${invertColorContainerPreview}`}>
           <div className={img}>
-            <img src={form.img || iconNoImage} alt='prewievImg' />
+            <Link to={`/details/${form._id}`}>
+              <span className={goBtn}>Go There</span>
+              <img src={form.img || iconNoImage} alt='prewievImg' />
+            </Link>
             <span
               className={`${messagePopup} ${
                 !!message &&

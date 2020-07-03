@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useEffect, useState } from "react"
 import mainStyle from "../styles/MainStyles.module.css"
 import Cart from "../components/Cart"
 import style from "../styles/PersonalCabPage.module.css"
-import axios from "axios"
-import { Context } from "../context/Context"
 import { IoIosAlert } from "react-icons/io"
 import { FaRegEdit } from "react-icons/fa"
 import { RiShoppingCartLine } from "react-icons/ri"
 import LoaderData from "../components/LoaderData"
+import { useHTTP } from "../hooks/useHTTP"
 
 function PersonalCab() {
   const { wrapper } = mainStyle
   const [message, setMessage] = useState("")
+  const { fetchData, load } = useHTTP()
   const [data, setData] = useState({
     username: "",
     firstname: "",
@@ -64,25 +64,11 @@ function PersonalCab() {
     title,
     cartBox,
   } = style
-  const { token } = useContext(Context)
-  const [load, setLoad] = useState(false)
   const [statusUpdate, setStatusUpdate] = useState(false)
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get("/api/auth/user/personalcab", {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        })
-        setData(res.data)
-      } catch (error) {}
-    }
-
-    fetch()
-    setTimeout(() => setLoad(true), 1000)
-  }, [token.token])
+    fetchData("get", "/api/auth/user/personalcab", null, setData)
+  }, [fetchData])
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
@@ -99,11 +85,7 @@ function PersonalCab() {
           return
         }
 
-        await axios.patch("/api/auth/user/change_userinfo", data, {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        })
+        await fetchData("patch", "/api/auth/user/change_userinfo", data)
       } catch (error) {}
     }
 
@@ -123,15 +105,9 @@ function PersonalCab() {
         return
       }
 
-      await axios.patch(
-        "/api/auth/user/change_userinfo",
-        { ava: imgUser },
-        {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        }
-      )
+      await fetchData("patch", "/api/auth/user/change_userinfo", {
+        ava: imgUser,
+      })
 
       setData({ ...data, ava: imgUser })
       setImgUserUpdate(false)

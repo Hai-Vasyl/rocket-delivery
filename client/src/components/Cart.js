@@ -1,162 +1,51 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { Context } from "../context/Context"
 import Order from "../components/Order"
-import axios from "axios"
+import { useHTTP } from "../hooks/useHTTP"
+import { useOrderAmountReducer } from "../hooks/useOrderAmountReducer"
 
 function Cart({ isCabinet }) {
-  const { orders, setOrders, token, setPopupCart, setAddedOrder } = useContext(
-    Context
-  )
+  const { orders, setOrders, token, setPopupCart } = useContext(Context)
+  const { fetchData } = useHTTP()
+  const { reduceOrderAmount } = useOrderAmountReducer()
 
-  const handleRemove = (orderid) => {
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          const res = await axios.patch(
-            `/api/orders/cart/amount/remove/${orderid}`,
-            null,
-            {
-              headers: {
-                Authorization: `Basic ${token.token}`,
-              },
-            }
-          )
+  useEffect(() => {
+    if (token.token) fetchData("get", "/api/orders/all", null, setOrders)
+  }, [token, fetchData, setOrders])
 
-          if (res.data.statusError) {
-            return
-          }
-          const { generalPrice, amount } = res.data
+  const handleReduceAmount = (orderid, typeReducer) => {
+    reduceOrderAmount(true, typeReducer, orderid)
 
-          setOrders((prevOrders) =>
-            prevOrders.map((order) => {
-              if (order._id === orderid) {
-                order.amount = amount
-                order.generalPrice = generalPrice
-              }
-              return order
-            })
-          )
-        } catch (error) {}
-      }
-
-      fetch()
-    } else {
-      setOrders((prevOrders) =>
-        prevOrders.map((order) => {
-          if (order._id === orderid && order.amount !== 1) {
-            const orderAmount = order.amount - 1
-            order.generalPrice =
-              (order.generalPrice / order.amount) * orderAmount
-            order.amount = orderAmount
-          }
-          return order
-        })
+    if (token.token) {
+      fetchData(
+        "patch",
+        `/api/orders/cart/amount/${typeReducer ? "add" : "remove"}/${orderid}`
       )
     }
   }
 
-  const handleAdd = (orderid) => {
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          const res = await axios.patch(
-            `/api/orders/cart/amount/add/${orderid}`,
-            null,
-            {
-              headers: {
-                Authorization: `Basic ${token.token}`,
-              },
-            }
-          )
-          const { generalPrice, amount } = res.data
-
-          setOrders((prevOrders) =>
-            prevOrders.map((order) => {
-              if (order._id === orderid) {
-                order.amount = amount
-                order.generalPrice = generalPrice
-              }
-              return order
-            })
-          )
-        } catch (error) {}
-      }
-
-      fetch()
-    } else {
-      setOrders((prevOrders) =>
-        prevOrders.map((order) => {
-          if (order._id === orderid) {
-            const orderAmount = order.amount + 1
-            order.generalPrice =
-              (order.generalPrice / order.amount) * orderAmount
-            order.amount = orderAmount
-          }
-          return order
-        })
-      )
-    }
-  }
-
-  const handleDelete = (orderid) => {
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          await axios.delete(`/api/orders/cart/delete/${orderid}`, {
-            headers: {
-              Authorization: `Basic ${token.token}`,
-            },
-          })
-        } catch (error) {}
-      }
-
-      fetch()
-    }
+  const handleDelete = async (orderid) => {
     setOrders((prevOrders) =>
       prevOrders.filter((order) => order._id !== orderid)
     )
-    setAddedOrder(false)
+
+    if (token.token) {
+      await fetchData("delete", `/api/orders/cart/delete/${orderid}`)
+    }
   }
 
   const handleBuy = (orderid) => {
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          const res = await axios.patch(
-            `/api/orders/cart/buy/${orderid}`,
-            null,
-            {
-              headers: {
-                Authorization: `Basic ${token.token}`,
-              },
-            }
-          )
+    setOrders((prevOrders) =>
+      prevOrders.map((order) => {
+        if (order._id === orderid) {
+          order.status = false
+        }
+        return order
+      })
+    )
 
-          if (res.statusError) {
-            return
-          }
-
-          setOrders((prevOrders) =>
-            prevOrders.map((order) => {
-              if (order._id === orderid) {
-                order.status = false
-              }
-              return order
-            })
-          )
-        } catch (error) {}
-      }
-
-      fetch()
-    } else {
-      setOrders((prevOrders) =>
-        prevOrders.map((order) => {
-          if (order._id === orderid) {
-            order.status = false
-          }
-          return order
-        })
-      )
+    if (token.token) {
+      fetchData("patch", `/api/orders/cart/buy/${orderid}`)
     }
   }
 
@@ -169,8 +58,7 @@ function Cart({ isCabinet }) {
         isCabinet={isCabinet}
         index={index + 1}
         setPopupCart={setPopupCart}
-        handleAdd={handleAdd}
-        handleRemove={handleRemove}
+        handleReduceAmount={handleReduceAmount}
         handleDelete={handleDelete}
         handleBuy={handleBuy}
       />

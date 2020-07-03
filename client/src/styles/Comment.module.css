@@ -22,6 +22,7 @@
 }
 .infoContainer {
   margin-left: 20px;
+  flex: 1;
 }
 .typeUser {
   text-align: center;
@@ -57,14 +58,14 @@
   font-size: 1.5em;
   cursor: pointer;
   border: none;
-  border: 1px solid rgba(128, 128, 128, 0.523);
+  border: 1px solid rgba(128, 128, 128, 0.223);
   width: 40px;
   line-height: 20px;
   text-align: center;
   border-radius: 3px;
   height: 40px;
   transition: 0.15s ease;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.7);
   outline-color: orangered;
 }
 .btnRate:hover {
@@ -72,6 +73,45 @@
 }
 .btnRate:active {
   transform: scale(0.9);
+}
+.unActiveBtn {
+  background-color: grey !important;
+  box-shadow: none !important;
+  outline: none;
+  color: lightgrey;
+}
+.unActiveBtn:hover {
+  transform: scale(1);
+}
+.unActiveBtn:hover .warningPopup {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+.warningPopup {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: grey;
+  position: absolute;
+  width: 140px;
+  top: -64px;
+  left: 50%;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  transition: 0.2s;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) scale(0);
+}
+.threeangle {
+  width: 0px;
+  height: 0px;
+  border: 10px solid transparent;
+  border-top-color: grey;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  bottom: -19px;
 }
 .rate {
   border: 1px solid rgba(51, 51, 51, 0.4);
@@ -90,7 +130,6 @@
   color: white;
   justify-content: center;
   background: #141e30;
-  /* margin-left: 20px; */
   transition: 0.2s ease;
   padding: 15px 20px;
   text-shadow: 0px 0px 5px black;
@@ -168,7 +207,6 @@
     0px 5px 10px rgba(0, 0, 0, 0.4);
 }
 .hideForm {
-  /* height: auto; */
   opacity: 1;
   transform: scale(1);
 }
@@ -197,7 +235,6 @@
   transition: 0.2s ease;
   background-color: #141e30;
   width: 20%;
-  /* border-bottom: 1.2px solid #141e30; */
   cursor: pointer;
 }
 .submitAnswerBtn:hover {
@@ -278,9 +315,9 @@
     padding: 5px;
   }
   .btnRate {
-    font-size: 1.3em;
+    font-size: 1.2em;
     width: 30px;
-    line-height: 15px;
+    line-height: 16px;
     height: 30px;
   }
   .date {

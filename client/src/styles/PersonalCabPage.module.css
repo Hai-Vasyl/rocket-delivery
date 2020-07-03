@@ -60,7 +60,6 @@
 .formImageChange input:focus {
   background-color: rgba(0, 0, 0, 0.1);
 }
-
 .formImageChange button {
   font-size: inherit;
   font-family: inherit;
@@ -73,7 +72,6 @@
   background-color: #141e30;
   color: lightgrey;
 }
-
 .formImageChange button:active {
   transform: scale(0.9);
 }

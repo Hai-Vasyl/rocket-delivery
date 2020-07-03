@@ -1,41 +1,21 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useEffect, useState } from "react"
 import mainStyle from "../styles/MainStyles.module.css"
-import axios from "axios"
-import { Context } from "../context/Context"
 import User from "../components/User"
 import LoaderData from "../components/LoaderData"
+import { useHTTP } from "../hooks/useHTTP"
 
 function UsersPage() {
   const { wrapper } = mainStyle
-  const { token } = useContext(Context)
   const [data, setData] = useState([])
-  const [load, setLoad] = useState(false)
+  const { fetchData, load } = useHTTP()
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get("/api/auth/users", {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        })
-        setData(res.data)
-      } catch (error) {}
-    }
-
-    fetch()
-    setTimeout(() => setLoad(true), 1000)
-  }, [token])
+    fetchData("get", "/api/auth/users", null, setData)
+  }, [fetchData])
 
   const handleDeleteUser = async (id) => {
-    try {
-      await axios.delete(`/api/auth/delete/${id}`, {
-        headers: {
-          Authorization: `Basic ${token.token}`,
-        },
-      })
-      setData(data.filter((user) => user._id !== id))
-    } catch (error) {}
+    setData(data.filter((user) => user._id !== id))
+    fetchData("delete", `/api/auth/delete/${id}`)
   }
 
   const usersJSX = data.map((user) => {

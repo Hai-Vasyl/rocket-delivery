@@ -1,17 +1,16 @@
-import React, { useState, useContext } from "react"
+import React, { useState } from "react"
 import mainStyle from "../styles/MainStyles.module.css"
 import style from "../styles/Create-EditFoodPage.module.css"
 import iconNoImage from "../imgs/icon-no-image.svg"
 import { AiOutlinePlusCircle, AiOutlineAppstore } from "react-icons/ai"
-import axios from "axios"
 import { RiUserSettingsLine } from "react-icons/ri"
 import { BsPlus } from "react-icons/bs"
-import { Context } from "../context/Context"
 import { IoIosAlert } from "react-icons/io"
+import { useModifyFood } from "../hooks/useModifyFood"
 
 function CreateFoodPage() {
   const { wrapper } = mainStyle
-  const { token } = useContext(Context)
+  const { handleModify } = useModifyFood()
 
   const {
     containerForm,
@@ -29,7 +28,9 @@ function CreateFoodPage() {
     popupActiveStatusFalse,
     popupActiveStatusTrue,
     messagePopup,
+    blockInput,
   } = style
+
   const [form, setForm] = useState({
     category: "pizza",
     name: "",
@@ -46,29 +47,9 @@ function CreateFoodPage() {
     setMessage("")
   }
 
-  const handleSubmitForm = async (e) => {
+  const handleSubmitForm = (e) => {
     e.preventDefault()
-    try {
-      if (
-        !form.category ||
-        !form.name ||
-        !form.price ||
-        !form.img ||
-        !form.description ||
-        !form.institution ||
-        !form.weight
-      ) {
-        setMessage({ status: false, message: "Fill all fields!" })
-        return
-      }
-      await axios.post("/api/foods/create", form, {
-        headers: {
-          Authorization: `Basic ${token.token}`,
-        },
-      })
-
-      setMessage({ status: true, message: "Food created!" })
-    } catch (error) {}
+    handleModify(form, setMessage, true)
   }
 
   return (
@@ -78,33 +59,39 @@ function CreateFoodPage() {
           <div className={title}>
             <AiOutlinePlusCircle /> <span>Create New Food</span>
           </div>
-          <input
-            className={input}
-            type='text'
-            name='name'
-            value={form.name}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Name'
-          />
-          <input
-            className={input}
-            type='text'
-            name='price'
-            value={form.price}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Price'
-          />
-          <input
-            className={input}
-            type='text'
-            name='description'
-            value={form.description}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Description'
-          />
+          <div className={blockInput}>
+            <label>Name: </label>
+            <input
+              className={input}
+              type='text'
+              name='name'
+              value={form.name}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
+          <div className={blockInput}>
+            <label>Price: </label>
+            <input
+              className={input}
+              type='text'
+              name='price'
+              value={form.price}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
+          <div className={blockInput}>
+            <label>Description: </label>
+            <input
+              className={input}
+              type='text'
+              name='description'
+              value={form.description}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
 
           <div className={selectContainer}>
             <label className={labelText}>
@@ -137,24 +124,28 @@ function CreateFoodPage() {
             </select>
           </div>
 
-          <input
-            className={input}
-            type='text'
-            name='img'
-            value={form.img}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Image'
-          />
-          <input
-            className={input}
-            type='text'
-            name='weight'
-            value={form.weight}
-            onChange={handleChangeForm}
-            autoComplete='off'
-            placeholder='Weight'
-          />
+          <div className={blockInput}>
+            <label>Image: </label>
+            <input
+              className={input}
+              type='text'
+              name='img'
+              value={form.img}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
+          <div className={blockInput}>
+            <label>Weight: </label>
+            <input
+              className={input}
+              type='text'
+              name='weight'
+              value={form.weight}
+              onChange={handleChangeForm}
+              autoComplete='off'
+            />
+          </div>
 
           <div className={selectContainer}>
             <label className={labelText}>

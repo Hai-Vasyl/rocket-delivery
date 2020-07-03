@@ -70,9 +70,7 @@ router.post(
 
       const user = await newUser.save()
 
-      const token = jwt.sign({ userId: user._id }, config.get("jwt_secret"), {
-        expiresIn: "7d",
-      })
+      const token = jwt.sign({ userId: user._id }, config.get("jwt_secret"))
 
       res.status(201).json({
         token,
@@ -123,9 +121,7 @@ router.post(
         return res.status(400).json({ message: "Wrong password, try again!" })
       }
 
-      const token = jwt.sign({ userId: user._id }, config.get("jwt_secret"), {
-        expiresIn: "7d",
-      })
+      const token = jwt.sign({ userId: user._id }, config.get("jwt_secret"))
 
       res.json({
         token,

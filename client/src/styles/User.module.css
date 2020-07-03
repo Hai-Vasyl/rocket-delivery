@@ -5,23 +5,20 @@
   margin: 0 auto;
   margin-bottom: 3vh;
   box-shadow: 0px 20px 23px #141e3071, 0px 0px 20px #141e309c;
-  /* margin: 0 5vw; */
   padding: 12px;
   color: lightgrey;
   background-color: #141e30;
-  /* background-image: linear-gradient(to bottom right, orangered, #141e30); */
   border-radius: 5px;
 }
 .containerImg {
   width: 130px;
-  /* border: 1px solid rgba(255, 255, 255, 0.2); */
   display: flex;
 }
 .containerInf {
-  flex: 1;
-  /* border: 1px solid rgba(255, 255, 255, 0.2); */
+  flex: auto;
   display: flex;
   border-radius: 5px;
+  justify-content: space-between;
 }
 .userName {
   color: lightgrey;
@@ -43,7 +40,6 @@
   background-color: orangered;
   transition: 0.2s ease;
   color: white;
-  text-shadow: 0px 0px 5px black;
   outline: none;
 }
 .btnDelete:hover {
@@ -73,8 +69,6 @@
 }
 .userNameLink {
   text-decoration: none;
-  /* display: inline-block; */
-  /* transition: 0.2s ease; */
   width: 150px;
   max-width: 100%;
   text-align: center;
@@ -92,8 +86,6 @@
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.459),
     0px 5px 10px rgba(0, 0, 0, 0.541);
   border-radius: 50%;
-
-  /* border: 1px solid black; */
 }
 .userImgLink:hover img {
   transform: scale(1.2);
@@ -110,4 +102,28 @@
   margin-top: 10px;
   border-radius: 4px;
   text-align: center;
+}
+
+@media (max-width: 650px) {
+  .infoBlock {
+    max-width: 45vw;
+    overflow: auto;
+    height: 104px;
+  }
+  .containerImg {
+    width: 90px;
+  }
+  .userImgLink {
+    width: 70px;
+    height: 70px;
+  }
+  .btnBlock {
+    width: 45px;
+  }
+  .btnDelete {
+    width: 30px;
+    line-height: 9px;
+    height: 30px;
+    font-size: 1em;
+  }
 }

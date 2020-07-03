@@ -1,29 +1,28 @@
 import React, { useState, useEffect, useContext } from "react"
 import mainStyle from "../styles/MainStyles.module.css"
 import style from "../styles/FoodPage.module.css"
-import axios from "axios"
 import { Link } from "react-router-dom"
 import { RiShoppingCartLine } from "react-icons/ri"
 import { AiOutlineLike, AiOutlineDislike, AiOutlineCheck } from "react-icons/ai"
-import Comment from "../components/Comment"
 import { Context } from "../context/Context"
-import { BsArrowRightShort } from "react-icons/bs"
 import { FiArrowRight } from "react-icons/fi"
-import { IoIosAlert } from "react-icons/io"
 import LoaderData from "../components/LoaderData"
+import Comments from "../components/Comments"
 import { v4 as uuidv4 } from "uuid"
+import { useHTTP } from "../hooks/useHTTP"
+import { useOrderAmountReducer } from "../hooks/useOrderAmountReducer"
+import { useRate } from "../hooks/useRate"
 
 function FoodPage(props) {
   const { wrapper } = mainStyle
   const [data, setData] = useState({})
-  const [comments, setComments] = useState([])
-  const [message, setMessage] = useState("")
   const [added, setAdded] = useState(false)
-  const [formComment, setFormComment] = useState("")
-  const { token, orders, setOrders, addedOrder, setAddedOrder } = useContext(
-    Context
-  )
-  const [load, setLoad] = useState(false)
+  const [orderFoodAmount, setOrderFoodAmount] = useState("")
+  const { token, orders, setOrders } = useContext(Context)
+  const { fetchData, load } = useHTTP()
+  const { reduceOrderAmount } = useOrderAmountReducer()
+  const { handleRate } = useRate()
+
   const {
     containerCard,
     imgContainer,
@@ -58,552 +57,82 @@ function FoodPage(props) {
     dateText,
     date,
     link,
-    containerComments,
-    commentBlock,
-    avaBlock,
-    postBtn,
-    username,
-    form,
-    imgBox,
     btnActive,
     linkEdit,
     activeCart,
     backgroundFood,
-    alertBox,
-    alertPopup,
-    commentWarning,
     invertColorBtnAmount,
     unActiveBtn,
+    warningPopup,
+    threeangle,
   } = style
   const { foodid } = props.match.params
 
-  const handleChangeComment = (e) => {
-    setFormComment(e.target.value)
-    setMessage("")
-  }
+  useEffect(() => {
+    fetchData(
+      "get",
+      `/api/foods/food/${token.token ? "auth/" : ""}${foodid}`,
+      null,
+      setData
+    )
+  }, [foodid, token.token, fetchData])
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        if (!!token) {
-          const res = await axios.get(`/api/foods/food/auth/${foodid}`, {
-            headers: {
-              Authorization: `Basic ${token.token}`,
-            },
-          })
-          setData(res.data)
-          const {
-            category,
-            name,
-            price,
-            institution,
-            description,
-            weight,
-            img,
-            rate,
-            date,
-            _id,
-            rateList,
-          } = res.data
-
-          setData({
-            _id,
-            category,
-            name,
-            price,
-            institution,
-            description,
-            weight,
-            img,
-            rate,
-            date,
-            rateStatus: rateList[0].status,
-          })
-        } else {
-          const res = await axios.get(`/api/foods/food/${foodid}`)
-          setData(res.data)
-        }
-        setAdded(false)
-      } catch (error) {}
-    }
-
-    fetch()
-    setTimeout(() => setLoad(true), 1000)
-  }, [foodid, token])
-
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        if (!!token) {
-          const res = await axios.get(`/api/comments/list/auth/${foodid}`, {
-            headers: {
-              Authorization: `Basic ${token.token}`,
-            },
-          })
-
-          setComments(res.data)
-          setComments((prevComments) =>
-            prevComments.map((elem) => {
-              elem.rateStatus =
-                elem.rateList[0] === undefined
-                  ? "none"
-                  : elem.rateList[0].status
-
-              elem.answerList.map((answer) => {
-                answer.rateStatus =
-                  answer.rateList[0] === undefined
-                    ? "none"
-                    : answer.rateList[0].status
-
-                return answer
-              })
-
-              return elem
-            })
-          )
-        } else {
-          const res = await axios.get(`/api/comments/list/${foodid}`)
-          setComments(res.data)
-        }
-      } catch (error) {}
-    }
-
-    fetch()
-  }, [foodid, token])
-
-  useEffect(() => {
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          const res = await axios.get(`/api/orders/check/${foodid}`, {
-            headers: {
-              Authorization: `Basic ${token.token}`,
-            },
-          })
-
-          setAdded(res.data)
-        } catch (error) {}
+    let amount = ""
+    let added = false
+    orders.forEach((order) => {
+      if (order.foodProps._id === foodid) {
+        added = true
+        amount = order.amount
+        return
       }
+    })
 
-      fetch()
-    } else {
-      orders.map((order) => {
-        if (order.foodProps._id === foodid) {
-          setAdded(true)
-        }
-        return order
-      })
-    }
-  }, [orders, data._id, foodid, token.token])
+    setOrderFoodAmount(amount)
+    setAdded(added)
+  }, [orders, foodid])
 
-  const handleLikeComment = async (comment) => {
+  const handleAddRemoveFoodCart = async () => {
     try {
-      const res = await axios.post(
-        `/api/rateComments/create/${comment._id}`,
-        { status: true, rate: comment.rate },
-        {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        }
-      )
+      if (added) {
+        setOrders((prevOrders) =>
+          prevOrders.filter((order) => order.foodProps._id !== foodid)
+        )
 
-      setComments((prevComments) =>
-        prevComments.map((item) => {
-          if (item._id === comment._id) {
-            item = {
-              ...item,
-              rate: res.data.rate,
-              rateStatus: res.data.status,
-            }
-          }
-          return item
-        })
-      )
+        if (token.token) {
+          fetchData("delete", `/api/orders/delete/${foodid}`)
+        }
+      } else {
+        let resId = uuidv4()
+        if (token.token) {
+          resId = await fetchData("post", `/api/orders/create/${foodid}`)
+        }
+
+        setOrders((prevOrders) => [
+          ...prevOrders,
+          {
+            foodProps: data,
+            generalPrice: data.price,
+            amount: 1,
+            status: true,
+            _id: resId,
+          },
+        ])
+      }
     } catch (error) {}
   }
 
-  const handleDisLikeComment = async (comment) => {
-    try {
-      const res = await axios.post(
-        `/api/rateComments/create/${comment._id}`,
-        { status: false, rate: comment.rate },
-        {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        }
-      )
+  const handleReduceAmount = (typeReducer) => {
+    reduceOrderAmount(false, typeReducer, foodid)
 
-      setComments((prevComments) =>
-        prevComments.map((item) => {
-          if (item._id === comment._id) {
-            item = {
-              ...item,
-              rate: res.data.rate,
-              rateStatus: res.data.status,
-            }
-          }
-          return item
-        })
-      )
-    } catch (error) {}
-  }
-
-  const handleLikeAnswer = async (answer) => {
-    try {
-      const res = await axios.post(
-        `/api/rateAnswers/create/${answer._id}`,
-        { status: true, rate: answer.rate },
-        {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        }
-      )
-
-      setComments((prevComments) =>
-        prevComments.map((item) => {
-          item.answerList = item.answerList.map((itemAnswer) => {
-            if (itemAnswer._id === answer._id) {
-              itemAnswer = {
-                ...itemAnswer,
-                rate: res.data.rate,
-                rateStatus: res.data.status,
-              }
-            }
-            return itemAnswer
-          })
-          return item
-        })
-      )
-    } catch (error) {}
-  }
-
-  const handleDisLikeAnswer = async (answer) => {
-    try {
-      const res = await axios.post(
-        `/api/rateAnswers/create/${answer._id}`,
-        { status: false, rate: answer.rate },
-        {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        }
-      )
-
-      setComments((prevComments) =>
-        prevComments.map((item) => {
-          item.answerList = item.answerList.map((itemAnswer) => {
-            if (itemAnswer._id === answer._id) {
-              itemAnswer = {
-                ...itemAnswer,
-                rate: res.data.rate,
-                rateStatus: res.data.status,
-              }
-            }
-            return itemAnswer
-          })
-          return item
-        })
-      )
-    } catch (error) {}
-  }
-
-  const handleSetStateComments = (newAnswer, commentId) => {
-    setComments((prevComments) =>
-      prevComments.map((comment) => {
-        if (comment._id === commentId) {
-          const owner = {
-            username: token.username,
-            ava: token.ava,
-            typeUser: token.typeUser,
-          }
-
-          comment.answerList = [...comment.answerList, { ...newAnswer, owner }]
-        }
-        return comment
-      })
-    )
-  }
-
-  const commentsJSX = comments.map((comment) => {
-    return (
-      <Comment
-        key={comment._id}
-        comment={comment}
-        handleLikeComment={handleLikeComment}
-        handleDisLikeComment={handleDisLikeComment}
-        handleLikeAnswer={handleLikeAnswer}
-        handleDisLikeAnswer={handleDisLikeAnswer}
-        handleSetStateComments={handleSetStateComments}
-      />
-    )
-  })
-
-  const handleUnLike = async () => {
-    try {
-      const res = await axios.post(
-        `/api/rateFoods/create/${foodid}`,
-        { status: false, rate: data.rate },
-        {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        }
-      )
-      setData({
-        ...data,
-        rate: res.data.rate,
-        rateStatus: res.data.status,
-      })
-    } catch (error) {}
-  }
-
-  const handleLike = async () => {
-    try {
-      const res = await axios.post(
-        `/api/rateFoods/create/${foodid}`,
-        { status: true, rate: data.rate },
-        {
-          headers: {
-            Authorization: `Basic ${token.token}`,
-          },
-        }
-      )
-
-      setData({
-        ...data,
-        rateStatus: res.data.status,
-        rate: res.data.rate,
-      })
-    } catch (error) {}
-  }
-
-  const handleAddFoodToCart = () => {
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          const res = await axios.post(
-            `/api/orders/create/${foodid}`,
-            { price: data.price },
-            {
-              headers: {
-                Authorization: `Basic ${token.token}`,
-              },
-            }
-          )
-
-          setOrders((prevOrders) => [...prevOrders, res.data])
-        } catch (error) {}
-      }
-
-      fetch()
-    } else {
-      setOrders((prevOrders) => [
-        ...prevOrders,
-        {
-          foodProps: data,
-          generalPrice: data.price,
-          amount: 1,
-          status: true,
-          _id: uuidv4(),
-        },
-      ])
-    }
-    setAddedOrder("")
-  }
-
-  const handleRemoveFoodFromCart = async () => {
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          setOrders((prevOrders) =>
-            prevOrders.filter((order) => order.foodProps._id !== foodid)
-          )
-
-          await axios.delete(`/api/orders/delete/${foodid}`, {
-            headers: {
-              Authorization: `Basic ${token.token}`,
-            },
-          })
-        } catch (error) {}
-      }
-
-      fetch()
-    } else {
-      setOrders((prevOrders) =>
-        prevOrders.filter((order) => order.foodProps._id !== foodid)
-      )
-    }
-    setAdded(false)
-    setAddedOrder("")
-  }
-
-  const handleRemove = () => {
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          const res = await axios.patch(
-            `/api/orders/amount/remove/${foodid}`,
-            null,
-            {
-              headers: {
-                Authorization: `Basic ${token.token}`,
-              },
-            }
-          )
-          if (res.data.statusError) {
-            return
-          }
-          const { generalPrice, amount } = res.data
-
-          setOrders((prevOrders) =>
-            prevOrders.map((order) => {
-              if (order.foodProps._id === foodid) {
-                order.amount = amount
-                order.generalPrice = generalPrice
-              }
-              return order
-            })
-          )
-        } catch (error) {}
-      }
-
-      fetch()
-    } else {
-      setOrders((prevOrders) =>
-        prevOrders.map((order) => {
-          if (order.foodProps._id === foodid && order.amount !== 1) {
-            const amountOrder = order.amount - 1
-            order.generalPrice =
-              (order.generalPrice / order.amount) * amountOrder
-            order.amount = amountOrder
-          }
-          return order
-        })
+    if (token.token) {
+      fetchData(
+        "patch",
+        `/api/orders/amount/${typeReducer ? "add" : "remove"}/${foodid}`
       )
     }
   }
 
-  const handleAdd = () => {
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          const res = await axios.patch(
-            `/api/orders/amount/add/${foodid}`,
-            null,
-            {
-              headers: {
-                Authorization: `Basic ${token.token}`,
-              },
-            }
-          )
-
-          const { generalPrice, amount } = res.data
-
-          setOrders((prevOrders) =>
-            prevOrders.map((order) => {
-              if (order.foodProps._id === foodid) {
-                order.amount = amount
-                order.generalPrice = generalPrice
-              }
-              return order
-            })
-          )
-        } catch (error) {}
-      }
-
-      fetch()
-    } else {
-      setOrders((prevOrders) =>
-        prevOrders.map((order) => {
-          if (order.foodProps._id === foodid) {
-            const amountOrder = order.amount + 1
-            order.generalPrice =
-              (order.generalPrice / order.amount) * amountOrder
-            order.amount = amountOrder
-          }
-          return order
-        })
-      )
-    }
-  }
-
-  const handleSubmitComment = (e) => {
-    e.preventDefault()
-
-    if (!!token.token) {
-      const fetch = async () => {
-        try {
-          if (!formComment) {
-            return setMessage("Fill Field To Post!")
-          }
-
-          const res = await axios.post(
-            `/api/comments/create/${data._id}`,
-            { content: formComment },
-            {
-              headers: {
-                Authorization: `Basic ${token.token}`,
-              },
-            }
-          )
-
-          const owner = {
-            username: token.username,
-            typeUser: token.typeUser,
-            ava: token.ava,
-          }
-          setComments((prevComments) => [
-            ...prevComments,
-            { ...res.data, owner },
-          ])
-          setFormComment("")
-        } catch (error) {}
-      }
-
-      fetch()
-    } else {
-    }
-  }
-
-  let orderAmount
-
-  orders.forEach((order) => {
-    if (order.foodProps._id === foodid) {
-      orderAmount = order.amount
-    }
-  })
-
-  const displayCommentPost = () => {
-    return (
-      <div className={commentBlock}>
-        <div className={avaBlock}>
-          <div className={imgBox}>
-            <img src={token.ava} alt='avaImage' />
-          </div>
-        </div>
-        <form className={form} onSubmit={handleSubmitComment}>
-          <h3 className={username}>{token.username}</h3>
-          <textarea
-            onChange={handleChangeComment}
-            value={formComment}
-            placeholder='Comment'
-          ></textarea>
-          <button className={postBtn} onClick={handleSubmitComment}>
-            <span>Post</span> <BsArrowRightShort />
-          </button>
-          <span
-            className={`${alertBox} ${!!message && alertPopup}`}
-            onClick={() => setMessage("")}
-          >
-            <IoIosAlert /> <span>{message}</span>
-          </span>
-        </form>
-      </div>
-    )
-  }
   if (!load) {
     return (
       <div className={wrapper}>
@@ -630,24 +159,32 @@ function FoodPage(props) {
             <div className={rateBlock}>
               <button
                 className={`${btnRate} ${
-                  !!token.token
+                  token.token
                     ? data.rateStatus === true && btnActive
                     : unActiveBtn
                 }`}
-                onClick={handleLike}
+                onClick={() => handleRate(true, data, setData, "Foods")}
               >
                 <AiOutlineLike />
+                <span className={warningPopup}>
+                  Register, to like food!
+                  <span className={threeangle}></span>
+                </span>
               </button>
               <span className={rate}>{data.rate}</span>
               <button
                 className={`${btnRate} ${
-                  !!token.token
+                  token.token
                     ? data.rateStatus === false && btnActive
                     : unActiveBtn
                 }`}
-                onClick={handleUnLike}
+                onClick={() => handleRate(false, data, setData, "Foods")}
               >
                 <AiOutlineDislike />
+                <span className={warningPopup}>
+                  Register, to dislike food!
+                  <span className={threeangle}></span>
+                </span>
               </button>
             </div>
           </div>
@@ -696,56 +233,43 @@ function FoodPage(props) {
           <div className={buttonsBlock}>
             <div className={btnAddAmount}>
               <div className={amount}>
-                <span>{orderAmount}</span>
+                <span>{orderFoodAmount}</span>
               </div>
               <div>
                 <button
-                  className={`${btnAmount} ${
-                    (typeof addedOrder === "string" ? !added : !addedOrder) &&
-                    invertColorBtnAmount
-                  }`}
-                  onClick={handleAdd}
+                  className={`${btnAmount} ${added && invertColorBtnAmount}`}
+                  onClick={() => handleReduceAmount(true)}
                 >
                   +
                 </button>
                 <button
-                  className={`${btnAmount} ${
-                    (typeof addedOrder === "string" ? !added : !addedOrder) &&
-                    invertColorBtnAmount
-                  }`}
-                  onClick={handleRemove}
+                  className={`${btnAmount} ${added && invertColorBtnAmount}`}
+                  onClick={() => handleReduceAmount(false)}
                 >
                   -
                 </button>
               </div>
             </div>
-            {(typeof addedOrder === "string" ? added : addedOrder) ? (
-              <button
-                className={`${cart} ${activeCart}`}
-                onClick={handleRemoveFoodFromCart}
-              >
-                <AiOutlineCheck /> <span>Added</span>
-              </button>
-            ) : (
-              <button className={cart} onClick={handleAddFoodToCart}>
-                <RiShoppingCartLine /> <span>Add</span>
-              </button>
-            )}
+
+            <button
+              className={`${cart} ${added && activeCart}`}
+              onClick={handleAddRemoveFoodCart}
+            >
+              {added ? (
+                <>
+                  <AiOutlineCheck /> <span>Added</span>
+                </>
+              ) : (
+                <>
+                  <RiShoppingCartLine /> <span>Add</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
       </div>
 
-      <div className={containerComments}>
-        {!!token.token ? (
-          displayCommentPost()
-        ) : (
-          <div className={commentWarning}>
-            =( Want to leave a comment - first register!
-          </div>
-        )}
-
-        {commentsJSX}
-      </div>
+      <Comments foodid={foodid} />
     </div>
   )
 }

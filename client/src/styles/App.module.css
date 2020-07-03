@@ -1,17 +1,8 @@
 .wrapper {
-  /* background-image: url("../imgs/texture_surface_paint_117790_1920x1080.jpg"); */
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
   background-image: linear-gradient(
-    to bottom right,
-    #141e30,
-    #1f1430ef,
-    rgba(255, 68, 0, 0.7)
-  );
-  /* url("../imgs/texture_surface_paint_117790_1920x1080.jpg") */
-
-  /* background-image: linear-gradient(
       131deg,
       rgba(186, 186, 186, 0.01) 0%,
       rgba(186, 186, 186, 0.01) 16.667%,
@@ -113,7 +104,7 @@
       #0f1124,
       #141e30
     ),
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)); */
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
 .background {
   position: fixed;
@@ -206,11 +197,10 @@
   height: 500px;
   overflow-y: auto;
   padding: 1.5vw;
-  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.507),
-    inset 0px 0px 20px rgba(0, 0, 0, 0.107);
+  box-shadow: inset 6px 6px 12px #0c121d, inset -6px -6px 12px #1c2a43;
   border-radius: 10px;
-  border-top: 1px solid rgba(128, 128, 128, 0.719);
-  border-bottom: 1px solid rgba(128, 128, 128, 0.719);
+  border-top: 1px solid rgba(128, 128, 128, 0.4);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.4);
 }
 .title {
   display: block;
@@ -246,10 +236,12 @@
 @media (max-width: 880px) {
   .popup {
     padding: 0px 10px;
-    background-color: rgba(169, 169, 169, 0.1);
+    background-color: rgba(169, 169, 169, 0.8);
+    box-shadow: none;
   }
   .containerCart {
-    height: 400px;
+    height: 55vh;
+    box-shadow: inset 7px 7px 13px #656565, inset -7px -7px 13px #ededed;
   }
   .linkContinue {
     background-color: #141e30;

@@ -7,27 +7,21 @@ const router = Router()
 
 router.post("/create/:foodid", auth, async (req, res) => {
   try {
-    const { price } = req.body
     const { foodid } = req.params
     const { userId } = req
+
+    const food = await Food.findById(foodid).select("price")
 
     const newOrder = new Order({
       foodProps: foodid,
       owner: userId,
       date: new Date(),
-      generalPrice: price,
+      generalPrice: food.price,
     })
 
     const order = await newOrder.save()
 
-    const findedOrder = await Order.findById(order._id)
-      .populate({
-        path: "foodProps",
-        select: "category img institution name ",
-      })
-      .select("amount generalPrice status")
-
-    res.status(201).json(findedOrder)
+    res.status(201).json(order._id)
   } catch (error) {
     res.status(500).json(`Error creating order: ${error.message}`)
   }
@@ -53,7 +47,7 @@ router.patch("/amount/add/:foodid", auth, async (req, res) => {
       { generalPrice, amount }
     )
 
-    res.json({ generalPrice, amount })
+    res.json("Order amount updated!")
   } catch (error) {
     res.status(500).json(`Error adding amount order: ${error.message}`)
   }
@@ -70,7 +64,7 @@ router.patch("/amount/remove/:foodid", auth, async (req, res) => {
     }).select("amount")
 
     if (orderAmount.amount === 1) {
-      return res.json({ statusError: true })
+      return res.json("Order can`t update!")
     }
 
     const foodPrice = await Food.findById(foodid).select("price")
@@ -83,7 +77,7 @@ router.patch("/amount/remove/:foodid", auth, async (req, res) => {
       { generalPrice, amount }
     )
 
-    res.json({ generalPrice, amount })
+    res.json("Order amount updated!")
   } catch (error) {
     res.status(500).json(`Error removing amount order: ${error.message}`)
   }
@@ -94,7 +88,7 @@ router.patch("/cart/buy/:orderid", auth, async (req, res) => {
     const { orderid } = req.params
     const order = await Order.findById(orderid).select("status")
     if (!order.status) {
-      return res.json({ statusError: true })
+      return res.json("Order already bought!")
     }
 
     await Order.updateOne({ _id: orderid }, { status: false })
@@ -118,7 +112,7 @@ router.patch("/cart/amount/add/:orderid", auth, async (req, res) => {
 
     await Order.updateOne({ _id: orderid }, { generalPrice, amount })
 
-    res.json({ generalPrice, amount })
+    res.json("Order amount updated!")
   } catch (error) {
     res.status(500).json(`Error adding amount order: ${error.message}`)
   }
@@ -133,7 +127,7 @@ router.patch("/cart/amount/remove/:orderid", auth, async (req, res) => {
       .select("amount")
 
     if (order.amount === 1) {
-      return res.json({ statusError: true })
+      return res.json("Order can`t update!")
     }
 
     const amount = order.amount - 1
@@ -141,7 +135,7 @@ router.patch("/cart/amount/remove/:orderid", auth, async (req, res) => {
 
     await Order.updateOne({ _id: orderid }, { generalPrice, amount })
 
-    res.json({ generalPrice, amount })
+    res.json("Order amount updated!")
   } catch (error) {
     res.status(500).json(`Error removing amount order: ${error.message}`)
   }

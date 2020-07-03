@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react"
 import mainStyle from "../styles/MainStyles.module.css"
-import axios from "axios"
 import ContainerPartnersFoods from "../components/ContainerPartnersFoods.js"
 import { Link } from "react-router-dom"
 import { FiArrowRight } from "react-icons/fi"
+import { useHTTP } from "../hooks/useHTTP"
 import LoaderData from "../components/LoaderData"
 
 function Partners() {
@@ -18,6 +18,8 @@ function Partners() {
     invertColorTitleCategory,
     invertWrapperContainer,
   } = mainStyle
+
+  const { load, fetchData } = useHTTP()
   const [data, setData] = useState({
     Regina: [],
     Embroidered_Shirt: [],
@@ -25,19 +27,10 @@ function Partners() {
     Dari_Mora: [],
     Brown: [],
   })
-  const [load, setLoad] = useState(false)
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get("/api/foods/briefpartners/all")
-        setData(res.data)
-      } catch (error) {}
-    }
-
-    fetch()
-    setTimeout(() => setLoad(true), 1000)
-  }, [])
+    fetchData("get", "/api/foods/briefpartners/all", null, setData)
+  }, [fetchData])
 
   if (!load) {
     return (

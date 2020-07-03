@@ -7,7 +7,6 @@ const Comment = require("../models/Comment")
 const RateComment = require("../models/RateComment")
 const Answer = require("../models/Answer")
 const RateAnswer = require("../models/RateAnswer")
-// const RateFood = require("../models/RateFood")
 
 const router = Router()
 
@@ -30,12 +29,6 @@ router.get("/:category", async (req, res) => {
     const food = await Food.find({ category }).select(
       "name price institution img"
     )
-
-    // if (food === null) {
-    //   return res
-    //     .status(404)
-    //     .json({ errorCode: true, message: "Category is not exist!" })
-    // }
 
     res.json(food)
   } catch (error) {
@@ -80,25 +73,17 @@ router.get("/food/auth/:id", auth, async (req, res) => {
   try {
     const { id } = req.params
 
-    // const food = await Food.findById(id).populate({
-    //   path: "comments",
-    //   populate: { path: "owner" },
-    // })
-    // const ratefood = await RateFood.find({owner: req.userId}).find({food: id})
-
     const food = await Food.findById(id).populate({
       path: "rateList",
       match: { owner: req.userId },
       select: "status",
     })
 
-    // .find({ rateList: { $elemMatch: { owner: req.userId } } })
-    // const foodnew = await food.rateList.find({ owner: req.userId })
-    // if (food === null) {
-    //   res.status(404).json({ errorCode: true, message: "Food is not exist!" })
-    // }
-
-    res.json(food)
+    res.json({
+      ...food._doc,
+      rateStatus:
+        food.rateList[0] === undefined ? "none" : food.rateList[0].status,
+    })
   } catch (error) {
     res.status(500).json(`Error getting food by id: ${error.message}`)
   }
@@ -184,19 +169,7 @@ router.post("/create", auth, async (req, res) => {
 
 router.patch("/update/:id", auth, async (req, res) => {
   try {
-    // const {
-    //   category,
-    //   name,
-    //   price,
-    //   img,
-    //   institution,
-    //   description,
-    //   weight,
-    // } = req.body
-
     const updatedFood = await Food.updateOne({ _id: req.params.id }, req.body)
-
-    // await updatedFood.save()
 
     res.json(updatedFood)
   } catch (error) {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
 import mainStyle from "../styles/MainStyles.module.css"
 import style from "../styles/MainPage.module.css"
-import axios from "axios"
 import ContainerPopularFoods from "../components/ContainerPopularFoods"
 import { IoIosRocket } from "react-icons/io"
 import imgMain from "../imgs/mainImage.svg"
 import { Link } from "react-router-dom"
 import { FaAddressCard } from "react-icons/fa"
+import { useHTTP } from "../hooks/useHTTP"
 import {
   AiOutlineAppstore,
   AiOutlineUsergroupAdd,
@@ -21,6 +21,8 @@ import imgCircle3 from "../imgs/background-circle2.svg"
 import LoaderData from "../components/LoaderData"
 
 function MainPage() {
+  const { load, fetchData } = useHTTP()
+
   const {
     titlePopular,
     titleCategory,
@@ -30,7 +32,6 @@ function MainPage() {
     titleMainPopular,
     wrapper_main,
   } = mainStyle
-  // const [load, setLoad] = useState(false)
   const {
     imgHeader,
     title,
@@ -51,7 +52,7 @@ function MainPage() {
     circle2,
     circle3,
   } = style
-  const [load, setLoad] = useState(false)
+
   const [data, setData] = useState({
     pizza: [],
     soups: [],
@@ -62,21 +63,17 @@ function MainPage() {
   })
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get("/api/foods/briefcategory/all")
-        setData(res.data)
-      } catch (error) {}
-    }
-
-    fetch()
-    setTimeout(() => setLoad(true), 500)
-  }, [])
+    fetchData("get", "/api/foods/briefcategory/all", null, setData)
+  }, [fetchData])
 
   if (!load) {
     return (
       <div className={wrapperMain}>
-        <LoaderData />
+        <div className={header}>
+          <div className={wrapperHeader}>
+            <LoaderData />
+          </div>
+        </div>
       </div>
     )
   }

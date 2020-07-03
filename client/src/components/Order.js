@@ -11,8 +11,7 @@ function Order({
   isCabinet,
   token,
   setPopupCart,
-  handleAdd,
-  handleRemove,
+  handleReduceAmount,
   handleDelete,
   handleBuy,
 }) {
@@ -85,19 +84,22 @@ function Order({
       <div className={btnBlock}>
         {order.status && (
           <div className={btnsAmount}>
-            <button className={btnAmount} onClick={() => handleAdd(order._id)}>
+            <button
+              className={btnAmount}
+              onClick={() => handleReduceAmount(order._id, true)}
+            >
               +
             </button>
             <span className={amount}>{order.amount}</span>
             <button
               className={btnAmount}
-              onClick={() => handleRemove(order._id)}
+              onClick={() => handleReduceAmount(order._id, false)}
             >
               -
             </button>
           </div>
         )}
-        {!!token.token && !isCabinet && (
+        {token.token && !isCabinet && (
           <Link
             className={purchaseBtn}
             to='/personalcab'

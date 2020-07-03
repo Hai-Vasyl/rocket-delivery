@@ -29,6 +29,7 @@ function LoginPage() {
     sidebarRegister,
     loaderActive,
   } = style
+
   const [form, setForm] = useState({ username: "", email: "", password: "" })
   const [error, setError] = useState("")
   const [loader, setLoader] = useState(false)
@@ -41,7 +42,7 @@ function LoginPage() {
 
   const handlerSubmit = async (e) => {
     try {
-      // e.preventDefault()
+      e.preventDefault()
       if (!form.email || !form.password || !form.username) {
         setError("Fill all fields!")
         return
@@ -89,33 +90,42 @@ function LoginPage() {
           <div className={titleForm}>
             <FaCheckCircle /> <span>Register</span>
           </div>
-          <input
-            type='text'
-            name='username'
-            value={form.username}
-            onChange={handlerChangeForm}
-            placeholder='Username'
-            className={input}
-            autoComplete='off'
-          />
-          <input
-            type='email'
-            name='email'
-            value={form.email}
-            onChange={handlerChangeForm}
-            placeholder='Email'
-            className={input}
-            autoComplete='off'
-          />
-          <input
-            type='password'
-            name='password'
-            value={form.password}
-            onChange={handlerChangeForm}
-            placeholder='Password'
-            className={input}
-            autoComplete='off'
-          />
+          <div>
+            <label>Username: </label>
+            <br />
+            <input
+              type='text'
+              name='username'
+              value={form.username}
+              onChange={handlerChangeForm}
+              className={input}
+              autoComplete='off'
+            />
+          </div>
+          <div>
+            <label>Email: </label>
+            <br />
+            <input
+              type='email'
+              name='email'
+              value={form.email}
+              onChange={handlerChangeForm}
+              className={input}
+              autoComplete='off'
+            />
+          </div>
+          <div>
+            <label>Password: </label>
+            <br />
+            <input
+              type='password'
+              name='password'
+              value={form.password}
+              onChange={handlerChangeForm}
+              className={input}
+              autoComplete='off'
+            />
+          </div>
           <div className={btnWrapper}>
             <button onClick={handlerSubmit} className={btnAction}>
               Sign Up

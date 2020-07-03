@@ -22,8 +22,6 @@
   margin-right: 0;
 }
 .img {
-  /* width: 350px; */
-  /* height: 350px; */
   overflow: hidden;
 }
 .img img {
@@ -37,8 +35,6 @@
 }
 .name {
   font-size: 0.9em;
-  /* text-align: center;
-  border: 1px solid black; */
 }
 .foodName {
   display: block;
@@ -55,9 +51,7 @@
   border-bottom-color: transparent;
 }
 .foodName:hover {
-  /* background-color: #141e30; */
   color: orangered;
-  /* transform: scale(1.05); */
 }
 .foodInstitution {
   text-decoration: none;

@@ -7,9 +7,8 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    // console.log(req.headers.authorization.split(" "))
     const token = req.headers.authorization.split(" ")[1]
-    // console.log(token)
+
     if (!token) {
       return res.status(401).json("Access is denied!")
     }

@@ -1,26 +1,18 @@
 import React, { useEffect, useState } from "react"
 import mainStyle from "../styles/MainStyles.module.css"
-import axios from "axios"
 import Food from "../components/Food"
 import LoaderData from "../components/LoaderData"
+import { useHTTP } from "../hooks/useHTTP"
 
 function FoodsPage(props) {
   const { wrapper, mainTitle, container } = mainStyle
+  const { load, fetchData } = useHTTP()
   const { foodcategory } = props.match.params
   const [data, setData] = useState([])
-  const [load, setLoad] = useState(false)
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get(`/api/foods/${foodcategory}`)
-        setData(res.data)
-      } catch (error) {}
-    }
-
-    fetch()
-    setTimeout(() => setLoad(true), 1000)
-  }, [foodcategory])
+    fetchData("get", `/api/foods/${foodcategory}`, null, setData)
+  }, [foodcategory, fetchData])
 
   const foods = data.map((food) => {
     return <Food key={food._id} food={food} />

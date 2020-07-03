@@ -9,6 +9,7 @@ import mainStyle from "../styles/MainStyles.module.css"
 
 function LoginPage() {
   const { wrapper } = mainStyle
+
   const {
     wrapperForm,
     sidebar,
@@ -84,24 +85,30 @@ function LoginPage() {
           <div className={titleForm}>
             <FaSignInAlt /> <span>Login</span>
           </div>
-          <input
-            type='email'
-            name='email'
-            value={form.email}
-            onChange={handlerChangeForm}
-            placeholder='Email'
-            className={input}
-            autoComplete='off'
-          />
-          <input
-            type='password'
-            name='password'
-            value={form.password}
-            onChange={handlerChangeForm}
-            placeholder='Password'
-            className={input}
-            autoComplete='off'
-          />
+          <div>
+            <label>Email: </label>
+            <br />
+            <input
+              type='email'
+              name='email'
+              value={form.email}
+              onChange={handlerChangeForm}
+              className={input}
+              autoComplete='off'
+            />
+          </div>
+          <div>
+            <label>Password: </label>
+            <br />
+            <input
+              type='password'
+              name='password'
+              value={form.password}
+              onChange={handlerChangeForm}
+              className={input}
+              autoComplete='off'
+            />
+          </div>
           <div className={btnWrapper}>
             <button onClick={handlerSubmit} className={btnAction}>
               Sign In

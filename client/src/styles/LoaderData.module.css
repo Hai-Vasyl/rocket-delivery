@@ -1,88 +1,19 @@
-.ldsEllipsis {
-  top: calc(50% + 39px);
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-}
-.ldsEllipsis div {
-  width: 30px;
-  height: 30px;
+.loader {
+  margin: auto;
+  margin-top: 30vh;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  background-color: #141e30;
-  border: 5px solid #141e30;
-  margin-left: 15px;
-  /* box-shadow: inset 0px 0px 12px rgba(0, 0, 0, 0.1),
-    0px 10px 12px rgba(0, 0, 0, 0.1); */
+  border: 5px solid grey;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: spin 1.2s linear infinite;
 }
-.ldsEllipsis div:first-child {
-  margin-left: 0px;
-}
-.ldsEllipsis div:nth-child(1) {
-  animation: increase1 1.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
-}
-.ldsEllipsis div:nth-child(2) {
-  animation: increase2 1.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
-}
-.ldsEllipsis div:nth-child(3) {
-  animation: increase3 1.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
-}
-
-@keyframes increase1 {
-  5% {
-    transform: scale(1);
-    box-shadow: 0px 10px 12px rgba(0, 0, 0, 0.1);
-    background-color: transparent;
-    border-color: white;
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
-  20% {
-    transform: scale(1.3);
-    background-color: #141e30;
-    /* box-shadow: 0px 0px 30px orangered; */
-  }
-  35% {
-    transform: scale(1);
-    box-shadow: 0px 10px 12px rgba(0, 0, 0, 0.1);
-    background-color: transparent;
-    border-color: #141e30;
-  }
-}
-
-@keyframes increase2 {
-  35% {
-    transform: scale(1);
-    box-shadow: 0px 10px 12px rgba(0, 0, 0, 0.1);
-    background-color: transparent;
-    border-color: white;
-  }
-  50% {
-    transform: scale(1.3);
-    background-color: #141e30;
-    /* box-shadow: 0px 0px 30px orangered; */
-  }
-  65% {
-    transform: scale(1);
-    background-color: transparent;
-    box-shadow: 0px 10px 12px rgba(0, 0, 0, 0.1);
-    border-color: #141e30;
-  }
-}
-@keyframes increase3 {
-  65% {
-    transform: scale(1);
-    background-color: transparent;
-    box-shadow: 0px 10px 12px rgba(0, 0, 0, 0.1);
-    border-color: white;
-  }
-  80% {
-    transform: scale(1.3);
-    background-color: #141e30;
-    /* box-shadow: 0px 0px 30px orangered; */
-  }
-  95% {
-    transform: scale(1);
-    background-color: transparent;
-    box-shadow: 0px 10px 12px rgba(0, 0, 0, 0.1);
-    border-color: #141e30;
+  to {
+    transform: rotate(360deg);
   }
 }

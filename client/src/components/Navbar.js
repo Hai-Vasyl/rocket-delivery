@@ -37,14 +37,16 @@ function Navbar() {
     titleLogo,
     linkAdaptive,
     centerBlockAdaptive,
-    resizeBriefLogo,
     authAdaptiveLinks,
+    counter,
+    emptyCounter,
   } = style
   const {
     token,
     setToken,
     drop,
     setDrop,
+    orders,
     setOrders,
     popupCart,
     setPopupCart,
@@ -61,9 +63,6 @@ function Navbar() {
   }
   const hadleDropDownAdaptive = () => {
     setDropAdaptive(!dropAdaptive)
-    if (!dropAdaptive) {
-      setPopupCart(false)
-    }
   }
   const handleDropDownActive = () => {
     setDrop(!drop)
@@ -203,11 +202,7 @@ function Navbar() {
               className={logoLink}
               onClick={removeAllActivePopups}
             >
-              <IoIosRocket />{" "}
-              <span className={titleLogo}>
-                R<span className={resizeBriefLogo}>ocket</span>-D
-                <span className={resizeBriefLogo}>elivery</span>
-              </span>
+              <IoIosRocket /> <span className={titleLogo}>Rocket-Delivery</span>
             </NavLink>
 
             <div
@@ -231,9 +226,13 @@ function Navbar() {
                 onClick={handleOpenCart}
               >
                 <RiShoppingCartLine /> <span>My Cart</span>
+                <span
+                  className={`${counter} ${!orders.length && emptyCounter}`}
+                >
+                  {orders.length > 5 ? "5+" : orders.length}
+                </span>
               </button>
               {styleAdaptiveLink()}
-
               {styleDropDownMenu()}
 
               <NavLink
@@ -245,9 +244,18 @@ function Navbar() {
               >
                 <FiUser /> <span>My Cabinet</span>
               </NavLink>
+              <button
+                onClick={handlerSignOut}
+                className={`${link} ${linkAdaptive}`}
+              >
+                <FaSignOutAlt /> <span>Sign Out</span>
+              </button>
             </div>
 
-            <button onClick={handlerSignOut} className={link}>
+            <button
+              onClick={handlerSignOut}
+              className={`${link} ${authAdaptiveLinks}`}
+            >
               <FaSignOutAlt /> <span>Sign Out</span>
             </button>
             <button
@@ -269,11 +277,7 @@ function Navbar() {
               className={logoLink}
               onClick={removeAllActivePopups}
             >
-              <IoIosRocket />{" "}
-              <span className={titleLogo}>
-                R<span className={resizeBriefLogo}>ocket</span>-D
-                <span className={resizeBriefLogo}>elivery</span>
-              </span>
+              <IoIosRocket /> <span className={titleLogo}>Rocket-Delivery</span>
             </NavLink>
 
             <div
@@ -296,6 +300,11 @@ function Navbar() {
                 onClick={handleOpenCart}
               >
                 <RiShoppingCartLine /> <span>My Cart</span>
+                <span
+                  className={`${counter} ${!orders.length && emptyCounter}`}
+                >
+                  {orders.length > 5 ? "5+" : orders.length}
+                </span>
               </button>
               {styleAdaptiveLink()}
               {styleDropDownMenu()}
@@ -326,9 +335,18 @@ function Navbar() {
               >
                 <FiUser /> <span>My Cabinet</span>
               </NavLink>
+              <button
+                onClick={handlerSignOut}
+                className={`${link} ${linkAdaptive}`}
+              >
+                <FaSignOutAlt /> <span>Sign Out</span>
+              </button>
             </div>
 
-            <button onClick={handlerSignOut} className={link}>
+            <button
+              onClick={handlerSignOut}
+              className={`${link} ${authAdaptiveLinks}`}
+            >
               <FaSignOutAlt /> <span>Sign Out</span>
             </button>
             <button
@@ -351,23 +369,8 @@ function Navbar() {
             className={logoLink}
             onClick={removeAllActivePopups}
           >
-            <IoIosRocket />{" "}
-            <span className={titleLogo}>
-              R<span className={resizeBriefLogo}>ocket</span>-D
-              <span className={resizeBriefLogo}>elivery</span>
-            </span>
+            <IoIosRocket /> <span className={titleLogo}>Rocket-Delivery</span>
           </NavLink>
-
-          <button
-            className={`${link} ${btnDropAdaptive} ${
-              dropAdaptive && activeAdaptive
-            }`}
-            onClick={hadleDropDownAdaptive}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
 
           <div
             className={`${centerBlock} ${dropAdaptive && centerBlockAdaptive}`}
@@ -388,6 +391,9 @@ function Navbar() {
               onClick={handleOpenCart}
             >
               <RiShoppingCartLine /> <span>My Cart</span>
+              <span className={`${counter} ${!orders.length && emptyCounter}`}>
+                {orders.length > 5 ? "5+" : orders.length}
+              </span>
             </button>
             {styleAdaptiveLink()}
             {styleDropDownMenu()}
@@ -431,6 +437,17 @@ function Navbar() {
               <FaCheckCircle /> <span>Sign Up</span>
             </NavLink>
           </div>
+
+          <button
+            className={`${link} ${btnDropAdaptive} ${
+              dropAdaptive && activeAdaptive
+            }`}
+            onClick={hadleDropDownAdaptive}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       )}
     </div>

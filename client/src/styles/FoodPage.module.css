@@ -1,25 +1,22 @@
 .containerCard {
   display: flex;
   font-size: 1.1em;
-  /* height: 75vh; */
 }
-
 .imgContainer {
   width: 58%;
   background-image: linear-gradient(
     to bottom right,
     rgba(20, 82, 153, 0.514),
-    #c91f1fa8
+    #c91f1f56
   );
-  /* padding: 0px !important; */
   display: flex;
+  animation: background 10s ease infinite alternate;
 }
 .imgFlowSide {
   box-shadow: 0px 10px 42px #141e30, 0px 20px 92px #080c148f;
   background-color: #141e30;
   overflow: hidden;
   margin: auto;
-  /* margin: 0; */
 }
 .propContainer {
   width: 42%;
@@ -104,19 +101,17 @@
   background-color: #141e30;
   border-radius: 4px;
   font-size: 1.5em;
-  text-shadow: 0px 0px 5px black;
   background-color: orangered;
   display: flex;
-  font-weight: bold;
   outline-color: white;
   transition: 0.2s ease;
+  position: relative;
 }
 .btnActive {
   background-color: green;
 }
 .btnRate * {
   margin: auto;
-  filter: drop-shadow(0px 0px 1px black);
 }
 .btnRate:hover {
   transform: scale(1.05);
@@ -128,6 +123,40 @@
 .unActiveBtn {
   background-color: grey !important;
   box-shadow: none !important;
+  outline: none;
+}
+.unActiveBtn:hover {
+  transform: scale(1);
+}
+.unActiveBtn:hover .warningPopup {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+.warningPopup {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: grey;
+  position: absolute;
+  width: 120px;
+  top: -60px;
+  left: 50%;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  transition: 0.2s;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) scale(0);
+}
+.threeangle {
+  width: 0px;
+  height: 0px;
+  border: 10px solid transparent;
+  border-top-color: grey;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  bottom: -19px;
 }
 .rate {
   color: lightgrey;
@@ -142,12 +171,10 @@
   font-size: 2em;
   display: flex;
   justify-content: center;
-  /* background: #333; */
   align-items: center;
   padding: 10px;
   width: 30%;
   background-color: orangered;
-  /* border-left: 1px solid lightgrey; */
 }
 .grivnaSign {
   font-size: 0.7em;
@@ -240,10 +267,6 @@
   display: flex;
   width: 40%;
 }
-.invertColorBtnAmount {
-  background-color: grey !important;
-  box-shadow: none !important;
-}
 .btnAddAmount > div {
   width: 50%;
 }
@@ -262,27 +285,29 @@
   font-family: inherit;
   cursor: pointer;
   border: none;
-  background: rgba(255, 255, 255, 0.1);
   color: white;
   padding: 4px 0;
-  background: orangered;
+  background-color: grey !important;
+  box-shadow: none !important;
   margin-top: 5px;
   border-radius: 3px;
   transition: 0.2s ease;
   height: 30px;
-  text-shadow: 0px 0px 5px black;
   outline: none;
   text-align: center;
   line-height: 20px;
 }
+.invertColorBtnAmount {
+  background: orangered !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 5px 29px rgba(0, 0, 0, 0.295);
+}
 .btnAmount:first-child {
   margin-top: 0;
 }
-.btnAmount:hover {
+.btnAmount.invertColorBtnAmount:hover {
   transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 5px 29px rgba(0, 0, 0, 0.295);
 }
-.btnAmount:active {
+.btnAmount.invertColorBtnAmount:active {
   transform: scale(0.9);
 }
 .cart {
@@ -297,10 +322,8 @@
   background: orangered;
   margin-left: 20px;
   transition: 0.2s ease;
-  text-shadow: 0px 0px 5px black;
   outline: none;
   border-radius: 4px;
-  font-weight: bold;
   border: none;
 }
 .cart:hover {
@@ -312,9 +335,6 @@
 }
 .cart span {
   margin-left: 10px;
-}
-.cart *:not(span) {
-  filter: drop-shadow(0px 0px 3px black);
 }
 .activeCart {
   background-color: grey;
@@ -330,7 +350,6 @@
   display: inline-block;
   margin-top: 0px;
 }
-
 .containerComments {
   width: 100%;
   margin-top: 5vh;
@@ -338,8 +357,12 @@
 }
 .commentBlock {
   display: flex;
-  background-color: #141e30;
   padding: 20px;
+  background-image: linear-gradient(
+    to right,
+    rgba(206, 27, 21, 0.459),
+    #141e30a4
+  );
 }
 .postBtn {
   font-size: inherit;
@@ -349,24 +372,21 @@
   align-items: center;
   color: white;
   justify-content: center;
-  background: orangered;
+  background: #141e30;
   transition: 0.2s ease;
   padding: 15px 20px;
-  text-shadow: 0px 0px 5px black;
   outline: none;
   border-radius: 4px;
-  font-weight: bold;
   border: none;
   margin-top: 10px;
 }
 .postBtn *:not(span) {
   font-size: 1.25em;
   margin-left: 5px;
-  filter: drop-shadow(0px 0px 2px black);
 }
 .postBtn:hover {
   transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.503), 0 5px 29px rgba(0, 0, 0, 0.295);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 .postBtn:active {
   transform: scale(0.9);
@@ -381,7 +401,7 @@
   border-radius: 50%;
   height: 100px;
   border: 2px solid lightgrey;
-  box-shadow: 0px 12px 22px rgba(0, 0, 0, 0.726);
+  box-shadow: 0px 12px 15px rgba(0, 0, 0, 0.226);
   overflow: hidden;
 }
 textarea {
@@ -394,23 +414,23 @@ textarea {
   overflow-y: auto;
   resize: none;
   border: none;
-  border-bottom: 1.2px solid orangered;
+  border: 1px solid transparent;
   background-color: transparent;
   outline: none;
   transition: 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.05);
-  color: lightgrey;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
   height: 7vh;
 }
-textarea::placeholder {
-  color: grey;
+textarea:focus {
+  border-color: lightgrey !important;
 }
 .username {
   color: lightgrey;
   font-weight: normal;
   padding: 10px;
   display: inline-block;
-  border: 1px solid rgba(128, 128, 128, 0.527);
+  border: 1px solid lightgrey;
   margin-bottom: 10px;
   border-radius: 5px;
 }
@@ -443,10 +463,25 @@ textarea::placeholder {
   transform: scale(1);
 }
 .commentWarning {
-  background-color: #141e304f;
   padding: 20px;
   color: lightgrey;
   font-size: 1.5em;
+  background-image: linear-gradient(
+    to right,
+    rgba(206, 27, 21, 0.459),
+    #141e30a4
+  );
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.commentsCounter {
+  font-size: 18px;
+  width: 40%;
+  color: lightgrey;
+  align-self: center;
+  margin-left: auto;
+  text-align: right;
 }
 @media (max-width: 1150px) {
   .propContainer {
@@ -598,7 +633,13 @@ textarea::placeholder {
     font-size: 0.9em;
   }
   .form textarea {
-    min-height: 10vh;
+    min-height: 15vh;
+  }
+  .commentWarning {
+    font-size: 1em;
+  }
+  .commentsCounter {
+    display: none;
   }
 }
 @media (max-width: 520px) {

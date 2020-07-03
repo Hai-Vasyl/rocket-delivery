@@ -2,20 +2,13 @@ import React, { useContext, useState } from "react"
 import style from "../styles/Comment.module.css"
 import { AiOutlineLike, AiOutlineDislike, AiOutlineClose } from "react-icons/ai"
 import { RiQuestionAnswerLine } from "react-icons/ri"
-import Answer from "../components/Answer"
 import { Context } from "../context/Context"
-import axios from "axios"
+import { useCreateComment } from "../hooks/useCreateComment"
 import { IoIosAlert } from "react-icons/io"
 
-function Comment({
-  comment,
-  handleLikeComment,
-  handleDisLikeComment,
-  handleLikeAnswer,
-  handleDisLikeAnswer,
-  handleSetStateComments,
-}) {
+function Comment({ comment, setComments, reduceRate }) {
   const [reply, setReply] = useState(false)
+  const { handleCreateComment } = useCreateComment()
   const {
     wrapper,
     avaContainer,
@@ -34,155 +27,175 @@ function Comment({
     inputAnswer,
     submitAnswerBtn,
     wrapperAnswers,
-    mainWrapper,
     btnActive,
     hideForm,
     cancel,
     alertBox,
     alertPopup,
     unActive,
+    invertColorBtn,
+    invertColorWrapper,
+    invertColorText,
+    invertColorContent,
+    unActiveBtn,
+    warningPopup,
+    threeangle,
   } = style
+
   const { token } = useContext(Context)
-  const [answer, setAnswer] = useState("")
+  const [formComment, setFormComment] = useState("")
   const [message, setMessage] = useState("")
 
-  const answerJSX = comment.answerList.map((answer) => {
-    return (
-      <Answer
-        key={answer._id}
-        answer={answer}
-        handleLikeAnswer={handleLikeAnswer}
-        handleDisLikeAnswer={handleDisLikeAnswer}
-      />
-    )
-  })
-
   const handleChangeAnswer = (e) => {
-    setAnswer(e.target.value)
+    setFormComment(e.target.value)
     setMessage("")
   }
 
   const handleReply = () => {
     if (reply) {
-      setAnswer("")
+      setFormComment("")
       setMessage("")
     }
     setReply(!reply)
   }
 
-  const handleSubmitAnswer = (e) => {
+  const onCreateComment = (e) => {
     e.preventDefault()
 
-    if (!!token.token) {
-      if (!answer) {
-        setMessage("Type Something!")
-        return
-      }
-
-      const fetch = async () => {
-        try {
-          const res = await axios.post(
-            `/api/answers/create/${comment._id}`,
-            { content: answer },
-            {
-              headers: {
-                Authorization: `Basic ${token.token}`,
-              },
-            }
-          )
-
-          handleSetStateComments(res.data, comment._id)
-          setAnswer("")
-          setReply(false)
-        } catch (error) {}
-      }
-
-      fetch()
-    } else {
+    if (!formComment) {
+      setMessage("Fill Field!")
+      return
     }
+
+    handleCreateComment(formComment, setComments, comment._id, "answers")
+    setFormComment("")
+    setReply(false)
   }
 
-  return (
-    <div className={mainWrapper}>
-      <div className={wrapper}>
+  function commentJSX(content, nameState, isComment) {
+    return (
+      <div className={`${wrapper} ${!isComment && invertColorWrapper}`}>
         <div className={avaContainer}>
           <div className={img}>
-            <img src={comment.owner.ava} alt='avaImg' />
+            <img src={content.owner.ava} alt='avaImg' />
           </div>
-          <div className={typeUser}>{comment.owner.typeUser}</div>
+          <div className={`${typeUser} ${!isComment && invertColorText}`}>
+            {content.owner.typeUser}
+          </div>
         </div>
 
         <div className={infoContainer}>
           <div className={titleBlock}>
-            <h3 className={name}>{comment.owner.username}</h3>
-            <span className={date}>{comment.date.slice(0, 10)}</span>
+            <h3 className={`${name} ${!isComment && invertColorText}`}>
+              {content.owner.username}
+            </h3>
+            <span className={date}>{content.date.slice(0, 10)}</span>
           </div>
 
-          <div className={contentBlock}>
-            <span>{comment.content}</span>
+          <div
+            className={`${contentBlock} ${!isComment && invertColorContent}`}
+          >
+            <span>{content.content}</span>
           </div>
 
           <div className={rateBlock}>
             <button
-              className={`${btnRate} ${
-                comment.rateStatus === true && btnActive
+              className={`${btnRate} ${!isComment && invertColorBtn} ${
+                token.token
+                  ? content.rateStatus === true && btnActive
+                  : unActiveBtn
               }`}
-              onClick={() => handleLikeComment(comment)}
+              onClick={() => reduceRate(true, content, nameState)}
             >
               <AiOutlineLike />
+              <span className={warningPopup}>
+                Register, to like comment!
+                <span className={threeangle}></span>
+              </span>
             </button>
-            <span className={rate}>{comment.rate}</span>
+            <span className={`${rate} ${!isComment && invertColorText}`}>
+              {content.rate}
+            </span>
             <button
-              className={`${btnRate} ${
-                comment.rateStatus === false && btnActive
+              className={`${btnRate} ${!isComment && invertColorBtn} ${
+                !isComment && invertColorBtn
+              } ${
+                token.token
+                  ? content.rateStatus === false && btnActive
+                  : unActiveBtn
               }`}
-              onClick={() => handleDisLikeComment(comment)}
+              onClick={() => reduceRate(false, content, nameState)}
             >
               <AiOutlineDislike />
+              <span className={warningPopup}>
+                Register, to dislike comment!
+                <span className={threeangle}></span>
+              </span>
             </button>
-            <button
-              className={`${answerBtn} ${
-                !token.token ? unActive : reply && cancel
-              }`}
-              onClick={handleReply}
-            >
-              {reply ? (
-                <>
-                  <AiOutlineClose /> <span>Cancel</span>
-                </>
-              ) : (
-                <>
-                  <RiQuestionAnswerLine /> <span>Reply</span>
-                </>
-              )}
-            </button>
+            {isComment && (
+              <button
+                className={`${answerBtn} ${
+                  !token.token ? unActive : reply && cancel
+                }`}
+                onClick={handleReply}
+              >
+                {reply ? (
+                  <>
+                    <AiOutlineClose /> <span>Cancel</span>
+                  </>
+                ) : (
+                  <>
+                    <RiQuestionAnswerLine /> <span>Reply</span>
+                  </>
+                )}
+              </button>
+            )}
           </div>
-          <span
-            className={`${alertBox} ${!!message && alertPopup}`}
-            onClick={() => setMessage("")}
-          >
-            <IoIosAlert /> <span>{message}</span>
-          </span>
+          {isComment && (
+            <span
+              className={`${alertBox} ${!!message && alertPopup}`}
+              onClick={() => setMessage("")}
+            >
+              <IoIosAlert /> <span>{message}</span>
+            </span>
+          )}
         </div>
 
-        <form
-          className={`${formAnswer} ${reply && hideForm}`}
-          onSubmit={handleSubmitAnswer}
-        >
-          <input
-            type='text'
-            className={inputAnswer}
-            value={answer}
-            onChange={handleChangeAnswer}
-            autoComplete='off'
-            placeholder='Type Answer here'
-          />
-          <button className={submitAnswerBtn}>Submit</button>
-        </form>
+        {isComment && (
+          <>
+            <form
+              className={`${formAnswer} ${reply && hideForm}`}
+              onSubmit={onCreateComment}
+            >
+              <input
+                type='text'
+                className={inputAnswer}
+                value={formComment}
+                onChange={handleChangeAnswer}
+                autoComplete='off'
+                placeholder='Type Answer here'
+              />
+              <button className={submitAnswerBtn}>Submit</button>
+            </form>
+          </>
+        )}
       </div>
+    )
+  }
 
-      <div className={wrapperAnswers}>{answerJSX}</div>
-    </div>
+  const answerJSX = comment.answerList.map((answer) => {
+    return (
+      <div className={wrapperAnswers} key={answer._id}>
+        {commentJSX(answer, "Answers", false)}
+      </div>
+    )
+  })
+
+  return (
+    <>
+      {commentJSX(comment, "Comments", true)}
+      {answerJSX}
+    </>
   )
 }
 

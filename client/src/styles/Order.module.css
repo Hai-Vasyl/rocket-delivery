@@ -5,13 +5,19 @@
   background-color: #141e30;
   margin-top: 1.5vh;
   color: lightgrey;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.521),
-    0px 0px 8px rgba(0, 0, 0, 0.315);
   border-radius: 7px;
-  /* border-bottom: 1px solid orangered; */
+  box-shadow: 5px 5px 9px #0c121d, -5px -5px 9px #1c2a43;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
 }
 .wrapper:first-child {
   margin-top: 0px;
+}
+.wrapper:nth-child(odd) {
+  border-left-color: orangered;
+}
+.wrapper:nth-child(even) {
+  border-right-color: orangered;
 }
 .orderIndex {
   background-color: rgba(255, 255, 255, 0.1);
@@ -206,6 +212,9 @@
   transform: none;
 }
 @media (max-width: 880px) {
+  .wrapper {
+    box-shadow: none;
+  }
   .orderIndex {
     display: none;
   }
